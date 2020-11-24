@@ -33,10 +33,11 @@
 #include "shares.h"                         // Global ('extern') queue declarations
 
 #include "task_user.h"                      // Header for user interface task
-#include "task_LED.h"                      // Header for user interface task
+//#include "task_LED.h"                      // Header for user interface task
 
 volatile int counter;
 frt_text_queue print_ser_queue (32, NULL, 10);
+/*
 frt_queue<uint16_t> time_queue(255,NULL,10);
 frt_queue<int16_t> ang_queue(255,NULL,10);
 frt_queue<int16_t> A_queue(255,NULL,10);
@@ -55,7 +56,7 @@ int16_t effort = 255;
 	
 // delta_angle is the change in phase angle to be taken for each iteration of the task
 int16_t delta_angle = 0; // (1) (1 degree) / (1/10 ms) -> (6) (10,000 degrees) / (1 s) ->  (6) (10,000*60/360 rev/min) -> (6) (166.67 rpm) = 1000 rpm
-	
+*/
 
 /*! \brief CCP write helper function written in assembly.
  *
@@ -65,6 +66,7 @@ int16_t delta_angle = 0; // (1) (1 degree) / (1/10 ms) -> (6) (10,000 degrees) /
  *  \param address A pointer to the address to write to.
  *  \param value   The value to put in to the register.
  */
+
 void CCPWrite( volatile uint8_t * address, uint8_t value )
 {
 	#if defined __GNUC__
@@ -98,6 +100,10 @@ void CCPWrite( volatile uint8_t * address, uint8_t value )
 
 int main (void)
 {
+	// Set up pins for LED output
+	PORTD.DIRSET = PIN6_bm;									// set pin D4 as output LED1: turns on when power is on.
+	PORTD.OUTSET = PIN6_bm;									// set pin high, LED 1
+	
 	cli();
 	// Configure the system clock
 	{	
@@ -140,7 +146,7 @@ int main (void)
 	// mation, or to allow user interaction, or for whatever use is appropriate.  The
 	// serial port will be used by the user interface task after setup is complete and
 	// the task scheduler has been started by the function vTaskStartScheduler()
-	rs232 ser_dev(0,&USARTE0); // Create a serial device on USART E0
+	rs232 ser_dev(0, &USARTC1); // Create a serial device on USART C1, baud 115200
 	ser_dev << clrscr << "FreeRTOS Xmega Testing Program" << endl << endl;
 	
 	// The user interface is at low priority; it could have been run in the idle task
@@ -149,12 +155,13 @@ int main (void)
 	
 	// The LED blinking task is also low priority and is used to test the timing accuracy
 	// of the task transitions.
-	new task_LED ("LED BLINKER", task_priority (1), 260, &ser_dev);
+	//new task_LED ("LED BLINKER", task_priority (1), 260, &ser_dev);
 	
 	// Enable high level interrupts and global interrupts
 	PMIC_CTRL = (1 << PMIC_HILVLEN_bp | 1 << PMIC_MEDLVLEN_bp | 1 << PMIC_LOLVLEN_bp);
 	sei();
 	
+	/*
 	// Build over-modulated lookup table to be used for PWM generation.
 	{
 		// 0 < theta < 60
@@ -175,13 +182,16 @@ int main (void)
 			spacevec2_lut[i]=(uint8_t) (127.5 - 127.5 * (sin((2 * i + 120) / 180.0 * 3.14159265358979323846)));
 		}
 	}
+	*/
 	
 	// Here's where the RTOS scheduler is started up. It should never exit as long as
 	// power is on and the microcontroller isn't rebooted
 	vTaskStartScheduler ();
+	
+	return 0;
 }
 
-
+/*
 ISR(TCC0_OVF_vect)
 {
 	//PORTC.OUT = PORTC.OUT ^ (1 << 3);
@@ -314,3 +324,4 @@ ISR(TCC0_OVF_vect)
 	TCC0.CCBBUF = B_duty;
 	TCC0.CCCBUF = C_duty;
 }
+*/
