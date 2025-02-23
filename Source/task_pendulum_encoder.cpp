@@ -37,10 +37,10 @@ void task_pendulum_encoder::run(void) {
 	// Make a variable which will hold times to use for precise task scheduling
 	portTickType previousTicks = xTaskGetTickCount ();
 
-	PORTE.DIR |= (PIN0_bm | PIN1_bm);
-	PORTE.OUT |= (PIN0_bm | PIN1_bm);
+	//PORTE.DIR |= (PIN0_bm | PIN1_bm);
+	//PORTE.OUT |= (PIN0_bm | PIN1_bm);
 
-	// PORTE.DIRCLR = (PIN0_bm | PIN1_bm);							// set E0 & E1 as inputs
+	PORTE.DIRCLR = (PIN0_bm | PIN1_bm);							// set E0 & E1 as inputs
 	PORTE.PIN0CTRL = PORT_ISC_LEVEL_gc;							// set E0 for level sensing
 	PORTE.PIN1CTRL = PORT_ISC_LEVEL_gc;							// set E1 for level sensing
 
@@ -64,11 +64,13 @@ void task_pendulum_encoder::run(void) {
 		//int16_t theta_pendulum = count * ()
 
 		/*
+		// Section of code used for unit testing, prints out curr count and queue value
 		if(runs%100==0){
-			*p_serial << "Pedulum Ticks: " << pendulum_encoder->get() << endl;
+			*p_serial << "Pendulum Ticks Counts: " << count << endl;
+			*p_serial << "Pendulum Ticks Queue: " << pendulum_encoder->get() << endl;
 		}
-		*/
-
+		*/ 
+		
 		// Increment counter for debugging
 		runs++;
 

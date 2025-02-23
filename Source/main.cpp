@@ -127,7 +127,7 @@ int main (void)
 	// Initialize queue of communication between tasks
 	leftLimitSwitch = new frt_queue<bool> (31, NULL, 0);
 	rightLimitSwitch = new frt_queue<bool> (31, NULL, 0);
-	pendulum_encoder= new frt_queue<int16_t> (255, NULL, 0);
+	pendulum_encoder= new frt_queue<int16_t> (1, NULL, 0);
 
 
 	// Configure a serial port which can be used by a task to print debugging infor-
