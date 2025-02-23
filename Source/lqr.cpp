@@ -12,4 +12,5 @@ void lqr::lqr_set_value() {
 }
 
 int16_t lqr::lqr_get_value() {
+	return 0;
 }

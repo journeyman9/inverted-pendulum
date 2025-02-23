@@ -86,7 +86,6 @@ void task_limit_switch::run(void) {
 		}
 		*/
 		
-	
 		// Increment counter for debugging
 		runs++;
 
