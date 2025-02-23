@@ -18,12 +18,13 @@
 #include "math.h"
 
 class task_limit_switch : public frt_task{
+	uint8_t bit_mask;
 	protected:
 
 	public:
 		// Constructor creates a motor encoder task object
 		task_limit_switch(const char*, unsigned portBASE_TYPE,
-							size_t, emstream*,uint8_t a_bit_mask);
+							size_t, emstream*, uint8_t a_bit_mask);
 
 		// This gets called by the RTOS once to start this task's state loop
 		void run(void);

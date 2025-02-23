@@ -42,10 +42,15 @@
  */
 extern frt_text_queue print_ser_queue;			// This queue allows tasks to send characters to the user interface task for display.
 
-extern frt_queue<uint16_t> time_queue;
-extern frt_queue<int16_t> ang_queue;
-extern frt_queue<int16_t> A_queue;
-extern frt_queue<int16_t> B_queue;
-extern frt_queue<int16_t> C_queue;
+//extern frt_queue<uint16_t> time_queue;
+//extern frt_queue<int16_t> ang_queue;
+//extern frt_queue<int16_t> A_queue;
+//extern frt_queue<int16_t> B_queue;
+//extern frt_queue<int16_t> C_queue;
+
+//extern TaskQueue<bool>* leftLimitSwitch;
+//extern TaskQueue<bool>* rightLimitSwitch; 
+extern shared_data<bool>* leftLimitSwitch;
+extern shared_data<bool>* rightLimitSwitch;
 
 #endif // _SHARES_H_

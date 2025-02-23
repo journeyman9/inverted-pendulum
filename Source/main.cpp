@@ -34,13 +34,16 @@
 
 #include "task_user.h"                      // Header for user interface task
 #include "task_limit_switch.h"				// Header for limit switches
-#include "task_pendulum_encoder.h"			// Header for pedulum encoder
+#include "task_pendulum_encoder.h"			// Header for pendulum encoder
 #include "task_motor_encoder.h"				// Header for Motor Controller
 #include "task_system_controller.h"			// Header for the system controller
 #include "task_motor_command.h"				// Header for the motor command
 
 volatile int counter;
 frt_text_queue print_ser_queue (32, NULL, 10);
+
+shared_data<bool>* leftLimitSwitch;
+shared_data<bool>* rightLimitSwitch; 
 
 /*! \brief CCP write helper function written in assembly.
  *
@@ -91,6 +94,8 @@ int main (void)
 	//PORTD.OUTSET = PIN5_bm;
 	//PORTD.DIRSET = PIN6_bm;
 	//PORTD.OUTSET = PIN6_bm;
+	
+	
 
 	cli();
 	// Configure the system clock
@@ -126,11 +131,11 @@ int main (void)
 	// but it is desired to exercise the RTOS more thoroughly in this test program
 	new task_user ("UserInt", task_priority (0), 260, &ser_dev);
 
-	new task_limit_switch ("LeftSwitch", task_priority (6), 260, &ser_dev, PIN0_bm);
-	new task_limit_switch ("RightSwitch", task_priority (5), 260, &ser_dev, PIN2_bm);
+	new task_limit_switch ("LeftSw", task_priority (6), 260, &ser_dev, (1<<0));
+	new task_limit_switch ("RightSw", task_priority (5), 260, &ser_dev, (1<<2));
 	new task_pendulum_encoder ("EncPen", task_priority (4), 260, &ser_dev);
 	new task_motor_encoder ("EncMtr", task_priority (3), 260, &ser_dev);
-	new task_system_controller ("CtrlCalc", task_priority (2), 260, &ser_dev);
+	new task_system_controller ("SysCtrl", task_priority (2), 260, &ser_dev);
 	new task_motor_command ("MtrCmd", task_priority (1), 260, &ser_dev);
 
 	// Enable high level interrupts and global interrupts
