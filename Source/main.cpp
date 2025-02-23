@@ -42,8 +42,11 @@
 volatile int counter;
 frt_text_queue print_ser_queue (32, NULL, 10);
 
-shared_data<bool>* leftLimitSwitch;
-shared_data<bool>* rightLimitSwitch; 
+//frt_queue<bool> leftLimitSwitch(1, NULL, 10);
+//frt_queue<bool> rightLimitSwitch(1, NULL, 10);
+
+frt_queue<bool>* leftLimitSwitch;
+frt_queue<bool>* rightLimitSwitch;
 
 /*! \brief CCP write helper function written in assembly.
  *
@@ -118,6 +121,10 @@ int main (void)
 	// Disable the watchdog timer unless it's needed later. This is important because
 	// sometimes the watchdog timer may have been left on...and it tends to stay on
 	wdt_disable ();
+	
+	// Initialize queue of communication between tasks
+	leftLimitSwitch = new frt_queue<bool> (25, NULL, 0);
+	rightLimitSwitch = new frt_queue<bool> (25, NULL, 0);
 
 
 	// Configure a serial port which can be used by a task to print debugging infor-
