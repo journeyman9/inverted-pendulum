@@ -20,26 +20,27 @@
 #include "shared_data_sender.h"
 #include "shared_data_receiver.h"
 
-#include "task_motor_command.h"                  // Template
+#include "task_motor_encoder.h"                  // Template
 
-task_motor_command::task_motor_command(
+task_motor_encoder::task_motor_encoder(
 	const char* a_name,
-	unsigned portBASE_TYPE a_priority
+	unsigned portBASE_TYPE a_priority,
 	size_t a_stack_size,
 	emstream* p_ser_dev
 )
 // Call the parent (task base) constructor
 : frt_task (a_name, a_priority, a_stack_size, p_ser_dev) {
-	// Nothing to do in this constructor other than call the parent constructor
+		// Nothing to do in this constructor other than call the parent constructor
 }
 
-
-void task_motor_command::run(void) {
+void task_motor_encoder::run(void) {
 	// Make a variable which will hold times to use for precise task scheduling
 	portTickType previousTicks = xTaskGetTickCount ();
 	
 		
 	while(1) {
+		
+		
 		
 		if (runs % 100 == 0) {
 			*p_serial << "Scary, scary skeletons!" << endl;

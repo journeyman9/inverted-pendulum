@@ -20,11 +20,11 @@
 #include "shared_data_sender.h"
 #include "shared_data_receiver.h"
 
-#include "task_pendulum_encoder.h"
+#include "task_motor_command.h"                  // Template
 
-task_pendulum_encoder::task_pendulum_encoder(
+task_motor_command::task_motor_command(
 	const char* a_name,
-	unsigned portBASE_TYPE a_priority
+	unsigned portBASE_TYPE a_priority,
 	size_t a_stack_size,
 	emstream* p_ser_dev
 )
@@ -33,16 +33,19 @@ task_pendulum_encoder::task_pendulum_encoder(
 	// Nothing to do in this constructor other than call the parent constructor
 }
 
-void task_pendulum_encoder::run(void) {
+
+void task_motor_command::run(void) {
 	// Make a variable which will hold times to use for precise task scheduling
 	portTickType previousTicks = xTaskGetTickCount ();
 	
+		
 	while(1) {
 		
 		if (runs % 100 == 0) {
 			*p_serial << "Scary, scary skeletons!" << endl;
 		}
-				
+
+		
 		// Increment counter for debugging
 		runs++;
 		

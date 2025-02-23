@@ -4,7 +4,19 @@
 
 Source\lib\freertos\croutine.c
 
-Source\task_LED.cpp
+Source\lqr.cpp
+
+Source\task_limit_switch.cpp
+
+Source\task_motor_command.cpp
+
+Source\task_motor_encoder.cpp
+
+Source\task_pendulum_encoder.cpp
+
+Source\task_skeleton.cpp
+
+Source\task_system_controller.cpp
 
 Source\task_user.cpp
 

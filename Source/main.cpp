@@ -36,7 +36,7 @@
 #include "task_limit_switch.h"
 #include "task_pendulum_encoder.h"
 #include "task_motor_encoder.h"
-#include "task_control_calc.h"
+#include "task_system_controller.h"
 #include "task_motor_command.h"
 
 volatile int counter;
@@ -130,7 +130,7 @@ int main (void)
 	new task_limit_switch ("RightSwitch", task_priority (5), 260, &ser_dev);
 	new task_pendulum_encoder ("EncPen", task_priority (4), 260, &ser_dev);
 	new task_motor_encoder ("EncMtr", task_priority (3), 260, &ser_dev);
-	new task_control_calc ("CtrlCalc", task_priority (2), 260, &ser_dev);
+	new task_system_controller ("CtrlCalc", task_priority (2), 260, &ser_dev);
 	new task_motor_command ("MtrCmd", task_priority (1), 260, &ser_dev);
 	
 	// Enable high level interrupts and global interrupts

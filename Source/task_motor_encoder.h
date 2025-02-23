@@ -18,12 +18,12 @@
 
 #include "math.h"
 
-class task_skeleton : public frt_task {
+class task_motor_encoder : public frt_task {
 	protected:
 	
 	public: 
 		// Constructor creates a motor encoder task object
-		task_skeleton(const char*, unsigned portBASE_TYPE, size_t, emstream*);
+		task_motor_encoder(const char*, unsigned portBASE_TYPE, size_t, emstream*);
 			
 		// This gets called by the RTOS once to start this task's state loop
 		void run(void);
