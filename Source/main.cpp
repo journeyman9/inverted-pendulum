@@ -123,8 +123,8 @@ int main (void)
 	wdt_disable ();
 	
 	// Initialize queue of communication between tasks
-	leftLimitSwitch = new frt_queue<bool> (25, NULL, 0);
-	rightLimitSwitch = new frt_queue<bool> (25, NULL, 0);
+	leftLimitSwitch = new frt_queue<bool> (31, NULL, 0);
+	rightLimitSwitch = new frt_queue<bool> (31, NULL, 0);
 
 
 	// Configure a serial port which can be used by a task to print debugging infor-

@@ -39,13 +39,13 @@ c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/..
 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avrxmega7\libc.a(strrev.o)
                               c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avrxmega7\libc.a(ultoa_ncheck.o) (strrev)
 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avrxmega7\libgcc.a(_mulsi3.o)
-                              C:\Users\journ\AppData\Local\Temp\ccMYVVdq.ltrans0.ltrans.o (__mulsi3)
+                              C:\Users\journ\AppData\Local\Temp\ccxxw8Lf.ltrans0.ltrans.o (__mulsi3)
 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avrxmega7\libgcc.a(_tablejump2.o)
-                              C:\Users\journ\AppData\Local\Temp\ccMYVVdq.ltrans0.ltrans.o (__tablejump2__)
+                              C:\Users\journ\AppData\Local\Temp\ccxxw8Lf.ltrans0.ltrans.o (__tablejump2__)
 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avrxmega7\libgcc.a(_ctors.o)
-                              C:\Users\journ\AppData\Local\Temp\ccMYVVdq.ltrans1.ltrans.o (__do_global_ctors)
+                              C:\Users\journ\AppData\Local\Temp\ccxxw8Lf.ltrans1.ltrans.o (__do_global_ctors)
 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avrxmega7\libgcc.a(_muluhisi3.o)
-                              C:\Users\journ\AppData\Local\Temp\ccMYVVdq.ltrans0.ltrans.o (__muluhisi3)
+                              C:\Users\journ\AppData\Local\Temp\ccxxw8Lf.ltrans0.ltrans.o (__muluhisi3)
 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avrxmega7\libgcc.a(_umulhisi3.o)
                               c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avrxmega7\libgcc.a(_muluhisi3.o) (__umulhisi3)
 
@@ -107,8 +107,8 @@ Discarded input sections
                 0x00000000        0x0 Source/lqr.o (symbol from plugin)
  .gnu.linkonce.t._ZNSt6vectorIfSaIfEE19_M_range_initializeIPKfEEvT_S5_St20forward_iterator_tag
                 0x00000000        0x0 Source/lqr.o (symbol from plugin)
- .data          0x00000000        0x0 C:\Users\journ\AppData\Local\Temp\ccMYVVdq.ltrans0.ltrans.o
- .data          0x00000000        0x0 C:\Users\journ\AppData\Local\Temp\ccMYVVdq.ltrans1.ltrans.o
+ .data          0x00000000        0x0 C:\Users\journ\AppData\Local\Temp\ccxxw8Lf.ltrans0.ltrans.o
+ .data          0x00000000        0x0 C:\Users\journ\AppData\Local\Temp\ccxxw8Lf.ltrans1.ltrans.o
  .text          0x00000000        0x0 Source/task_limit_switch.o (symbol from plugin)
  .gnu.linkonce.t._ZTV17task_limit_switch
                 0x00000000        0x0 Source/task_limit_switch.o (symbol from plugin)
@@ -500,8 +500,8 @@ Linker script and memory map
 LOAD C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/XMEGAA_DFP/1.1.68/gcc/dev/atxmega128a4u/avrxmega7/crtatxmega128a4u.o
 LOAD Source/lib/freertos/croutine.o
 LOAD Source/lqr.o
-LOAD C:\Users\journ\AppData\Local\Temp\ccMYVVdq.ltrans0.ltrans.o
-LOAD C:\Users\journ\AppData\Local\Temp\ccMYVVdq.ltrans1.ltrans.o
+LOAD C:\Users\journ\AppData\Local\Temp\ccxxw8Lf.ltrans0.ltrans.o
+LOAD C:\Users\journ\AppData\Local\Temp\ccxxw8Lf.ltrans1.ltrans.o
 LOAD Source/task_limit_switch.o
 LOAD Source/task_motor_command.o
 LOAD Source/task_motor_encoder.o
@@ -673,7 +673,7 @@ END GROUP
  *(.vectors)
  *(.progmem.gcc*)
  .progmem.gcc_sw_table
-                0x000001fc       0x16 C:\Users\journ\AppData\Local\Temp\ccMYVVdq.ltrans0.ltrans.o
+                0x000001fc       0x16 C:\Users\journ\AppData\Local\Temp\ccxxw8Lf.ltrans0.ltrans.o
                 0x00000212                . = ALIGN (0x2)
                 0x00000212                __trampolines_start = .
  *(.trampolines)
@@ -684,7 +684,7 @@ END GROUP
  *libc.a:*(.progmem.data)
  *(.progmem*)
  .progmem.something
-                0x000002da      0x299 C:\Users\journ\AppData\Local\Temp\ccMYVVdq.ltrans0.ltrans.o
+                0x000002da      0x299 C:\Users\journ\AppData\Local\Temp\ccxxw8Lf.ltrans0.ltrans.o
                 0x00000574                . = ALIGN (0x2)
  *fill*         0x00000573        0x1 
  *(.jumptables)
@@ -693,7 +693,7 @@ END GROUP
  *(.lowtext*)
                 0x00000574                __ctors_start = .
  *(.ctors)
- .ctors         0x00000574        0x2 C:\Users\journ\AppData\Local\Temp\ccMYVVdq.ltrans1.ltrans.o
+ .ctors         0x00000574        0x2 C:\Users\journ\AppData\Local\Temp\ccxxw8Lf.ltrans1.ltrans.o
                 0x00000576                __ctors_end = .
                 0x00000576                __dtors_start = .
  *(.dtors)
@@ -853,7 +853,7 @@ END GROUP
                 0x000005e2                __vector_87
                 0x000005e2                __vector_65
                 0x000005e2                __vector_120
- .text          0x000005e6     0x125e C:\Users\journ\AppData\Local\Temp\ccMYVVdq.ltrans0.ltrans.o
+ .text          0x000005e6     0x125e C:\Users\journ\AppData\Local\Temp\ccxxw8Lf.ltrans0.ltrans.o
                 0x00000616                _ZN8emstream12clear_screenEv
                 0x00000618                _ZN8emstream12transmit_nowEv
                 0x0000061a                _ZN8emstream14check_for_charEv
@@ -873,7 +873,7 @@ END GROUP
                 0x00000fc2                _ZN9task_user3runEv
                 0x00001490                _ZN17task_limit_switch3runEv
                 0x000016b6                _ZN8frt_taskC2EPKchjP8emstream
- .text          0x00001844      0xaf0 C:\Users\journ\AppData\Local\Temp\ccMYVVdq.ltrans1.ltrans.o
+ .text          0x00001844      0xaf0 C:\Users\journ\AppData\Local\Temp\ccxxw8Lf.ltrans1.ltrans.o
                 0x00001b58                main
                 0x00001e88                __vector_58
                 0x00001f44                __vector_91
@@ -1104,13 +1104,13 @@ END GROUP
                 0x00802002        0x4 Source/lib/freertos/tasks.o
  *(.gnu.linkonce.d*)
  *(.rodata)
- .rodata        0x00802006        0x8 C:\Users\journ\AppData\Local\Temp\ccMYVVdq.ltrans0.ltrans.o
- .rodata        0x0080200e       0x84 C:\Users\journ\AppData\Local\Temp\ccMYVVdq.ltrans1.ltrans.o
+ .rodata        0x00802006        0x8 C:\Users\journ\AppData\Local\Temp\ccxxw8Lf.ltrans0.ltrans.o
+ .rodata        0x0080200e       0x84 C:\Users\journ\AppData\Local\Temp\ccxxw8Lf.ltrans1.ltrans.o
  *(.rodata*)
  .rodata.str1.1
-                0x00802092       0x2f C:\Users\journ\AppData\Local\Temp\ccMYVVdq.ltrans0.ltrans.o
+                0x00802092       0x2f C:\Users\journ\AppData\Local\Temp\ccxxw8Lf.ltrans0.ltrans.o
  .rodata.str1.1
-                0x008020c1       0x53 C:\Users\journ\AppData\Local\Temp\ccMYVVdq.ltrans1.ltrans.o
+                0x008020c1       0x53 C:\Users\journ\AppData\Local\Temp\ccxxw8Lf.ltrans1.ltrans.o
  .rodata.str1.1
                 0x00802114        0x5 Source/lib/freertos/tasks.o
  *(.gnu.linkonce.r*)
@@ -1122,8 +1122,8 @@ END GROUP
 .bss            0x0080211a     0x10a2
                 0x0080211a                PROVIDE (__bss_start, .)
  *(.bss)
- .bss           0x0080211a        0x4 C:\Users\journ\AppData\Local\Temp\ccMYVVdq.ltrans0.ltrans.o
- .bss           0x0080211e       0x32 C:\Users\journ\AppData\Local\Temp\ccMYVVdq.ltrans1.ltrans.o
+ .bss           0x0080211a        0x4 C:\Users\journ\AppData\Local\Temp\ccxxw8Lf.ltrans0.ltrans.o
+ .bss           0x0080211e       0x32 C:\Users\journ\AppData\Local\Temp\ccxxw8Lf.ltrans1.ltrans.o
                 0x0080211e                rightLimitSwitch
                 0x00802120                leftLimitSwitch
                 0x00802122                print_ser_queue
@@ -1223,8 +1223,8 @@ END GROUP
 
 .comment        0x00000000       0x30
  *(.comment)
- .comment       0x00000000       0x31 C:\Users\journ\AppData\Local\Temp\ccMYVVdq.ltrans0.ltrans.o
- .comment       0x00000000       0x31 C:\Users\journ\AppData\Local\Temp\ccMYVVdq.ltrans1.ltrans.o
+ .comment       0x00000000       0x31 C:\Users\journ\AppData\Local\Temp\ccxxw8Lf.ltrans0.ltrans.o
+ .comment       0x00000000       0x31 C:\Users\journ\AppData\Local\Temp\ccxxw8Lf.ltrans1.ltrans.o
  .comment       0x00000000       0x30 Source/lib/freertos/heap_2.o
                                  0x31 (size before relaxing)
  .comment       0x00000030       0x31 Source/lib/freertos/list.o

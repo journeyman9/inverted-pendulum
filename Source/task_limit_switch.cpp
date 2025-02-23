@@ -76,6 +76,7 @@ void task_limit_switch::run(void) {
 			rightLimitSwitch->put(rightLimit);
 		}
 		
+		/*
 		if(runs%100==0) {
 			*p_serial << "Left" << leftLimitSwitch->get() << "\t";
 			*p_serial << "Right" << rightLimitSwitch->get() << endl;
@@ -83,6 +84,7 @@ void task_limit_switch::run(void) {
 			*p_serial << "limits: " << leftLimit << rightLimit << endl;
 			*p_serial << "rightLimit: " << rightLimit << endl;
 		}
+		*/
 		
 		// Increment counter for debugging
 		runs++;

@@ -3122,7 +3122,7 @@ Disassembly of section .text:
     1be8:	f1 82       	std	Z+1, r15	; 0x01
     1bea:	40 e0       	ldi	r20, 0x00	; 0
     1bec:	61 e0       	ldi	r22, 0x01	; 1
-    1bee:	89 e1       	ldi	r24, 0x19	; 25
+    1bee:	8f e1       	ldi	r24, 0x1F	; 31
     1bf0:	0e 94 80 15 	call	0x2b00	; 0x2b00 <xQueueGenericCreate>
     1bf4:	f8 01       	movw	r30, r16
     1bf6:	84 83       	std	Z+4, r24	; 0x04
@@ -3144,7 +3144,7 @@ Disassembly of section .text:
     1c1c:	f1 82       	std	Z+1, r15	; 0x01
     1c1e:	40 e0       	ldi	r20, 0x00	; 0
     1c20:	61 e0       	ldi	r22, 0x01	; 1
-    1c22:	89 e1       	ldi	r24, 0x19	; 25
+    1c22:	8f e1       	ldi	r24, 0x1F	; 31
     1c24:	0e 94 80 15 	call	0x2b00	; 0x2b00 <xQueueGenericCreate>
     1c28:	f8 01       	movw	r30, r16
     1c2a:	84 83       	std	Z+4, r24	; 0x04
