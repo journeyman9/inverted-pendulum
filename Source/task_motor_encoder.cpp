@@ -41,10 +41,11 @@ void task_motor_encoder::run(void) {
 	while(1) {
 		
 		
-		
+		/*
 		if (runs % 100 == 0) {
 			*p_serial << "Scary, scary skeletons!" << endl;
 		}
+		*/
 
 		
 		// Increment counter for debugging
