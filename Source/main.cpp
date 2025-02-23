@@ -48,6 +48,8 @@ frt_text_queue print_ser_queue (32, NULL, 10);
 frt_queue<bool>* leftLimitSwitch;
 frt_queue<bool>* rightLimitSwitch;
 
+frt_queue<int16_t>* pendulum_encoder;
+
 /*! \brief CCP write helper function written in assembly.
  *
  *  This function is written in assembly because of the time critical
@@ -97,8 +99,8 @@ int main (void)
 	//PORTD.OUTSET = PIN5_bm;
 	//PORTD.DIRSET = PIN6_bm;
 	//PORTD.OUTSET = PIN6_bm;
-	
-	
+
+
 
 	cli();
 	// Configure the system clock
@@ -121,10 +123,11 @@ int main (void)
 	// Disable the watchdog timer unless it's needed later. This is important because
 	// sometimes the watchdog timer may have been left on...and it tends to stay on
 	wdt_disable ();
-	
+
 	// Initialize queue of communication between tasks
 	leftLimitSwitch = new frt_queue<bool> (31, NULL, 0);
 	rightLimitSwitch = new frt_queue<bool> (31, NULL, 0);
+	pendulum_encoder= new frt_queue<int16_t> (1, NULL, 0);
 
 
 	// Configure a serial port which can be used by a task to print debugging infor-
