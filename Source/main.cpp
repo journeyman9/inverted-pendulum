@@ -126,8 +126,8 @@ int main (void)
 	// but it is desired to exercise the RTOS more thoroughly in this test program
 	new task_user ("UserInt", task_priority (0), 260, &ser_dev);
 
-	new task_limit_switch ("LeftSwitch", task_priority (6), 260, &ser_dev);
-	new task_limit_switch ("RightSwitch", task_priority (5), 260, &ser_dev);
+	new task_limit_switch ("LeftSwitch", task_priority (6), 260, &ser_dev, PIN0_bm);
+	new task_limit_switch ("RightSwitch", task_priority (5), 260, &ser_dev, PIN2_bm);
 	new task_pendulum_encoder ("EncPen", task_priority (4), 260, &ser_dev);
 	new task_motor_encoder ("EncMtr", task_priority (3), 260, &ser_dev);
 	new task_system_controller ("CtrlCalc", task_priority (2), 260, &ser_dev);
