@@ -40,7 +40,8 @@ void task_limit_switch::run(void) {
 	// Make a variable which will hold times to use for precise task scheduling
 	portTickType previousTicks = xTaskGetTickCount ();
 
-	PORTD.OUTSET |= bit_mask;
+	PORTD.DIR |= bit_mask;
+	PORTD.OUT |= bit_mask;
 	
 	if (bit_mask == PIN0_bm) {
 		PORTD.PIN0CTRL = PORT_OPC_PULLUP_gc;
@@ -75,7 +76,7 @@ void task_limit_switch::run(void) {
 			rightLimitSwitch->put(rightLimit);
 		}
 		
-		
+		/*
 		if(runs%100==0) {
 			*p_serial << "Left" << leftLimitSwitch->get() << "\t";
 			*p_serial << "Right" << rightLimitSwitch->get() << endl;
@@ -83,6 +84,7 @@ void task_limit_switch::run(void) {
 			*p_serial << "limits: " << leftLimit << rightLimit << endl;
 			*p_serial << "rightLimit: " << rightLimit << endl;
 		}
+		*/
 		
 	
 		// Increment counter for debugging
