@@ -33,11 +33,11 @@
 #include "shares.h"                         // Global ('extern') queue declarations
 
 #include "task_user.h"                      // Header for user interface task
-#include "task_limit_switch.h"
-#include "task_pendulum_encoder.h"
-#include "task_motor_encoder.h"
-#include "task_system_controller.h"
-#include "task_motor_command.h"
+#include "task_limit_switch.h"				// Header for limit switches
+#include "task_pendulum_encoder.h"			// Header for pedulum encoder
+#include "task_motor_encoder.h"				// Header for Motor Controller
+#include "task_system_controller.h"			// Header for the system controller
+#include "task_motor_command.h"				// Header for the motor command
 
 volatile int counter;
 frt_text_queue print_ser_queue (32, NULL, 10);
