@@ -22,9 +22,9 @@
 
 #include "task_limit_switch.h"                  // Template
 
-task_limit_switch::task_switch (
+task_limit_switch::task_limit_switch (
 	const char* a_name,
-	unsigned portBASE_TYPE a_priority
+	unsigned portBASE_TYPE a_priority,
 	size_t a_stack_size,
 	emstream* p_ser_dev
 )

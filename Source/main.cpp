@@ -33,11 +33,11 @@
 #include "shares.h"                         // Global ('extern') queue declarations
 
 #include "task_user.h"                      // Header for user interface task
-#include "task_limit_switch.h"				// Header for limit switch handler
-#include "task_pendulum_encoder.h"			// Header for Pendulum encoder handler
-#include "task_motor_encoder.h"				// Header for Motor Encooder handler
-#include "task_system_controller.h"			// Header for system controler
-#include "task_motor_command.h"				// Header for Motor command test
+#include "task_limit_switch.h"
+#include "task_pendulum_encoder.h"
+#include "task_motor_encoder.h"
+#include "task_system_controller.h"
+#include "task_motor_command.h"
 
 volatile int counter;
 frt_text_queue print_ser_queue (32, NULL, 10);
@@ -99,6 +99,7 @@ int main (void)
 		OSC.CTRL |= (1 << OSC_RC32MEN_bp);
 		do {} while((OSC.STATUS & (1 << OSC_RC32MRDY_bp)) != (1 << OSC_RC32MRDY_bp));
 
+
 		// Select the clock
 		CCPWrite(&(CLK.CTRL),((CLK.CTRL & ~CLK_SCLKSEL_gm) | (1 << CLK_SCLKSEL0_bp)));
 		// Enable the RTC as an external oscillator
@@ -129,7 +130,7 @@ int main (void)
 	new task_limit_switch ("RightSwitch", task_priority (5), 260, &ser_dev);
 	new task_pendulum_encoder ("EncPen", task_priority (4), 260, &ser_dev);
 	new task_motor_encoder ("EncMtr", task_priority (3), 260, &ser_dev);
-	new task_control_calc ("CtrlCalc", task_priority (2), 260, &ser_dev);
+	new task_system_controller ("CtrlCalc", task_priority (2), 260, &ser_dev);
 	new task_motor_command ("MtrCmd", task_priority (1), 260, &ser_dev);
 
 	// Enable high level interrupts and global interrupts

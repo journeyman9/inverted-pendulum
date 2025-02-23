@@ -24,7 +24,7 @@
 
 task_skeleton::task_skeleton(
 	const char* a_name,
-	unsigned portBASE_TYPE a_priority
+	unsigned portBASE_TYPE a_priority,
 	size_t a_stack_size,
 	emstream* p_ser_dev
 )
