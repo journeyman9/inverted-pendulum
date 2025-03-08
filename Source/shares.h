@@ -49,10 +49,14 @@ extern shared_data<bool>* rightLimitSwitch;     // Right limit switch
 extern shared_data<int16_t>* pendulum_encoder;  // Pendulum encoder
 extern shared_data<int16_t>* linear_position;	// Linear position of cart
 extern shared_data<int16_t>* thMotor;			// Angular position of motor
-extern shared_data<int16_t>* thdMotor;			// Agular velocity of motor
+extern shared_data<int16_t>* thdMotor;			// Angular velocity of motor
 extern shared_data<int16_t>* linear_offset;     // Linear Offset for the carriage
 extern shared_data<int16_t>* motor_command;
 
+extern shared_data<bool>* begin; // case 0
+extern shared_data<bool>* go; // case 2;
+extern shared_data<bool>* stop; // case 3
+extern shared_data<bool>* reset; // reset to idle
 
 // Our attempt at a queue
 //extern frt_queue<bool>* leftLimitSwitch;

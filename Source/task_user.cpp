@@ -163,22 +163,22 @@ void task_user::run (void)
 							break;
 
 						case ('b'):
-							begin.put(true);
+							begin->put(true);
 							*p_serial << PMS ("Begin Homing") << endl;
 							break;
 						
 						case ('g'):
-							go.put(true);
+							go->put(true);
 							*p_serial << PMS ("Commence Balance") << endl;
 							break;
 						
 						case('d'):
-							stop.put(true);
+							stop->put(true);
 							*p_serial << PMS ("EMERGENCY STOP") << endl;
 							break;
 						
 						case('r'):
-							reset.put(true);
+							reset->put(true);
 							*p_serial << PMS ("Reset, try Homing again by pressing 'b'") << endl;
 							break;
 

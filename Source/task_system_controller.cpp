@@ -50,7 +50,7 @@ void task_system_controller::run(void) {
 					motor_command->put(5);
 
 					if (rightLimitSwitch->get()) {
-						linear_offset.put(linear_position->get());
+						linear_offset->put(linear_position->get());
 						transition_to(1);
 					}
 				}
@@ -66,20 +66,20 @@ void task_system_controller::run(void) {
 				}
 
 				if (reset->get() == 1) {
-					tranisition_to(0);
+					transition_to(0);
 				}
 			
 			// Delay
 			case(2):
 				delay_ms(500);
 				motor_command->put(0);
-				transitition_to();
+				transition_to(3);
 			
 			// Center cart
 			case(3):
 				position_set = left_home / 2;
 				position_error = position_set - linear_position->get();
-				motor_command->put(Kp * positiion_error / 256);
+				motor_command->put(Kp * position_error / 256);
 
 				if (reset->get() == 1) {
 					reset->put(0);
