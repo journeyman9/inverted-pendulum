@@ -162,6 +162,26 @@ void task_user::run (void)
 							transition_to (0);
 							break;
 
+						case ('b'):
+							begin.put(true);
+							*p_serial << PMS ("Begin Homing") << endl;
+							break;
+						
+						case ('g'):
+							go.put(true);
+							*p_serial << PMS ("Commence Balance") << endl;
+							break;
+						
+						case('d'):
+							stop.put(true);
+							*p_serial << PMS ("EMERGENCY STOP") << endl;
+							break;
+						
+						case('r'):
+							reset.put(true);
+							*p_serial << PMS ("Reset, try Homing again by pressing 'b'") << endl;
+							break;
+
 						// If the character isn't recognized, ask: What's That Function?
 						default:
 							p_serial->putchar (char_in);
@@ -211,6 +231,10 @@ void task_user::print_help_message (void)
 	*p_serial << PMS ("    v:   Version and setup information") << endl;
 	*p_serial << PMS ("    s:   Stack dump for tasks") << endl;
 	*p_serial << PMS ("    e:   Exit command mode") << endl;
+	*p_serial << PMS ("    b:   Begin Calibration") << endl;
+	*p_serial << PMS ("    g:   Start Balance!") << endl;
+	*p_serial << PMS ("    d:   Emergency Stop") << endl;
+	*p_serial << PMS ("    r:   Reset to Idle") << endl;
 	*p_serial << PMS ("    h:   HALP!") << endl;
 }
 

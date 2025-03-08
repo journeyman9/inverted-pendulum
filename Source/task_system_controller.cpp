@@ -40,7 +40,57 @@ void task_system_controller::run(void) {
 	
 		
 	while(1) {
-		
+		switch (state) {
+			// Home right
+			case(0): 
+				linear_offset->put(0);
+				if (begin->get()) {
+					reset->put(0);
+					stop->put(0);
+					motor_command->put(5);
+
+					if (rightLimitSwitch->get()) {
+						linear_offset.put(linear_position->get());
+						transition_to(1);
+					}
+				}
+
+			// Home left
+			case(1):
+				begin->put(0);
+				motor_command->put(-5);
+
+				if (leftLimitSwitch->get()) {
+					left_home = linear_position->get();
+					transition_to(2);
+				}
+
+				if (reset->get() == 1) {
+					tranisition_to(0);
+				}
+			
+			// Delay
+			case(2):
+				delay_ms(500);
+				motor_command->put(0);
+				transitition_to();
+			
+			// Center cart
+			case(3):
+				position_set = left_home / 2;
+				position_error = position_set - linear_position->get();
+				motor_command->put(Kp * positiion_error / 256);
+
+				if (reset->get() == 1) {
+					reset->put(0);
+					transition_to(0);
+				}
+
+				if (go->get() == 1) {
+					transition_to(4);
+				}
+
+		}	
 		/*
 		if (runs % 100 == 0) {
 			*p_serial << "Scary, scary skeletons!" << endl;

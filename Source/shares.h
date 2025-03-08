@@ -47,6 +47,7 @@ extern shared_data<bool>* leftLimitSwitch;
 extern shared_data<bool>* rightLimitSwitch;
 
 extern shared_data<int16_t>* pendulum_encoder; 
+extern shared_data<int16_t>* motor_command;
 
 
 // Our attempt at a queue 

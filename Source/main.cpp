@@ -46,6 +46,7 @@ shared_data<bool>* leftLimitSwitch;
 shared_data<bool>* rightLimitSwitch;
 
 shared_data<int16_t>* pendulum_encoder; 
+shared_data<int16_t>* motor_command;
 
 /*! \brief CCP write helper function written in assembly.
  *
@@ -122,12 +123,16 @@ int main (void)
 	wdt_disable ();
 
 
-	/*
 	// Initialize queue of communication between tasks
-	leftLimitSwitch = new frt_queue<bool> (31, NULL, 0);
-	rightLimitSwitch = new frt_queue<bool> (31, NULL, 0);
-	pendulum_encoder= new frt_queue<int16_t> (1, NULL, 0);
-	*/
+	//leftLimitSwitch = new frt_queue<bool> (31, NULL, 0);
+	//rightLimitSwitch = new frt_queue<bool> (31, NULL, 0);
+	//pendulum_encoder= new frt_queue<int16_t> (1, NULL, 0);
+	
+	leftlimitswitch = new shared_data<bool>;
+	rightlimitswitch = new shared_data<bool>;
+
+	pendulum_encoder = new shared_data<int16_t>; 
+	motor_command = new shared_data<int16_t>;
 
 	// Configure a serial port which can be used by a task to print debugging infor-
 	// mation, or to allow user interaction, or for whatever use is appropriate.  The
