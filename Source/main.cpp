@@ -42,13 +42,13 @@
 volatile int counter;
 frt_text_queue print_ser_queue (32, NULL, 10);
 
-leftLimitSwtich = new shared_data<bool>;		// Left limit switch
-rightLimitSwitch = new shared_data<bool>;		// Right limit switchs
-linear_position = new shared_data<int16_t>;		// Linear position of cart
-thMotor = new shared_data<int16_t>;				// Angular position of motor
-thdMotor = new shared_data<int16_t>;			// Angular velocity of motor
-pendulum_encoder = new shared_data<int16_t>;	// Pendulum Encoder values
-linear_offset = new shared_data<int16_t>;      	// Linear Offset for the carriage
+shared_data<bool>* leftLimitSwitch;			// Left limit switch
+shared_data<bool>* rightLimitSwitch;		// Right limit switchs
+shared_data<int16_t>* linear_position;		// Linear position of cart
+shared_data<int16_t>* thMotor;				// Angular position of motor
+shared_data<int16_t>* thdMotor;				// Agular velocity of motor
+shared_data<int16_t>* pendulum_encoder;		// Pendulum Encoder
+shared_data<int16_t>* linear_offset;      	// Linear Offset for the carriage
 
 /*! \brief CCP write helper function written in assembly.
  *
@@ -100,8 +100,6 @@ int main (void)
 	//PORTD.DIRSET = PIN6_bm;
 	//PORTD.OUTSET = PIN6_bm;
 
-
-
 	cli();
 	// Configure the system clock
 	{
@@ -124,13 +122,14 @@ int main (void)
 	// sometimes the watchdog timer may have been left on...and it tends to stay on
 	wdt_disable ();
 
-
-	/*
-	// Initialize queue of communication between tasks
-	leftLimitSwitch = new frt_queue<bool> (31, NULL, 0);
-	rightLimitSwitch = new frt_queue<bool> (31, NULL, 0);
-	pendulum_encoder= new frt_queue<int16_t> (1, NULL, 0);
-	*/
+	// Define shared variables and put it adress into the pointer
+	leftLimitSwtich = new shared_data<bool>;		// Left limit switch
+	rightLimitSwitch = new shared_data<bool>;		// Right limit switchs
+	linear_position = new shared_data<int16_t>;		// Linear position of cart
+	thMotor = new shared_data<int16_t>;				// Angular position of motor
+	thdMotor = new shared_data<int16_t>;			// Angular velocity of motor
+	pendulum_encoder = new shared_data<int16_t>;	// Pendulum Encoder values
+	linear_offset = new shared_data<int16_t>;      	// Linear Offset for the carriage
 
 	// Configure a serial port which can be used by a task to print debugging infor-
 	// mation, or to allow user interaction, or for whatever use is appropriate.  The
