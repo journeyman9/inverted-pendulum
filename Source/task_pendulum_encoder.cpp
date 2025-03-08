@@ -55,7 +55,7 @@ void task_pendulum_encoder::run(void) {
 
 		count = TCC1.CNT; 				// Read value from hardware
 
-		pendulum_encoder->put(count);  // store value
+		pendulum_encoder.put(count);  // store value
 
 		// Convert to degrees (maybe) TODO: need to figure out what mult to use
 		//int16_t theta_pendulum = count * ()
