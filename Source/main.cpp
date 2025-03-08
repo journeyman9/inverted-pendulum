@@ -47,8 +47,8 @@ shared_data<bool>* rightLimitSwitch;		// Right limit switchs
 shared_data<int16_t>* linear_position;		// Linear position of cart
 shared_data<int16_t>* thMotor;				// Angular position of motor
 shared_data<int16_t>* thdMotor;				// Agular velocity of motor
-shared_data<int16_t>* linear_offset;      	// Linear Offset for the carriage
 shared_data<int16_t>* pendulum_encoder;
+shared_data<int16_t>* linear_offset;      	// Linear Offset for the carriage
 
 /*! \brief CCP write helper function written in assembly.
  *
