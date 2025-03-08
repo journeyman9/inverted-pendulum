@@ -289,7 +289,7 @@ Disassembly of section .text:
      39d:	54 69 6d 65 3a 20 00                                Time: .
 
 000003a4 <_ZZN9task_user11show_statusEvE3__c_0>:
-     3a4:	46 65 62 20 32 33 20 32 30 32 35 00                 Feb 23 2025.
+     3a4:	4d 61 72 20 20 38 20 32 30 32 35 00                 Mar  8 2025.
 
 000003b0 <_ZZN9task_user11show_statusEvE3__c>:
      3b0:	4d 45 34 30 35 20 62 61 73 65 20 72 61 64 69 6f     ME405 base radio
@@ -2066,8 +2066,8 @@ Disassembly of section .text:
     13c2:	f8 e0       	ldi	r31, 0x08	; 8
     13c4:	8a e6       	ldi	r24, 0x6A	; 106
     13c6:	83 83       	std	Z+3, r24	; 0x03
-    13c8:	80 ea       	ldi	r24, 0xA0	; 160
-    13ca:	95 e0       	ldi	r25, 0x05	; 5
+    13c8:	8d ec       	ldi	r24, 0xCD	; 205
+    13ca:	97 e0       	ldi	r25, 0x07	; 7
     13cc:	86 a3       	std	Z+38, r24	; 0x26
     13ce:	97 a3       	std	Z+39, r25	; 0x27
     13d0:	81 e0       	ldi	r24, 0x01	; 1
