@@ -43,12 +43,16 @@
 extern frt_text_queue print_ser_queue;			// This queue allows tasks to send characters to the user interface task for display.
 
 // Saved here for example if we need to go back to shared variables
-//extern shared_data<bool>* leftLimitSwitch;
-//extern shared_data<bool>* rightLimitSwitch;
+extern shared_data<bool>* leftLimitSwitch;
+extern shared_data<bool>* rightLimitSwitch;
 
-extern frt_queue<bool>* leftLimitSwitch;
-extern frt_queue<bool>* rightLimitSwitch;
+extern shared_data<int16_t>* pendulum_encoder; 
 
-extern frt_queue<int16_t>* pendulum_encoder; // Value of the pendule encoder
+
+// Our attempt at a queue 
+//extern frt_queue<bool>* leftLimitSwitch;
+//extern frt_queue<bool>* rightLimitSwitch;
+
+//extern frt_queue<int16_t>* pendulum_encoder; // Value of the pendule encoder
 
 #endif // _SHARES_H_
