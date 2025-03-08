@@ -42,15 +42,19 @@
  */
 extern frt_text_queue print_ser_queue;			// This queue allows tasks to send characters to the user interface task for display.
 
-// Saved here for example if we need to go back to shared variables
-extern shared_data<bool>* leftLimitSwitch;
-extern shared_data<bool>* rightLimitSwitch;
+// Share Variables
+extern shared_data<bool>* leftLimitSwitch;      // Left limit swtich
+extern shared_data<bool>* rightLimitSwitch;     // Right limit switch
 
-extern shared_data<int16_t>* pendulum_encoder; 
+extern shared_data<int16_t>* pendulum_encoder;  // Pendulum encoder
+extern shared_data<int16_t>* linear_position;	// Linear position of cart
+extern shared_data<int16_t>* thMotor;			// Angular position of motor
+extern shared_data<int16_t>* thdMotor;			// Agular velocity of motor
+extern shared_data<int16_t>* linear_offset;     // Linear Offset for the carriage
 extern shared_data<int16_t>* motor_command;
 
 
-// Our attempt at a queue 
+// Our attempt at a queue
 //extern frt_queue<bool>* leftLimitSwitch;
 //extern frt_queue<bool>* rightLimitSwitch;
 

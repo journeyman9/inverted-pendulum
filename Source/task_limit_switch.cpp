@@ -42,7 +42,7 @@ void task_limit_switch::run(void) {
 
 	PORTD.DIR |= bit_mask;
 	PORTD.OUT |= bit_mask;
-	
+
 	if (bit_mask == PIN0_bm) {
 		PORTD.PIN0CTRL = PORT_OPC_PULLUP_gc;
 	}
@@ -75,7 +75,7 @@ void task_limit_switch::run(void) {
 			rightLimit = false;
 			rightLimitSwitch->put(rightLimit);
 		}
-		
+
 		/*
 		if(runs%100==0) {
 			*p_serial << "Left" << leftLimitSwitch->get() << "\t";
@@ -85,7 +85,7 @@ void task_limit_switch::run(void) {
 			*p_serial << "rightLimit: " << rightLimit << endl;
 		}
 		*/
-		
+
 		// Increment counter for debugging
 		runs++;
 
