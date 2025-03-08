@@ -45,7 +45,7 @@ frt_text_queue print_ser_queue (32, NULL, 10);
 shared_data<bool>* leftLimitSwitch;
 shared_data<bool>* rightLimitSwitch;
 
-shared_data<int16_t>* pendulum_encoder; 
+shared_data<int16_t>* pendulum_encoder;
 
 /*! \brief CCP write helper function written in assembly.
  *
