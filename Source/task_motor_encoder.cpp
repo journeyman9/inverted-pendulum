@@ -53,7 +53,7 @@ void task_motor_encoder::run(void) {
 	uint8_t dt = 1;															// 1 ms
 	int16_t angularVelocity;
 	int16_t x;
-	linear_offset->put(0);
+	linear_offset.put(0);
 
 
 	while(1) {
@@ -62,9 +62,9 @@ void task_motor_encoder::run(void) {
 
 		// Convert to linear position
 		//x = ( (int32_t) encoder_count*3)/100 - linear_offset->get();	// PPMM = (4*1000)/(pi*38)
-		x = (encoder_count*6)/100 - linear_offset->get();
+		x = (encoder_count*6)/100 - linear_offset.get();
 		linear_position->put(x);
-	
+
 		// Angular velocity calculation
 		int16_t ticks_per_ms = (encoder_count - last_encoder_count); // current angular velocity [ticks/ms]
 		thdMotor->put(ticks_per_ms);
@@ -80,7 +80,7 @@ void task_motor_encoder::run(void) {
 			//*p_serial<< "linear offset: " << linear_offset << " [mm]" << endl;
 			//*p_serial << "angularVelocity: " << angularVelocity << " [RPM]" << endl;
 		}
-		
+
 		last_encoder_count = encoder_count;							// make present encoder_count the previous for the next calculation
 
 		// Increment counter for debugging
