@@ -42,13 +42,13 @@
 volatile int counter;
 frt_text_queue print_ser_queue (32, NULL, 10);
 
-leftLimitSwtich = new shared_data<bool> leftLimitSwitch;		// Left limit switch
-rightLimitSwitch = new shared_data<bool> rightLimitSwitch;		// Right limit switchs
-linear_position = new shared_data<int16_t> linear_position;		// Linear position of cart
-thMotor = new shared_data<int16_t> thMotor;						// Angular position of motor
-thdMotor = new shared_data<int16_t> thdMotor;					// Agular velocity of motor
-pendulum_encoder = new shared_data<int16_t> pendulum_encoder;
-linear_offset = new shared_data<int16_t> linear_offset;      	// Linear Offset for the carriage
+leftLimitSwtich = new shared_data<bool>;		// Left limit switch
+rightLimitSwitch = new shared_data<bool>;		// Right limit switchs
+linear_position = new shared_data<int16_t>;		// Linear position of cart
+thMotor = new shared_data<int16_t>;				// Angular position of motor
+thdMotor = new shared_data<int16_t>;			// Angular velocity of motor
+pendulum_encoder = new shared_data<int16_t>;	// Pendulum Encoder values
+linear_offset = new shared_data<int16_t>;      	// Linear Offset for the carriage
 
 /*! \brief CCP write helper function written in assembly.
  *

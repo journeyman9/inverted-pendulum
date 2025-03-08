@@ -53,7 +53,7 @@ void task_motor_encoder::run(void) {
 	uint8_t dt = 1;															// 1 ms
 	int16_t angularVelocity;
 	int16_t x;
-	linear_offset.put(0);
+	linear_offset->put(0);
 
 
 	while(1) {
