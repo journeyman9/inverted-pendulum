@@ -123,7 +123,7 @@ int main (void)
 	wdt_disable ();
 
 	// Define shared variables and put it adress into the pointer
-	leftLimitSwtich = new shared_data<bool>;		// Left limit switch
+	leftLimitSwitch = new shared_data<bool>;		// Left limit switch
 	rightLimitSwitch = new shared_data<bool>;		// Right limit switchs
 	linear_position = new shared_data<int16_t>;		// Linear position of cart
 	thMotor = new shared_data<int16_t>;				// Angular position of motor
