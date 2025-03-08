@@ -71,6 +71,7 @@ void task_motor_encoder::run(void) {
 
 		angularVelocity = ((int32_t) (encoder_count-last_encoder_count)*15)/dt;	// d_ec*60/(4*1000)/dt where dt is in ms so * 1000
 
+		/*
 		if(runs%100==0)
 		{
 			*p_serial << "Encoder Pulses: " << encoder_count << endl;
@@ -80,6 +81,7 @@ void task_motor_encoder::run(void) {
 			//*p_serial<< "linear offset: " << linear_offset << " [mm]" << endl;
 			//*p_serial << "angularVelocity: " << angularVelocity << " [RPM]" << endl;
 		}
+		*/
 
 		last_encoder_count = encoder_count;							// make present encoder_count the previous for the next calculation
 
