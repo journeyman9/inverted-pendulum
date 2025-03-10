@@ -40,13 +40,106 @@ void task_system_controller::run(void) {
 	
 		
 	while(1) {
+		switch (state) {
+			// Home right
+			case(0): 
+				linear_offset->put(0);
+				if (begin->get()) {
+					reset->put(0);
+					stop->put(0);
+					motor_command->put(220);
+
+					if (rightLimitSwitch->get()) {
+						linear_offset->put(linear_position->get());
+						transition_to(1);
+					}
+				}
+				break;
+
+			// Home left
+			case(1):
+				begin->put(0);
+				motor_command->put(-220);
+
+				if (leftLimitSwitch->get()) {
+					left_home = linear_position->get();
+					transition_to(2);
+				}
+
+				if (reset->get() == 1) {
+					transition_to(0);
+				}
+				break;
+			
+			// Move away from limit switch and delay
+			case(2): 
+				motor_command->put(0);
+				delay_ms(200);
+				if (leftLimitSwitch->get()){
+					motor_command->put(220);
+				}
+				else {
+				transition_to(3);
+				}
+
+				break;
+			
+			// Center cart
+			case(3):
+				// Aim for the middle of the carriage
+				position_set = left_home / 2;
+				position_error = position_set - linear_position->get();
+				
+				// P controller to get to middle position
+				motor_command->put(Kp * position_error);
+				
+				// Pring out all of our linear control 
+				/*
+				if (runs%100 == 0){
+					*p_serial << "position_set: " << position_set << endl;
+					*p_serial << "linear Position: " << linear_position->get() << endl;
+					*p_serial << "motor_command: " << motor_command->get() << endl;
+				}
+				*/
+				
+				// Transition to error if limit switches are hit
+				if (leftLimitSwitch->get() || rightLimitSwitch->get()) {
+					*p_serial << "LIMIT SWITCH HIT ERROR" << endl;
+					transition_to(100);
+				}
+
+				if (reset->get() == 1) {
+					reset->put(0);
+					transition_to(0);
+				}
+
+				if (go->get() == 1) {
+					transition_to(4);
+				}
+				break;
+				
+			case(100):
+				motor_command->put(0);
+				
+				/*
+				if (runs%100 == 0) {
+					*p_serial << "Error State" << endl;
+				}
+				*/
+				
+				if (reset->get()){
+					reset->put(0);
+					transition_to(0);
+				}
+			
+				break;
+		}	
 		
 		/*
 		if (runs % 100 == 0) {
-			*p_serial << "Scary, scary skeletons!" << endl;
+			*p_serial << "b: " << begin->get() << endl;
 		}
 		*/
-
 		
 		// Increment counter for debugging
 		runs++;

@@ -62,7 +62,7 @@ void task_motor_encoder::run(void) {
 
 		// Convert to linear position
 		//x = ( (int32_t) encoder_count*3)/100 - linear_offset->get();	// PPMM = (4*1000)/(pi*38)
-		x = (encoder_count*6)/100 - linear_offset->get();
+		x = ((int32_t) encoder_count*6)/100 - linear_offset->get();
 		linear_position->put(x);
 
 		// Angular velocity calculation
