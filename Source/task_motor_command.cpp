@@ -43,34 +43,30 @@ void task_motor_command::run(void) {
 	TCC0.CTRLA = TC0_CLKSEL0_bm; // Configures Clock select bits prescaler to 1
 	TCC0.CTRLB = TC0_WGMODE0_bm | TC0_WGMODE1_bm; // Configures waveform generation mode to single slope PWM
 
-	TCC0.PER = 0x640; // Set period to 320 counts for a PWM frequency 20kHz with 20% duty cycle 32MHz / (1 * 1600) = 20kHz
+	TCC0.PER = 1600; // Set period to 320 counts for a PWM frequency 20kHz with 20% duty cycle 32MHz / (1 * 1600) = 20kHz
 	TCC0.CCA = 0; // Ensure channel A is off when enabled
 	TCC0.CCB = 0; // Ensure channel B is off when enabled
 	TCC0.CTRLB |= TC0_CCAEN_bm | TC0_CCBEN_bm; // Enable output compare on channels A and B
-
-	output = 0;
 	
 	while(1) {
-
+		
 		output = motor_command->get();
+		
 		// PWM function to command motor
-		if (output >= 0)
-		{
+		if (output >= 0) {
 			TCC0.CCA = output;
 			TCC0.CCB = 0;
 		}
-		else if (output < 0)
-		{
+		else if (output < 0) {
 			TCC0.CCA = 0;
 			TCC0.CCB = -output;
 		}
 		
 		/*
 		if (runs % 100 == 0) {
-			*p_serial << "Scary, scary skeletons!" << endl;
+			*p_serial << "output" << output << endl;
 		}
 		*/
-
 		
 		// Increment counter for debugging
 		runs++;
