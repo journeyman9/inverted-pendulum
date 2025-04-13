@@ -31,7 +31,9 @@ class task_system_controller : public frt_task{
 		int16_t left_home;
 		int16_t position_set;
 		int16_t position_error;
+		int16_t integrated_error;
 		int16_t Kp = 3;
+		int16_t Ki = 1; 
 	
 	};
 	
