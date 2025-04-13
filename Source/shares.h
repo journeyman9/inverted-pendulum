@@ -48,11 +48,11 @@ extern shared_data<bool>* rightLimitSwitch;         // Right limit switch
 
 extern shared_data<int16_t>* pendulum_encoder;      // Pendulum encoder
 extern shared_data<float>* pendulum_encoder_radians;// Pendulum encoder in radians
-extern shared_data<int16_t>* linear_position;	    // Linear position of cart in meters
-extern shared_data<int16_t>* linear_velocity;	    // Linear position of cart in meters per sec
+extern shared_data<float>* linear_position;	    // Linear position of cart in meters
+extern shared_data<float>* linear_velocity;	    // Linear position of cart in meters per sec
 extern shared_data<int16_t>* thMotor;			    // Angular position of motor
 extern shared_data<int16_t>* thdMotor;			    // Angular velocity of motor
-extern shared_data<int16_t>* linear_offset;         // Linear Offset for the carriage
+extern shared_data<float>* linear_offset;         // Linear Offset for the carriage
 extern shared_data<int16_t>* motor_command;
 
 extern shared_data<bool>* begin; // case 0

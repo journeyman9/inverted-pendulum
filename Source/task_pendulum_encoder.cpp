@@ -57,7 +57,7 @@ void task_pendulum_encoder::run(void) {
 		count = TCC1.CNT; 									// Read value from hardware
 
 		pendulum_encoder->put(count);  						// store value
-		pendulum_encoder_radians->put(count/1997*6.2831); 	// Convert to radians
+		pendulum_encoder_radians->put((count*6.2831)/1997); 	// Convert to radians
 
 		// Convert to degrees (maybe) TODO: need to figure out what mult to use
 		//int16_t theta_pendulum = count * ()
@@ -67,7 +67,7 @@ void task_pendulum_encoder::run(void) {
 		/*
 		if(runs%100==0){
 			*p_serial << "Pendulum Ticks Counts: " << count << endl;
-			*p_serial << "Pendulum Ticks Radians: " << count/1997 *6.2831 << endl; 
+			*p_serial << "Pendulum Ticks Radians: " << pendulum_encoder_radians->get() << endl; 
 		}
 		*/
 
