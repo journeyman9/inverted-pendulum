@@ -92,7 +92,7 @@ void task_system_controller::run(void) {
 				integrated_error = integrated_error + position_error; 
 				
 				// P controller to get to middle position
-				motor_command->put(Kp * position_error + ((Ki * integrated_error)/100);
+				motor_command->put(Kp * position_error + ((Ki * integrated_error)/100));
 				
 				
 				// Pring out all of our linear control 
