@@ -21,6 +21,7 @@
 #include "shared_data_receiver.h"
 
 #include "task_system_controller.h"                  // Template
+#include "lqr.h"
 
 task_system_controller::task_system_controller(
 	const char* a_name,
@@ -116,6 +117,34 @@ void task_system_controller::run(void) {
 				if (go->get() == 1) {
 					transition_to(4);
 				}
+				break;
+			
+			// Balance
+			case(4):
+				angle_set = pendulum_encoder->get();
+				go->put(0);
+
+				Lqr controller;
+				
+				float e[4] = {
+					linear_position->get() - position_set,	
+					linear_velocity->get() - 0,
+					pendulum_encoder_radians->get() - angle_set,
+					pendulum_encoder_w_radians->get() - 0,
+				}
+
+				motor_command->put(controller.calculate_action(e));
+				
+				if (leftLimitSwitch->get() || rightLimitSwitch->get()) {
+					*p_serial << "LIMIT SWITCH HIT ERROR" << endl;
+					transition_to(100);
+				}
+
+				if (reset->get() == 1) {
+					reset->put(0);
+					transition_to(0);
+				}
+
 				break;
 				
 			case(100):

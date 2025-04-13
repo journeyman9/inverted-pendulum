@@ -2,10 +2,10 @@
 #include <avr/io.h>                         // Port I/O for SFR's
 #include <vector>
 
-class lqr {
+class Lqr {
 public:
-    lqr();
-    ~lqr();
+    Lqr();
+    ~Lqr();
 
     void lqr_set_value();
     int16_t lqr_get_value();
