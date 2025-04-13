@@ -8,6 +8,12 @@ lqr::lqr() {
 lqr::~lqr() {
 }
 
+float lqr::calculate_action(float[4] e) {
+	// Calculate the control action using the LQR controller
+	u = K[0] * e[0] + K[1] * e[1] + K[2] * e[2] + K[3] * e[3];
+	return u;
+}
+
 void lqr::lqr_set_value() {
 }
 
