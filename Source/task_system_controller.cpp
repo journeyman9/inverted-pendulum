@@ -89,9 +89,11 @@ void task_system_controller::run(void) {
 				// Aim for the middle of the carriage
 				position_set = left_home / 2;
 				position_error = position_set - linear_position->get();
+				integrated_error = integrated_error + position_error; 
 				
 				// P controller to get to middle position
-				motor_command->put(Kp * position_error);
+				motor_command->put(Kp * position_error + ((Ki * integrated_error)/100));
+				
 				
 				// Pring out all of our linear control 
 				/*
