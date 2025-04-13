@@ -42,13 +42,15 @@
 volatile int counter;
 frt_text_queue print_ser_queue (32, NULL, 10);
 
-shared_data<bool>* leftLimitSwitch;			// Left limit switch
-shared_data<bool>* rightLimitSwitch;		// Right limit switch
-shared_data<int16_t>* linear_position;		// Linear position of cart
-shared_data<int16_t>* thMotor;				// Angular position of motor
-shared_data<int16_t>* thdMotor;				// Angular velocity of motor
-shared_data<int16_t>* pendulum_encoder;		// Pendulum Encoder
-shared_data<int16_t>* linear_offset;      	// Linear Offset for the carriage
+shared_data<bool>* leftLimitSwitch;				// Left limit switch
+shared_data<bool>* rightLimitSwitch;			// Right limit switch
+shared_data<float>* linear_position;			// Linear position of cart in meters
+shared_data<float>* linear_veloctiy;			// Linear velocity of the cart in meters/sec
+shared_data<int16_t>* thMotor;					// Angular position of motor
+shared_data<int16_t>* thdMotor;					// Angular velocity of motor
+shared_data<int16_t>* pendulum_encoder;			// Pendulum Encoder
+shared_data<float>* pendulum_encoder_radians;	// Pendulum Encoder Radians
+shared_data<float>* linear_offset;      		// Linear Offset for the carriage in meters
 shared_data<int16_t>* motor_command;
 
 shared_data<bool>* begin; // case 0
@@ -135,13 +137,15 @@ int main (void)
 	//pendulum_encoder= new frt_queue<int16_t> (1, NULL, 0);
 	
 	// Define shared variables and put it address into the pointer
-	leftLimitSwitch = new shared_data<bool>;		// Left limit switch
-	rightLimitSwitch = new shared_data<bool>;		// Right limit switch
-	linear_position = new shared_data<int16_t>;		// Linear position of cart
-	thMotor = new shared_data<int16_t>;				// Angular position of motor
-	thdMotor = new shared_data<int16_t>;			// Angular velocity of motor
-	pendulum_encoder = new shared_data<int16_t>;	// Pendulum Encoder values
-	linear_offset = new shared_data<int16_t>;      	// Linear Offset for the carriage
+	leftLimitSwitch = new shared_data<bool>;			// Left limit switch
+	rightLimitSwitch = new shared_data<bool>;			// Right limit switch
+	linear_position = new shared_data<float>;			// Linear position of cart
+	linear_position = new shared_data<float>;	   		// Linear position of cart in meters
+	thMotor = new shared_data<int16_t>;					// Angular position of motor
+	thdMotor = new shared_data<int16_t>;				// Angular velocity of motor
+	pendulum_encoder = new shared_data<int16_t>;		// Pendulum Encoder values
+	pendulum_encoder_radians = new shared_data<float>;  // Pendulum Encoder in radians
+	linear_offset = new shared_data<float>;      		// Linear Offset for the carriage
 	motor_command = new shared_data<int16_t>;
 	begin = new shared_data<bool>;
 	go = new shared_data<bool>;

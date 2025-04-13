@@ -53,6 +53,7 @@ void task_motor_encoder::run(void) {
 	uint8_t dt = 1;															// 1 ms
 	int16_t angularVelocity;
 	int16_t x;
+	int16_t previous_x;
 	linear_offset->put(0);
 
 
@@ -60,10 +61,12 @@ void task_motor_encoder::run(void) {
 
 		encoder_count = TCD0.CNT; 									// Get count
 
-		// Convert to linear position
+		// Convert to linear position in meters
 		//x = ( (int32_t) encoder_count*3)/100 - linear_offset->get();	// PPMM = (4*1000)/(pi*38)
-		x = ((int32_t) encoder_count*6)/100 - linear_offset->get();
+		x = (((int32_t) encoder_count*6)/100 - linear_offset->get())/1000;
 		linear_position->put(x);
+
+
 
 		// Angular velocity calculation
 		int16_t ticks_per_ms = (encoder_count - last_encoder_count); // current angular velocity [ticks/ms]
