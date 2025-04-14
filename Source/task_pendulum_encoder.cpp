@@ -49,7 +49,9 @@ void task_pendulum_encoder::run(void) {
 	TCC1.CTRLA = TC_CLKSEL_DIV1_gc;								// start TCC1 with prescaler = 1
 
 	int16_t count;
-	int16_t previous_pendulum_encoder; 
+	float previous_rads;
+	uint8_t dt = 1;
+	float current_rads;
 
 
 	while(1) {
@@ -57,7 +59,11 @@ void task_pendulum_encoder::run(void) {
 		count = TCC1.CNT; 									// Read value from hardware
 
 		pendulum_encoder->put(count);  						// store value
-		pendulum_encoder_radians->put((count*6.2831)/1997); 	// Convert to radians
+		
+		current_rads = (count*6.2831)/1997;
+		pendulum_encoder_radians->put(current_rads); 	// Convert to radians
+		
+		pendulum_encoder_w_radians->put(current_rads - previous_rads);
 
 		// Convert to degrees (maybe) TODO: need to figure out what mult to use
 		//int16_t theta_pendulum = count * ()
@@ -70,7 +76,9 @@ void task_pendulum_encoder::run(void) {
 			*p_serial << "Pendulum Ticks Radians: " << pendulum_encoder_radians->get() << endl; 
 		}
 		*/
-
+		
+		previous_rads = current_rads;
+		
 		// Increment counter for debugging
 		runs++;
 
