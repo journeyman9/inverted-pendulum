@@ -28,12 +28,14 @@ class task_system_controller : public frt_task{
 		// This gets called by the RTOS once to start this task's state loop
 		void run(void);
 		
-		int16_t left_home;
-		int16_t position_set;
-		int16_t position_error;
-		int16_t integrated_error;
-		int16_t Kp = 3;
-		int16_t Ki = 1; 
+		float left_home;
+		float position_set;
+		float position_error;
+		float integrated_error;
+		float Kp = 2200;
+		float Ki = 5;
+		float angle_set; 
+		float error[4] = {0, 0, 0, 0};
 	
 	};
 	
