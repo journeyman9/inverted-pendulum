@@ -21,6 +21,7 @@
 #include "shared_data_receiver.h"
 
 #include "task_system_controller.h"                  // Template
+#include "lqr.h"
 
 task_system_controller::task_system_controller(
 	const char* a_name,
@@ -37,6 +38,8 @@ task_system_controller::task_system_controller(
 void task_system_controller::run(void) {
 	// Make a variable which will hold times to use for precise task scheduling
 	portTickType previousTicks = xTaskGetTickCount ();
+	
+	Lqr controller;
 	
 		
 	while(1) {
@@ -79,7 +82,7 @@ void task_system_controller::run(void) {
 					motor_command->put(220);
 				}
 				else {
-				transition_to(3);
+					transition_to(3);
 				}
 
 				break;
@@ -87,15 +90,21 @@ void task_system_controller::run(void) {
 			// Center cart
 			case(3):
 				// Aim for the middle of the carriage
-				position_set = left_home / 2;
+				position_set = left_home / 2.0;
 				position_error = position_set - linear_position->get();
 				integrated_error = integrated_error + position_error; 
 				
 				// P controller to get to middle position
-				motor_command->put(Kp * position_error + ((Ki * integrated_error)/100));
+
+				motor_command->put((int16_t)(Kp * position_error + ((Ki * integrated_error))));
 				
+				/*
+				if (runs%100 == 0) {
+					*p_serial << "motor command: " << motor_command->get() << endl;
+				}
+				*/
 				
-				// Pring out all of our linear control 
+				// Print out all of our linear control 
 				/*
 				if (runs%100 == 0){
 					*p_serial << "position_set: " << position_set << endl;
@@ -112,11 +121,36 @@ void task_system_controller::run(void) {
 
 				if (reset->get() == 1) {
 					reset->put(0);
+					stop->put(0);
 					transition_to(0);
 				}
 
 				if (go->get() == 1) {
 					transition_to(4);
+				}
+				break;
+			
+			// Balance
+			case(4):
+				angle_set = pendulum_encoder->get();
+				go->put(0);
+			
+				error[0] = linear_position->get() - position_set;
+				error[1] = linear_velocity->get() - 0;
+				error[2] = pendulum_encoder_radians->get() - angle_set;
+				error[3] = pendulum_encoder_w_radians->get() - 0;
+
+				motor_command->put(controller.calculate_action(error));
+			
+				if (leftLimitSwitch->get() || rightLimitSwitch->get()) {
+					*p_serial << "LIMIT SWITCH HIT ERROR" << endl;
+					transition_to(100);
+				}
+
+				if (reset->get() == 1) {
+					reset->put(0);
+					stop->put(0);
+					transition_to(0);
 				}
 				break;
 				
@@ -131,10 +165,12 @@ void task_system_controller::run(void) {
 				
 				if (reset->get()){
 					reset->put(0);
+					stop->put(0);
 					transition_to(0);
 				}
 			
 				break;
+				
 		}	
 		
 		/*

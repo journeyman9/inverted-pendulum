@@ -52,7 +52,8 @@ void task_motor_encoder::run(void) {
 	int16_t last_encoder_count;
 	uint8_t dt = 1;															// 1 ms
 	int16_t angularVelocity;
-	int16_t x;
+	float x;
+	float previous_x = 0;
 	linear_offset->put(0);
 
 
@@ -60,31 +61,36 @@ void task_motor_encoder::run(void) {
 
 		encoder_count = TCD0.CNT; 									// Get count
 
-		// Convert to linear position
+		// Convert to linear position in meters
 		//x = ( (int32_t) encoder_count*3)/100 - linear_offset->get();	// PPMM = (4*1000)/(pi*38)
-		x = ((int32_t) encoder_count*6)/100 - linear_offset->get();
+		x = ((float) encoder_count)*(6/100.0)*(1/1000.0) - linear_offset->get();  // dived by 1000 for meters
 		linear_position->put(x);
+
+
 
 		// Angular velocity calculation
 		int16_t ticks_per_ms = (encoder_count - last_encoder_count); // current angular velocity [ticks/ms]
-		thdMotor->put(ticks_per_ms);
-
-		angularVelocity = ((int32_t) (encoder_count-last_encoder_count)*15)/dt;	// d_ec*60/(4*1000)/dt where dt is in ms so * 1000
-
+		//thdMotor->put(ticks_per_ms);
+		
+		linear_velocity->put((x - previous_x)/dt);
+		//angularVelocity = ((int32_t) (encoder_count-last_encoder_count)*15)/dt;	// d_ec*60/(4*1000)/dt where dt is in ms so * 1000
+		
 		/*
 		if(runs%100==0)
 		{
 			*p_serial << "Encoder Pulses: " << encoder_count << endl;
-			*p_serial << "linearPosition: " << x << " [mm]" << endl;			// x position in mm
+			*p_serial << "linearPosition: " << x << " [m]" << endl;			// x position in mm
 			//*p_serial << "Ticks_per_ms: " << ticks_per_ms << endl;
 			//*p_serial << ticks_per_ms << endl;
 			//*p_serial<< "linear offset: " << linear_offset << " [mm]" << endl;
 			//*p_serial << "angularVelocity: " << angularVelocity << " [RPM]" << endl;
 		}
 		*/
+		
 
 		last_encoder_count = encoder_count;							// make present encoder_count the previous for the next calculation
-
+		previous_x = x;
+		
 		// Increment counter for debugging
 		runs++;
 
