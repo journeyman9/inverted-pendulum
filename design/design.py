@@ -4,7 +4,6 @@ import control as ct
 
 kt = 0.065 # N-m / A
 R = 1.38 # Ohm
-L = 2.26e-3 # H
 kb = 0.065 # N-m / A
 Bm = 1.21e-5 # N-m / rad /s
 m1 = 0.277 # kg
