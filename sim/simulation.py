@@ -17,8 +17,11 @@ class Simulation(ABC):
     def step(self, u) -> np.ndarray:
         pass
     
-    def log(self, iteration: int, x: np.ndarray, x_r: np.ndarray, u: float):
+    def log(self, iteration: int, x: np.ndarray, x_r: np.ndarray, u: float, time: float = None):
         data = {}
+
+        if time is not None:
+            data["time"] = time
         
         for i in range(len(x)):
             data[f"x{i}"] = x[i]

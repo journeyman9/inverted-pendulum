@@ -5,4 +5,4 @@ class Planner():
         pass
     
     def plan(self, x: np.ndarray) -> np.ndarray:
-        return np.array([0.0, 0.0, 0.0, 0.0])
+        return np.array([0.0, 0.0, np.pi, 0.0])

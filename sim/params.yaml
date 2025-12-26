@@ -1,7 +1,7 @@
 sim:
   dt: 0.001
-  ctr_dt: 0.01
-  time_end: 2
+  ctr_dt: 0.001
+  time_end: 10
 mech:
   m1: 0.277
   m2: 0.069
@@ -17,3 +17,10 @@ elec:
   R: 1.38
   kb: 0.065
   Bm: 1.21e-5
+ctrl:
+  K: [1., 0.95425908, -1.00477956, -1.06011656]
+init:
+  x: 0.2 # m
+  xd: 0
+  th: 5 # Degrees
+  thd: 0
