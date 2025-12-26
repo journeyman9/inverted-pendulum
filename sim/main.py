@@ -39,10 +39,6 @@ def main():
         if i % 100 == 0:
             sim.render()
             #print("Time : {} s".format(sim.dt * i))
-
-        if i == 0:
-            import pdb
-            pdb.set_trace()
         
         if i >= total_steps-1:
             done = True

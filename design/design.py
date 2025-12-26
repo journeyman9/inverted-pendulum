@@ -44,6 +44,10 @@ C = np.eye(4)
 D = np.zeros((4, 1))
 sys = ct.ss(A, B, C, D)
 
+# Discrete 
+dt = 0.001
+dsys = ct.c2d(sys, dt, method='zoh')
+
 # Print poles and zeros before pole placement  
 """
 poles_before = ct.poles(sys)  
@@ -85,5 +89,20 @@ Q = np.array(
 
 R = 1
 
+'''
+Q = np.array(
+    [
+        [1 / (0.06**2), 0, 0, 0],
+        [0, 1 / (0.3 ** 2), 0, 0],
+        [0, 0, 1 / (0.785 ** 2), 0],
+        [0, 0, 0, 1 / (3.9 ** 2)],
+    ]
+)
+
+R = 1 / (24 ** 2)
+'''
+
 K, S, E = ct.lqr(A, B, Q, R)
+#K, S, E = ct.dlqr(dsys, Q, R)
+
 print("K: ", K)
