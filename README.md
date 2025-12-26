@@ -8,6 +8,12 @@ Balance an inverted pendulum by moving a cart attached to a belt/pulley system d
    <img src="https://github.com/journeyman9/inverted-pendulum/blob/main/img/ipsim.gif?raw=true" />
 </p>
 
+## Setup for Python
+
+```
+pip install -r requirements.txt
+```
+
 ## Acknowledgements
 
 > John Ridgley's ME 507 class and FREERTOS
