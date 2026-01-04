@@ -44,6 +44,10 @@ C = np.eye(4)
 D = np.zeros((4, 1))
 sys = ct.ss(A, B, C, D)
 
+print("Eigenvalues OL")
+values, vectors = np.linalg.eig(A)
+print(values)
+
 # Discrete 
 dt = 0.001
 dsys = ct.c2d(sys, dt, method='zoh')

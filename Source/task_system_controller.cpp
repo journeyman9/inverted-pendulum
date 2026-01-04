@@ -40,6 +40,7 @@ void task_system_controller::run(void) {
 	portTickType previousTicks = xTaskGetTickCount ();
 	
 	Lqr controller;
+	bool set_already = false;
 	
 		
 	while(1) {
@@ -132,7 +133,11 @@ void task_system_controller::run(void) {
 			
 			// Balance
 			case(4):
-				angle_set = pendulum_encoder->get();
+				if (set_already == false) {
+					angle_set = pendulum_encoder->get();
+					set_already == true;
+				}
+				
 				go->put(0);
 			
 				error[0] = linear_position->get() - position_set;
@@ -187,6 +192,6 @@ void task_system_controller::run(void) {
 		//_delay_ms(1);
 		// This is a method we use to cause a task to make one run through its task
 		// loop every N milliseconds and let other tasks run at other times
-		delay_from_to (previousTicks, configMS_TO_TICKS (1));
+		delay_from_to (previousTicks, configMS_TO_TICKS (5));
 	}	
 }
