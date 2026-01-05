@@ -32,8 +32,8 @@ class task_system_controller : public frt_task{
 		float position_set;
 		float position_error;
 		float integrated_error;
-		float Kp = 2200;
-		float Ki = 5;
+		float Kp = 6000;
+		float Ki = 3;
 		float angle_set; 
 		float error[4] = {0, 0, 0, 0};
 	
