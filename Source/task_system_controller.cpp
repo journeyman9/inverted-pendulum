@@ -156,11 +156,11 @@ void task_system_controller::run(void) {
 				/*
 				if (runs%100 == 0) {
 					char buf[6];
-					//*p_serial << "Pendulum encoder radians: " << dtostrf(error[2] - angle_set, 0, 6, buf) << endl;
-					*p_serial << "Pendulum encoder radians error: " << dtostrf(error[2], 0, 6, buf) << endl;
+					*p_serial << "Pendulum encoder radians: " << dtostrf(error[2] - angle_set, 0, 6, buf) << endl;
+					//*p_serial << "Pendulum encoder radians error: " << dtostrf(error[2], 0, 6, buf) << endl;
 				}
 				*/
-
+				
 				motor_command->put(controller.calculate_action(error));
 			
 				if (leftLimitSwitch->get() || rightLimitSwitch->get()) {

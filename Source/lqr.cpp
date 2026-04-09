@@ -9,10 +9,11 @@ Lqr::~Lqr() {
 }
 
 float Lqr::calculate_action(float e[4]) {
-	// Calculate the control action using the LQR controller
-	u = K[0] * e[0] + K[1] * e[1] + K[2] * e[2] + K[3] * e[3];
 	
-	u *= -1600 / 24; // Convert effort in voltage to motor controller PWM 
+	// Calculate the control action using the LQR controller
+	u = -1.0 * (K[0] * e[0] + K[1] * e[1] + K[2] * e[2] + K[3] * e[3]);
+	
+	u *= 1600 / 24;
 	return u;
 }
 

@@ -60,7 +60,7 @@ void task_pendulum_encoder::run(void) {
 
 		pendulum_encoder->put(count);  						// store value
 		
-		current_rads = (count*6.2831)/1997;
+		current_rads = -1.0 * (count*6.2831)/1997;
 		pendulum_encoder_radians->put(current_rads); 	// Convert to radians
 		
 		pendulum_encoder_w_radians->put(current_rads - previous_rads);
@@ -77,7 +77,6 @@ void task_pendulum_encoder::run(void) {
 			*p_serial << "Pendulum Ticks Radians: " << pendulum_encoder_radians->get() << endl; 
 		}
 		*/
-		
 		
 		previous_rads = current_rads;
 		
