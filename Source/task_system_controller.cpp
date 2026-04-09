@@ -48,6 +48,7 @@ void task_system_controller::run(void) {
 			// Home right
 			case(0): 
 				linear_offset->put(0);
+				set_already = false;
 				if (begin->get()) {
 					reset->put(0);
 					stop->put(0);
@@ -134,8 +135,8 @@ void task_system_controller::run(void) {
 			// Balance
 			case(4):
 				if (set_already == false) {
-					angle_set = pendulum_encoder->get();
-					set_already == true;
+					angle_set = pendulum_encoder_radians->get();
+					set_already = true;
 				}
 				
 				go->put(0);
@@ -144,6 +145,21 @@ void task_system_controller::run(void) {
 				error[1] = linear_velocity->get() - 0;
 				error[2] = pendulum_encoder_radians->get() - angle_set;
 				error[3] = pendulum_encoder_w_radians->get() - 0;
+				
+				// Error handling for too great of angle
+				if ((error[2] >= 0.2616) || (error[2]<=-0.2616)){
+					*p_serial << "Outside Angle Recovery" << endl;
+					transition_to(100);
+					
+				}
+				
+				/*
+				if (runs%100 == 0) {
+					char buf[6];
+					//*p_serial << "Pendulum encoder radians: " << dtostrf(error[2] - angle_set, 0, 6, buf) << endl;
+					*p_serial << "Pendulum encoder radians error: " << dtostrf(error[2], 0, 6, buf) << endl;
+				}
+				*/
 
 				motor_command->put(controller.calculate_action(error));
 			
@@ -192,6 +208,6 @@ void task_system_controller::run(void) {
 		//_delay_ms(1);
 		// This is a method we use to cause a task to make one run through its task
 		// loop every N milliseconds and let other tasks run at other times
-		delay_from_to (previousTicks, configMS_TO_TICKS (5));
+		delay_from_to (previousTicks, configMS_TO_TICKS (1));
 	}	
 }
