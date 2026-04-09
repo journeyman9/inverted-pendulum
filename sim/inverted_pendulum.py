@@ -23,47 +23,35 @@ class InvertedPendulum(Simulation):
         """
 
         xd = np.zeros((len(x)))
-        sigma = 1 + self.Jm / (self.r ** 2 * (self.m1 + self.m2)) - (self.m2 * self.L) ** 2 / ((self.m1 + self.m2) * (self.I2 + self.m2 * self.L ** 2))
         
         xd[0] = x[1]
         xd[2] = x[3]
         
         # Solve the coupled system for xd[1] and xd[3]
         # From the equations:
-        # xd[1] = term1 - (m2/sigma) * L * xd[3] * cos(th) + term2 * u - damping * x[1]
-        # xd[3] = term3 - (m2 * L * xd[1] * cos(th)) / (I2 + m2*L^2)
+        # xd[1] = kt / (sigma * (m1 + m2) * R * r) * u + (m2 / (sigma * (m1+m2))) * L * (thd^2) * sin(th)
+        # ... - 0.5 * (m2 * L)^2 * g * cos(th) * sin(th) / ( sigma * (m1+m2) * I2 + m2 * L^2)
+        # ... - (Bm / (sigma * r^2 * (m1 + m2)) + (kt * kb) / (sigma * R * r^2 * (m1 + m2)) + (b / (sigma * (m1 + m2)) ) * xdot
+
+        # xd[3] = 0.5 * (m2 * g * L * sin(th)) / (I2 + m2 * L^2) - (m2 * L * xddot * cos(th)) / (I2 + m2*L^2)
         
         # Define coefficients
-        cos_th = np.cos(x[2])
-        sin_th = np.sin(x[2])
+        # The simulation state stores the physical angle with the upright
+        # equilibrium at pi, so shift back to deviation coordinates here.
+        theta = x[2]
+        cos_th = np.cos(theta)
+        sin_th = np.sin(theta)
         
-        term1 = (self.m1 / sigma) * self.L * (x[3] ** 2) * sin_th
-        term2 = (1.0 / sigma) * (self.kt / ((self.m1 + self.m2) * self.R * self.r))
-        damping_coeff = (1.0 / sigma) * ((self.Bm / (self.r ** 2)) + ((self.kt * self.kb) / (self.R * self.r ** 2)) - self.b)
-        term3 = 0.5 * (self.m2 * self.g * self.L * sin_th) / (self.I2 + self.m2 * self.L ** 2)
+        sigma = 1 + (self.Jm / (self.r ** 2 * (self.m1 + self.m2))) - ((self.m2 * self.L * cos_th) ** 2 / ((self.m1 + self.m2) * (self.I2 + self.m2 * self.L ** 2)))
         
-        # Coupling coefficients
-        A_cart = (self.m2 / sigma) * self.L * cos_th
-        A_pend = (self.m2 * self.L * cos_th) / (self.I2 + self.m2 * self.L ** 2)
-        
-        # Solve the coupled system algebraically
-        # xd[1] = term1 - A_cart * xd[3] + term2 * u - damping_coeff * x[1]
-        # xd[3] = term3 - A_pend * xd[1]
-        #
-        # Substituting: xd[3] = term3 - A_pend * (term1 - A_cart * xd[3] + term2 * u - damping_coeff * x[1])
-        # xd[3] = term3 - A_pend*term1 + A_pend*A_cart*xd[3] - A_pend*term2*u + A_pend*damping_coeff*x[1]
-        # xd[3] * (1 - A_pend*A_cart) = term3 - A_pend*term1 - A_pend*term2*u + A_pend*damping_coeff*x[1]
-        
-        denom = 1 - A_pend * A_cart
-        
-        if abs(denom) < 1e-10:
-            # Fallback if denominator is too small
-            xd[3] = term3
-            xd[1] = term1 + term2 * u - damping_coeff * x[1]
-        else:
-            xd[3] = (term3 - A_pend * term1 - A_pend * term2 * u + A_pend * damping_coeff * x[1]) / denom
-            xd[1] = term1 - A_cart * xd[3] + term2 * u - damping_coeff * x[1]
-        
+        xd[1] = (1.0 / sigma) * (self.kt / ((self.m1 + self.m2) * self.R * self.r)) * u + \
+        (1.0 / sigma) * (self.m2 * self.L * (x[3] ** 2) * sin_th) / (self.m1 + self.m2) - \
+        (1.0 / sigma) * (0.5 * (self.m2 * self.L) ** 2 * self.g * cos_th * sin_th) / ((self.m1 + self.m2)*(self.I2 + self.m2 * self.L **2)) - \
+        (1.0 / sigma) * ( (self.Bm / (self.r ** 2 * (self.m1 + self.m2))) + (self.kt * self.kb / (self.R * self.r ** 2 * (self.m1 + self.m2))) + (self.b / (self.m1 + self.m2)) ) * x[1]
+                
+        xd[3] = 0.5 * (self.m2 * self.g * self.L * sin_th) / (self.I2 + self.m2 * self.L ** 2) - \
+        (self.m2 * self.L * xd[1] * cos_th) / (self.I2 + self.m2 * self.L ** 2)
+
         return xd
 
 
@@ -112,7 +100,7 @@ class InvertedPendulum(Simulation):
             max_step=self.dt
         )
         self.t = sol.t[-1]
-        self.state = sol.y[:, 1]
+        self.state = sol.y[:, -1]
 
         return np.array(self.state)
 

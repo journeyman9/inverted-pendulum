@@ -15,11 +15,8 @@ class Controller():
         x_tilde[2]   = x_tilde[2]   - np.pi  # θ̃ = θ - π
         x_r_tilde[2] = x_r_tilde[2] - np.pi  # θ̃_ref = θ_ref - π (→ 0)
 
-        u = self.K.dot(x_tilde - x_r_tilde)
+        # Standard state-feedback law from the LQR design.
+        error = x_tilde - x_r_tilde
+        u = -self.K.dot(error)
 
-        # NOTE: Voltage sign convention correction
-        # The controller gains were designed assuming positive voltage moves cart right,
-        # but the physical system (or motor wiring) has reversed polarity.
-        # Negating the action compensates for this sign mismatch.
-        u *= -1
         return float(u)

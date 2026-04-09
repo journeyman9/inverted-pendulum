@@ -8,6 +8,16 @@ Balance an inverted pendulum by moving a cart attached to a belt/pulley system d
    <img src="https://github.com/journeyman9/inverted-pendulum/blob/main/img/ipsim.gif?raw=true" />
 </p>
 
+## Equations of Motion
+
+```
+θ̃ = θ - π
+```
+
+<p align="center">
+   <img src="https://github.com/journeyman9/inverted-pendulum/blob/main/img/ipeom.png" />
+</p>
+
 ## Setup for Python
 
 ```
