@@ -81,7 +81,7 @@ class InvertedPendulum(Simulation):
         self.state = np.array([
             params["init"]["x"],
             params["init"]["xd"],
-            np.radians(params["init"]["th"]) + np.pi,
+            np.radians(params["init"]["th"]),
             params["init"]["thd"],
         ])
         self.u = 0
@@ -128,7 +128,7 @@ class InvertedPendulum(Simulation):
         # Extract state variables
         x_cart = self.state[0]  # cart position
         th_phys = self.state[2] # physical angle, equilibrium at pi
-        th = th_phys - np.pi    # Deviation angle: 0 = upright
+        th = th_phys   # Deviation angle: 0 = upright
         
         # Track/rail position
         track_y = 0.0

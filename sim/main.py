@@ -29,7 +29,7 @@ def main():
     done = False
     i = 0
     while not done:
-        #sim.log(i, x, x_r, u, sim.dt*i)
+        sim.log(i, x, x_r, u, sim.dt*i)
         if i % steps_per_ctrl == 0:
             x_r = planner.plan(x)
             u = ctr.lqr(x, x_r)
@@ -43,7 +43,7 @@ def main():
         if i >= total_steps-1:
             done = True
 
-        if np.abs(x[2] - np.pi) > np.pi / 4:
+        if np.abs(x[2]) > np.pi / 4:
             print("Pendulum angle is too large, ending simulation.")
             done = True
 
