@@ -30,14 +30,11 @@ class InvertedPendulum(Simulation):
         # Solve the coupled system for xd[1] and xd[3]
         # From the equations:
         # xd[1] = kt / (sigma * (m1 + m2) * R * r) * u + (m2 / (sigma * (m1+m2))) * L * (thd^2) * sin(th)
-        # ... - (m2 * L)^2 * g * cos(th) * sin(th) / ( sigma * (m1+m2) * I2 + m2 * L^2)
+        # ... + (m2 * L)^2 * g * cos(th) * sin(th) / ( sigma * (m1+m2) * I2 + m2 * L^2)
         # ... - (Bm / (sigma * r^2 * (m1 + m2)) + (kt * kb) / (sigma * R * r^2 * (m1 + m2)) + (b / (sigma * (m1 + m2)) ) * xdot
 
-        # xd[3] = (m2 * g * L * sin(th)) / (I2 + m2 * L^2) - (m2 * L * xddot * cos(th)) / (I2 + m2*L^2)
+        # xd[3] = - (m2 * g * L * sin(th)) / (I2 + m2 * L^2) - (m2 * L * xddot * cos(th)) / (I2 + m2*L^2)
         
-        # Define coefficients
-        # The simulation state stores the physical angle with the upright
-        # equilibrium at pi, so shift back to deviation coordinates here.
         theta = x[2]
         cos_th = np.cos(theta)
         sin_th = np.sin(theta)
@@ -45,11 +42,11 @@ class InvertedPendulum(Simulation):
         sigma = 1 + (self.Jm / (self.r ** 2 * (self.m1 + self.m2))) - ((self.m2 * self.L * cos_th) ** 2 / ((self.m1 + self.m2) * (self.I2 + self.m2 * self.L ** 2)))
         
         xd[1] = (1.0 / sigma) * (self.kt / ((self.m1 + self.m2) * self.R * self.r)) * u + \
-        (1.0 / sigma) * (self.m2 * self.L * (x[3] ** 2) * sin_th) / (self.m1 + self.m2) - \
+        (1.0 / sigma) * (self.m2 * self.L * (x[3] ** 2) * sin_th) / (self.m1 + self.m2) + \
         (1.0 / sigma) * ((self.m2 * self.L) ** 2 * self.g * cos_th * sin_th) / ((self.m1 + self.m2)*(self.I2 + self.m2 * self.L **2)) - \
         (1.0 / sigma) * ( (self.Bm / (self.r ** 2 * (self.m1 + self.m2))) + (self.kt * self.kb / (self.R * self.r ** 2 * (self.m1 + self.m2))) + (self.b / (self.m1 + self.m2)) ) * x[1]
                 
-        xd[3] = (self.m2 * self.g * self.L * sin_th) / (self.I2 + self.m2 * self.L ** 2) - \
+        xd[3] = -(self.m2 * self.g * self.L * sin_th) / (self.I2 + self.m2 * self.L ** 2) - \
         (self.m2 * self.L * xd[1] * cos_th) / (self.I2 + self.m2 * self.L ** 2)
 
         return xd
