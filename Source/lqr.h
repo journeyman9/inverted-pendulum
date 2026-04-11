@@ -9,9 +9,10 @@ public:
 
     void lqr_set_value();
     int16_t lqr_get_value();
-	float calculate_action(float e[4]);
+	float calculate_action(float x[4], float x_r[4], float position_set, float angle_set);
    
     float u;
-	float K[4] = {29.21413192, 24.12018189, 100.78018064, -1.44048738};
-	//float K[4] = {29.13059689, 30.67422592, 163.56977604, -4.03851092}; // Unstable
+    float x_tilde;
+    float theta_tilde;
+	float K[4] = {-29.19490681, -33.92094379, 141.5476876, 24.66740691};
 };

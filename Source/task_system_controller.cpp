@@ -40,7 +40,10 @@ void task_system_controller::run(void) {
 	portTickType previousTicks = xTaskGetTickCount ();
 	
 	Lqr controller;
+	Planner planner;
 	bool set_already = false;
+	float x[4];
+	float x_r[4];
 	
 		
 	while(1) {
@@ -143,14 +146,16 @@ void task_system_controller::run(void) {
 				}
 				
 				go->put(0);
-			
-				error[0] = linear_position->get() - position_set;
-				error[1] = linear_velocity->get() - 0;
-				error[2] = pendulum_encoder_radians->get() - angle_set;
-				error[3] = pendulum_encoder_w_radians->get() - 0;
+				x = {
+					linear_position->get(),
+					linear_velocity->get(),
+					pendulum_encoder_radians->get(),
+					pendulum_encoder_w_radians->get()
+				}
+				x_r = planner.plan();
 				
 				// Error handling for too great of angle
-				if ((error[2] >= 0.2616) || (error[2]<=-0.2616)){
+				if ((x[2] - angle_set >= 0.2616) || (x[2] - angle_set < -0.2616)){
 					*p_serial << "Outside Angle Recovery" << endl;
 					transition_to(100);
 					
@@ -159,12 +164,12 @@ void task_system_controller::run(void) {
 				/*
 				if (runs%100 == 0) {
 					char buf[6];
-					*p_serial << "Pendulum encoder radians: " << dtostrf(error[2] + angle_set, 0, 6, buf) << endl;
-					//*p_serial << "Pendulum encoder radians error: " << dtostrf(error[2], 0, 6, buf) << endl;
+					*p_serial << "Pendulum encoder radians: " << dtostrf(x[2], 0, 6, buf) << endl;
+					//*p_serial << "Pendulum encoder radians error: " << dtostrf(x[2] - 3.14159f, 0, 6, buf) << endl;
 				}
 				*/
 				
-				motor_command->put(controller.calculate_action(error));
+				motor_command->put(controller.calculate_action(x, x_r, position_set, angle_set));
 			
 				if (leftLimitSwitch->get() || rightLimitSwitch->get()) {
 					*p_serial << "LIMIT SWITCH HIT ERROR" << endl;
