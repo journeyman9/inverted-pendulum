@@ -30,10 +30,10 @@ class InvertedPendulum(Simulation):
         # Solve the coupled system for xd[1] and xd[3]
         # From the equations:
         # xd[1] = kt / (sigma * (m1 + m2) * R * r) * u + (m2 / (sigma * (m1+m2))) * L * (thd^2) * sin(th)
-        # ... - 0.5 * (m2 * L)^2 * g * cos(th) * sin(th) / ( sigma * (m1+m2) * I2 + m2 * L^2)
+        # ... - (m2 * L)^2 * g * cos(th) * sin(th) / ( sigma * (m1+m2) * I2 + m2 * L^2)
         # ... - (Bm / (sigma * r^2 * (m1 + m2)) + (kt * kb) / (sigma * R * r^2 * (m1 + m2)) + (b / (sigma * (m1 + m2)) ) * xdot
 
-        # xd[3] = 0.5 * (m2 * g * L * sin(th)) / (I2 + m2 * L^2) - (m2 * L * xddot * cos(th)) / (I2 + m2*L^2)
+        # xd[3] = (m2 * g * L * sin(th)) / (I2 + m2 * L^2) - (m2 * L * xddot * cos(th)) / (I2 + m2*L^2)
         
         # Define coefficients
         # The simulation state stores the physical angle with the upright
@@ -46,10 +46,10 @@ class InvertedPendulum(Simulation):
         
         xd[1] = (1.0 / sigma) * (self.kt / ((self.m1 + self.m2) * self.R * self.r)) * u + \
         (1.0 / sigma) * (self.m2 * self.L * (x[3] ** 2) * sin_th) / (self.m1 + self.m2) - \
-        (1.0 / sigma) * (0.5 * (self.m2 * self.L) ** 2 * self.g * cos_th * sin_th) / ((self.m1 + self.m2)*(self.I2 + self.m2 * self.L **2)) - \
+        (1.0 / sigma) * ((self.m2 * self.L) ** 2 * self.g * cos_th * sin_th) / ((self.m1 + self.m2)*(self.I2 + self.m2 * self.L **2)) - \
         (1.0 / sigma) * ( (self.Bm / (self.r ** 2 * (self.m1 + self.m2))) + (self.kt * self.kb / (self.R * self.r ** 2 * (self.m1 + self.m2))) + (self.b / (self.m1 + self.m2)) ) * x[1]
                 
-        xd[3] = 0.5 * (self.m2 * self.g * self.L * sin_th) / (self.I2 + self.m2 * self.L ** 2) - \
+        xd[3] = (self.m2 * self.g * self.L * sin_th) / (self.I2 + self.m2 * self.L ** 2) - \
         (self.m2 * self.L * xd[1] * cos_th) / (self.I2 + self.m2 * self.L ** 2)
 
         return xd
@@ -62,9 +62,9 @@ class InvertedPendulum(Simulation):
         self.time_end = params["sim"]["time_end"]
 
         self.m1 = params["mech"]["m1"]
-        self.m2 = params["mech"]["m2"]
-        self.m3 = params["mech"]["m3"]
-        self.L = params["mech"]["L"]
+        self.mr = params["mech"]["mr"]
+        self.ms = params["mech"]["ms"]
+        self.l = params["mech"]["l"]
         self.r = params["mech"]["r"]
         self.r3 = params["mech"]["r3"]
         self.b = params["mech"]["b"]
@@ -76,7 +76,10 @@ class InvertedPendulum(Simulation):
         self.kb = params["elec"]["kb"]
         self.Bm = params["elec"]["Bm"]
         
-        self.I2 = 1/3 * self.m2 * self.L ** 2 + (2/5) * self.m3 * self.r3 ** 2 + self.m3 * self.L ** 2 
+        self.m2 = self.mr + self.ms 
+        self.L = (1 / (self.mr + self.ms)) * (self.mr * (self.l/2) + self.ms * self.l)
+        
+        self.I2 = 1/3 * self.mr * self.l ** 2 + (2/5) * self.ms * self.r3 ** 2 + self.ms * self.l ** 2 - (self.m2 * self.L ** 2) # Subtracting to not double count
         
         self.state = np.array([
             params["init"]["x"],
