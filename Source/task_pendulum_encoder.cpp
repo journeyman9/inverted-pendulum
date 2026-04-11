@@ -48,37 +48,56 @@ void task_pendulum_encoder::run(void) {
 	TCC1.PER = 0x7CD; 											// Empirically derived
 	TCC1.CTRLA = TC_CLKSEL_DIV1_gc;								// start TCC1 with prescaler = 1
 
-	int16_t count;
+	int16_t raw_count = TCC1.CNT;
+	int16_t prev_raw_count = raw_count;
+	int16_t dcount_raw = 0;
+	int16_t dcount_signed = 0;
+	int32_t count_unwrapped = 0;
+	
 	float previous_rads;
-	uint8_t dt = 1;
 	float current_rads;
-
+	
+	const float counts_per_rev = 1997.0f;
+	const float PI = 3.141592f;
+	const float dt = 0.001f;
+	
+	float theta_unwrapped = 0;
+	float theta_lqr = -PI;
+	float omega = 0;
 
 	while(1) {
 
-		count = TCC1.CNT; 									// Read value from hardware
-
-		pendulum_encoder->put(count);  						// store value
+		raw_count = TCC1.CNT; 							// Read value from hardware
+		dcount_raw = raw_count - prev_raw_count;
+		if (dcount_raw > counts_per_rev / 2.0) {
+			dcount_raw -= counts_per_rev;
+		}
+		else if (dcount_raw < -counts_per_rev / 2.0) {
+			dcount_raw += counts_per_rev;
+		}
 		
-		current_rads = -1.0 * (count*6.2831)/1997;
-		pendulum_encoder_radians->put(current_rads); 	// Convert to radians
+		dcount_signed = -dcount_raw;
+		count_unwrapped += dcount_signed;
+		theta_unwrapped = count_unwrapped * (2.0 * PI / counts_per_rev);
 		
-		pendulum_encoder_w_radians->put(current_rads - previous_rads);
-
-		// Convert to degrees (maybe) TODO: need to figure out what mult to use
-		//int16_t theta_pendulum = count * ()
-
+		theta_lqr = theta_unwrapped - PI;
+		
+		omega = (dcount_signed * (2.0 * PI / counts_per_rev)) / dt;
+		
+		pendulum_encoder->put((int16_t)count_unwrapped);
+		pendulum_encoder_radians->put(theta_unwrapped); 	// Convert to radians
+		
+		pendulum_encoder_w_radians->put(omega);
 
 		// Section of code used for unit testing, prints out curr count and queue value
-		
 		/*
 		if(runs%100==0){
-			*p_serial << "Pendulum Ticks Counts: " << count << endl;
+			*p_serial << "Pendulum Ticks Counts: " << count_unwrapped << endl;
 			*p_serial << "Pendulum Ticks Radians: " << pendulum_encoder_radians->get() << endl; 
 		}
 		*/
 		
-		previous_rads = current_rads;
+		prev_raw_count = raw_count;
 		
 		// Increment counter for debugging
 		runs++;

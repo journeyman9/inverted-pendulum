@@ -84,6 +84,7 @@ ct.pzmap(sys_new, title='Pole-Zero Map After Pole Placement')
 plt.show()
 """
 
+
 # LQR
 Q = np.array(
     [
@@ -95,6 +96,19 @@ Q = np.array(
 )
 
 R = 0.01
+
+"""
+Q = np.array(
+    [
+        [1 / (0.4 ** 2), 0, 0, 0],
+        [0, 1 / (0.3 ** 2), 0, 0],
+        [0, 0, 1 / (0.3925 ** 2), 0],
+        [0, 0, 0, 1 / (3.9 ** 2)],
+    ]
+)
+
+R = 1 / (24 ** 2)
+"""
 
 K, S, E = ct.dlqr(dsys, Q, R)
 

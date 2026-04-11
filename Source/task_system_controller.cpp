@@ -134,6 +134,9 @@ void task_system_controller::run(void) {
 			
 			// Balance
 			case(4):
+				if (stop->get() == true) {
+					transition_to(100);
+				}
 				if (set_already == false) {
 					angle_set = pendulum_encoder_radians->get();
 					set_already = true;
