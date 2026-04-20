@@ -1,9 +1,11 @@
+import json
+import os
 import numpy as np
 import matplotlib.pyplot as plt
 import control as ct
 
-kt = 0.065 # N-m / A
 R = 1.38 # Ohm
+kt = 0.065 # N-m / A
 kb = 0.065 # N-m / A
 Bm = 1.21e-5 # N-m / rad /s
 m1 = 0.277 # kg
@@ -37,19 +39,19 @@ B = np.array([
     (1.0 / (sigma * (m1 + m2) * (I2 + m2 * L ** 2))) * (m2 * L) * ( kt / (R * r) )
 ]).reshape(-1, 1)
 
-print(A)
-print(B)
+# print(A)
+# print(B)
 
-print("Controllable? ", np.linalg.matrix_rank(ct.ctrb(A, B)) == 4)
+# print("Controllable? ", np.linalg.matrix_rank(ct.ctrb(A, B)) == 4)
 
 # Plot pole zero
 C = np.eye(4)
 D = np.zeros((4, 1))
 sys = ct.ss(A, B, C, D)
 
-print("Eigenvalues OL")
+# print("Eigenvalues OL")
 values, vectors = np.linalg.eig(A)
-print(values)
+# print(values)
 
 # Discrete 
 dt = 0.001
@@ -111,5 +113,39 @@ R = 1 / (24 ** 2)
 """
 
 K, S, E = ct.dlqr(dsys, Q, R)
+
+db_path = os.path.join(os.path.dirname(__file__), "k_q_values.json")
+if os.path.exists(db_path):
+    with open(db_path, "r") as f:
+        db = json.load(f)
+else:
+    db = {}
+
+q_key = str(Q.tolist())
+existing_notes = db.get(q_key, {}).get("notes", "")
+db[q_key] = {"Q": Q.tolist(), "R": R if np.isscalar(R) else np.array(R).tolist(), "K": K.tolist(), "notes": existing_notes}
+
+def _is_numeric_list(obj):
+    if not isinstance(obj, list) or not obj:
+        return False
+    return (all(isinstance(x, (int, float)) for x in obj) or
+            all(isinstance(x, list) and all(isinstance(y, (int, float)) for y in x) for x in obj))
+
+def _json_compact(obj, indent=0):
+    pad, inner = ' ' * indent, ' ' * (indent + 2)
+    if isinstance(obj, dict):
+        parts = []
+        keys = list(obj.keys())
+        for i, k in enumerate(keys):
+            comma = ',' if i < len(keys) - 1 else ''
+            parts.append(f'{inner}{json.dumps(k)}: {_json_compact(obj[k], indent + 2)}{comma}')
+        return '{\n' + '\n'.join(parts) + '\n' + pad + '}'
+    elif _is_numeric_list(obj):
+        return json.dumps(obj)
+    else:
+        return json.dumps(obj)
+
+with open(db_path, "w") as f:
+    f.write(_json_compact(db))
 
 print("K: ", K)
