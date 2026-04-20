@@ -9,7 +9,7 @@ public:
 
     void lqr_set_value();
     int16_t lqr_get_value();
-	float calculate_action(float x[4], float x_r[4], float position_set, float angle_set);
+	float calculate_action(float x[4], std::vector<float> x_r, float position_set, float angle_set);
    
     float u;
     float x_tilde;

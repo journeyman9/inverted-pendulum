@@ -6,6 +6,8 @@ Source\lib\freertos\croutine.c
 
 Source\lqr.cpp
 
+Source\planner.cpp
+
 Source\task_limit_switch.cpp
 
 Source\task_motor_command.cpp

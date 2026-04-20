@@ -1,6 +1,7 @@
 #include <stdlib.h>                         // Prototype declarations for I/O functions
 #include <avr/io.h>                         // Port I/O for SFR's
 #include "lqr.h"
+#include <vector>
 
 Lqr::Lqr() {
 }
@@ -8,7 +9,7 @@ Lqr::Lqr() {
 Lqr::~Lqr() {
 }
 
-float Lqr::calculate_action(float x[4], float x_r[4], float position_set, float angle_set) {
+float Lqr::calculate_action(float x[4], std::vector<float> x_r, float position_set, float angle_set) {
 	x_tilde = x[0] - position_set;
 	theta_tilde = x[2] - 3.14159f;
 

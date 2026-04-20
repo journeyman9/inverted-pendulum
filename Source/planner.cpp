@@ -1,6 +1,7 @@
 #include <stdlib.h>                         // Prototype declarations for I/O functions
 #include <avr/io.h>                         // Port I/O for SFR's
 #include "planner.h"
+#include <vector>
 
 Planner::Planner() {
 }
@@ -8,13 +9,8 @@ Planner::Planner() {
 Planner::~Planner() {
 }
 
-float Planner::plan(float x[4]) {
-	x_r = {
-		0,
-		0,
-		0,
-		0
-	}
+std::vector<float> Planner::plan(float x[4]) {
+	x_r = {0.0f, 0.0f, 0.0f, 0.0f};
 	return x_r;
 }
 
