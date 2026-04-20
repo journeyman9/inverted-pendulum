@@ -9,9 +9,11 @@ Planner::Planner() {
 Planner::~Planner() {
 }
 
-std::vector<float> Planner::plan(float x[4]) {
-	x_r = {0.0f, 0.0f, 0.0f, 0.0f};
-	return x_r;
+void Planner::plan(float x[4]) {
+	x_r[0] = 0.0f;
+	x_r[1] = 0.0f;
+	x_r[2] = 0.0f;
+	x_r[3] = 0.0f;
 }
 
 void Planner::planner_set_value() {

@@ -44,9 +44,8 @@ void task_system_controller::run(void) {
 	Lqr controller;
 	Planner planner;
 	bool set_already = false;
-	float x[4];
-	std::vector<float> x_r(4);
-	
+	float x[4] = {0.0f, 0.0f, 0.0f, 0.0f};
+	float x_r[4] = {0.0f, 0.0f, 0.0f, 0.0f};
 		
 	while(1) {
 		switch (state) {
@@ -116,7 +115,8 @@ void task_system_controller::run(void) {
 				if (runs%100 == 0){
 					*p_serial << "position_set: " << position_set << endl;
 					*p_serial << "linear Position: " << linear_position->get() << endl;
-					*p_serial << "motor_command: " << motor_command->get() << endl;
+					*p_serial << "error : " << linear_position->get() - position_set  << endl;
+					//*p_serial << "motor_command: " << motor_command->get() << endl;
 				}
 				*/
 				
@@ -152,7 +152,7 @@ void task_system_controller::run(void) {
 				x[1] = linear_velocity->get();
 				x[2] = pendulum_encoder_radians->get();
 				x[3] = pendulum_encoder_w_radians->get();
-				x_r = planner.plan();
+				planner.plan(x);
 				
 				// Error handling for too great of angle
 				if ((x[2] - angle_set >= 0.2616) || (x[2] - angle_set < -0.2616)){
@@ -163,9 +163,10 @@ void task_system_controller::run(void) {
 				
 				/*
 				if (runs%100 == 0) {
-					char buf[6];
-					*p_serial << "Pendulum encoder radians: " << dtostrf(x[2], 0, 6, buf) << endl;
-					*p_serial << "Pendulum encoder radians error: " << dtostrf(x[2] - 3.14159f, 0, 6, buf) << endl;
+					//char buf[6];
+					//*p_serial << "Pendulum encoder radians: " << dtostrf(x[2], 0, 6, buf) << endl;
+					//*p_serial << "Pendulum encoder radians error: " << dtostrf(x[2] - 3.14159f, 0, 6, buf) << endl;
+					*p_serial << "error " << x[1] - position_set << " : x " << x[1] << " - position_set" << position_set << endl;
 				}
 				*/
 				

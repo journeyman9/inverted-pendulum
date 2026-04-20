@@ -51,7 +51,6 @@ void task_motor_encoder::run(void) {
 	int16_t encoder_count;
 	int16_t last_encoder_count;
 	uint8_t dt = 1;															// 1 ms
-	int16_t angularVelocity;
 	float x;
 	float previous_x = 0;
 	linear_offset->put(0);
@@ -75,10 +74,10 @@ void task_motor_encoder::run(void) {
 		if(runs%100==0)
 		{
 			//*p_serial << "Encoder Pulses: " << encoder_count << endl;
-			//*p_serial << "linearPosition: " << x << " [m]" << endl;			// x position in mm
+			*p_serial << "linearPosition: " << x << " [m]" << endl;			// x position in mm
 			//*p_serial << "Ticks_per_ms: " << ticks_per_ms << endl;
 			//*p_serial << ticks_per_ms<< endl;
-			*p_serial << linear_velocity->get() << endl;
+			//*p_serial << linear_velocity->get() << endl;
 			//*p_serial<< "linear offset: " << linear_offset << " [mm]" << endl;
 			//*p_serial << "angularVelocity: " << angularVelocity << " [RPM]" << endl;
 		}

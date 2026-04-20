@@ -54,15 +54,11 @@ void task_pendulum_encoder::run(void) {
 	int16_t dcount_signed = 0;
 	int32_t count_unwrapped = 0;
 	
-	float previous_rads;
-	float current_rads;
-	
 	const float counts_per_rev = 1997.0f;
 	const float PI = 3.141592f;
 	const float dt = 0.001f;
 	
 	float theta_unwrapped = 0;
-	float theta_lqr = -PI;
 	float omega = 0;
 
 	while(1) {
@@ -80,8 +76,6 @@ void task_pendulum_encoder::run(void) {
 		count_unwrapped += dcount_signed;
 		theta_unwrapped = count_unwrapped * (2.0 * PI / counts_per_rev);
 		
-		theta_lqr = theta_unwrapped - PI;
-		
 		omega = (dcount_signed * (2.0 * PI / counts_per_rev)) / dt;
 		
 		pendulum_encoder->put((int16_t)count_unwrapped);
@@ -92,7 +86,7 @@ void task_pendulum_encoder::run(void) {
 		// Section of code used for unit testing, prints out curr count and queue value
 		/*
 		if(runs%100==0){
-			*p_serial << "Pendulum Ticks Counts: " << count_unwrapped << endl;
+			//*p_serial << "Pendulum Ticks Counts: " << count_unwrapped << endl;
 			*p_serial << "Pendulum Ticks Radians: " << pendulum_encoder_radians->get() << endl; 
 		}
 		*/

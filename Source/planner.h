@@ -9,6 +9,6 @@ public:
 
     void planner_set_value();
     int16_t planner_get_value();
-	std::vector<float> plan(float x[4]);
+	void plan(float x[4]);
     std::vector<float> x_r = {0.0f, 0.0f, 0.0f, 0.0f};
 };
