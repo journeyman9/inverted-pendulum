@@ -46,6 +46,7 @@ void task_system_controller::run(void) {
 	bool set_already = false;
 	float x[4] = {0.0f, 0.0f, 0.0f, 0.0f};
 	float x_r[4] = {0.0f, 0.0f, 0.0f, 0.0f};
+	float u = 0.0f;
 		
 	while(1) {
 		switch (state) {
@@ -160,17 +161,17 @@ void task_system_controller::run(void) {
 					transition_to(100);
 					
 				}
+				u = -1.0 * controller.calculate_action(x, x_r, position_set, angle_set);				
+				motor_command->put(u);
 				
-				/*
 				if (runs%100 == 0) {
-					//char buf[6];
-					//*p_serial << "Pendulum encoder radians: " << dtostrf(x[2], 0, 6, buf) << endl;
-					//*p_serial << "Pendulum encoder radians error: " << dtostrf(x[2] - 3.14159f, 0, 6, buf) << endl;
-					*p_serial << "error " << x[1] - position_set << " : x " << x[1] << " - position_set" << position_set << endl;
+					char buf[6];
+					char buf2[6];
+					char buf3[6];
+					*p_serial << "Angle radians: " << dtostrf(x[2], 0, 6, buf);
+					*p_serial << " Angle error: " << dtostrf(x[2] - 3.14159f, 0, 6, buf2);
+					*p_serial << " Motor u: " << dtostrf(u, 0, 6, buf3) << endl;
 				}
-				*/
-				
-				motor_command->put(controller.calculate_action(x, x_r, position_set, angle_set));
 			
 				if (leftLimitSwitch->get() || rightLimitSwitch->get()) {
 					*p_serial << "LIMIT SWITCH HIT ERROR" << endl;
