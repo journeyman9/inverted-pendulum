@@ -161,7 +161,7 @@ void task_system_controller::run(void) {
 					transition_to(100);
 					
 				}
-				u = -1.0 * controller.calculate_action(x, x_r, position_set, angle_set);				
+				u = controller.calculate_action(x, x_r, position_set, angle_set);				
 				motor_command->put(u);
 				
 				if (runs%100 == 0) {

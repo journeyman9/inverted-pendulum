@@ -14,7 +14,12 @@ float Lqr::calculate_action(float x[4], float x_r[4], float position_set, float 
 	theta_tilde = x[2] - 3.1415f;
 
 	// Calculate the control action using the LQR controller
-	u = -1.0 * K[0] * (x_tilde - x_r[0]) + K[1] * (x[1] - x_r[1]) + K[2] * (theta_tilde - x_r[2]) + K[3] * (x[3] - x_r[3]);
+	u = -1.0 * (
+		K[0] * (x_tilde - x_r[0]) +
+		K[1] * (x[1] - x_r[1]) +
+		K[2] * (theta_tilde - x_r[2]) + 
+		K[3] * (x[3] - x_r[3])
+	);
 	
 	u *= 1600 / 24;
 	
