@@ -86,8 +86,9 @@ void task_pendulum_encoder::run(void) {
 		// Section of code used for unit testing, prints out curr count and queue value
 		/*
 		if(runs%100==0){
+			char buf[6];
 			//*p_serial << "Pendulum Ticks Counts: " << count_unwrapped << endl;
-			*p_serial << "Pendulum Ticks Radians: " << pendulum_encoder_radians->get() << endl; 
+			*p_serial << "Pendulum Ticks Radians: " << dtostrf(pendulum_encoder_radians->get(), 0, 6, buf) << endl; 
 		}
 		*/
 		

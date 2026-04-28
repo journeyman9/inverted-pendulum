@@ -94,6 +94,6 @@ void task_limit_switch::run(void) {
 		//_delay_ms(1);
 		// This is a method we use to cause a task to make one run through its task
 		// loop every N milliseconds and let other tasks run at other times
-		delay_from_to (previousTicks, configMS_TO_TICKS (1));
+		delay_from_to (previousTicks, configMS_TO_TICKS (5));
 	}
 }

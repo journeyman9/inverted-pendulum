@@ -39,8 +39,8 @@ B = np.array([
     (1.0 / (sigma * (m1 + m2) * (I2 + m2 * L ** 2))) * (m2 * L) * ( kt / (R * r) )
 ]).reshape(-1, 1)
 
-# print(A)
-# print(B)
+#print(A)
+#print(B)
 
 # print("Controllable? ", np.linalg.matrix_rank(ct.ctrb(A, B)) == 4)
 
@@ -90,21 +90,21 @@ plt.show()
 # LQR
 Q = np.array(
     [
-        [10, 0, 0, 0],
+        [5, 0, 0, 0],
         [0, 1, 0, 0],
-        [0, 0, 100, 0],
+        [0, 0, 10, 0],
         [0, 0, 0, 1],
     ]
 )
 
-R = 0.01
+R = 50
 
 """
 Q = np.array(
     [
         [1 / (0.4 ** 2), 0, 0, 0],
         [0, 1 / (0.3 ** 2), 0, 0],
-        [0, 0, 1 / (0.3925 ** 2), 0],
+        [0, 0, 1 / (0.384 ** 2), 0],
         [0, 0, 0, 1 / (3.9 ** 2)],
     ]
 )
@@ -112,7 +112,13 @@ Q = np.array(
 R = 1 / (24 ** 2)
 """
 
-K, S, E = ct.dlqr(dsys, Q, R)
+K, S, E = ct.lqr(dsys, Q, R)
+
+values, vectors = np.linalg.eig(A - B@K)
+np.set_printoptions(precision=4, suppress=True)
+for i in range(len(values)):
+    print("x{} approx e ^ ({:.2f})t * {}".format(i, values[i], vectors[:, i]))
+ 
 
 db_path = os.path.join(os.path.dirname(__file__), "k_q_values.json")
 if os.path.exists(db_path):
@@ -148,4 +154,5 @@ def _json_compact(obj, indent=0):
 with open(db_path, "w") as f:
     f.write(_json_compact(db))
 
+np.set_printoptions(precision=6, suppress=True)
 print("K: ", K)

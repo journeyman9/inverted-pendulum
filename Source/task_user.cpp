@@ -210,7 +210,7 @@ void task_user::run (void)
 
 		// No matter the state, wait for approximately a millisecond before we 
 		// run the loop again. This gives lower priority tasks a chance to run
-		vTaskDelay (configMS_TO_TICKS (1));
+		vTaskDelay (configMS_TO_TICKS (20));
 	}
 }
 
