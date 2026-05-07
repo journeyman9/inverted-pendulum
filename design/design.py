@@ -19,7 +19,9 @@ L = (1 / (mr + ms)) * (mr * (l/2) + ms * l)
 
 I2 = 1/3 * mr * l ** 2 + (2/5) * ms * r3 ** 2 + ms * l ** 2 - (m2 * L ** 2) # Subtracting to not double count
 b = 0.1
-Jm = 2.12e-5 # kg-m^2
+mp = 0.035 # kg
+Jp = 0.5 * mp * r ** 2
+Jm = 2.12e-5 + Jp # kg-m^2
 sigma = 1 + (Jm / (r ** 2 * (m1 + m2))) - ((m2 * L) ** 2 / ((m1 + m2) * (I2 + m2 * L ** 2)))
 g = 9.81 # m/s^2
 
