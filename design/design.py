@@ -8,13 +8,13 @@ R = 1.38 # Ohm
 kt = 0.065 # N-m / A
 kb = 0.065 # N-m / A
 Bm = 1.21e-5 # N-m / rad /s
-m1 = 0.277 # kg
-ms = 0.009 # kg
+m1 = 0.280 # kg
+ms = 0.008 + 0.003 # kg
 mr = 0.069
 m2 = mr + ms # kg
 l = 0.6096 # m
-r = 0.0191 # m
-r3 = 0.0127 # m 
+r = 0.0188 # m
+r3 = 0.0181 # m 
 L = (1 / (mr + ms)) * (mr * (l/2) + ms * l)
 
 I2 = 1/3 * mr * l ** 2 + (2/5) * ms * r3 ** 2 + ms * l ** 2 - (m2 * L ** 2) # Subtracting to not double count
