@@ -92,14 +92,14 @@ plt.show()
 # LQR
 Q = np.array(
     [
-        [5, 0, 0, 0],
+        [10, 0, 0, 0],
         [0, 1, 0, 0],
-        [0, 0, 10, 0],
+        [0, 0, 100, 0],
         [0, 0, 0, 1],
     ]
 )
 
-R = 50
+R = 100
 
 """
 Q = np.array(
@@ -114,7 +114,7 @@ Q = np.array(
 R = 1 / (24 ** 2)
 """
 
-K, S, E = ct.lqr(dsys, Q, R)
+K, S, E = ct.lqr(sys, Q, R)
 
 values, vectors = np.linalg.eig(A - B@K)
 np.set_printoptions(precision=4, suppress=True)
@@ -157,4 +157,5 @@ with open(db_path, "w") as f:
     f.write(_json_compact(db))
 
 np.set_printoptions(precision=6, suppress=True)
-print("K: ", K)
+K = K[0]
+print("K: [{:.6f}, {:.6f}, {:.6f}, {:.6f}]".format(K[0], K[1], K[2], K[3]))
