@@ -50,25 +50,40 @@ void task_motor_encoder::run(void) {
 
 	int16_t encoder_count;
 	int16_t last_encoder_count;
-	uint8_t dt = 1;															// 1 ms
 	float x;
 	float previous_x = 0;
 	linear_offset->put(0);
+	
+	/*
+	const float meters_per_count = 0.00006f; // 6/100/1000
+	portTickType currentTicks;
+	portTickType lastTicks = previousTicks;
+	float dt;
+	*/
 
 
 	while(1) {
+		//portTickType workStart = xTaskGetTickCount();
+		/*
+		currentTicks = xTaskGetTickCount();
+		dt = (float)(currentTicks - lastTicks) * portTICK_RATE_MS / 1000.0f;
+		lastTicks = currentTicks;
+		*/
 
 		encoder_count = TCD0.CNT; 									// Get count
 
 		// Convert to linear position in meters
 		//x = ( (int32_t) encoder_count*3)/100 - linear_offset->get();	// PPMM = (4*1000)/(pi*38)
 		x = ((float) encoder_count)*(6/100.0)*(1/1000.0) - linear_offset->get();  // dived by 1000 for meters
+		// x = ((float) encoder_count) * meters_per_count - linear_offset->get();
 		linear_position->put(x);
-
-		//thdMotor->put(ticks_per_ms);
 		
 		linear_velocity->put((x - previous_x) / .001);
-		//angularVelocity = ((int32_t) (encoder_count-last_encoder_count)*15)/dt;	// d_ec*60/(4*1000)/dt where dt is in ms so * 1000
+		/*
+		if (dt > 0.0f) {
+			linear_velocity->put((x - previous_x) / dt);
+		}
+		*/
 		
 		/*
 		if(runs%100==0)
@@ -85,6 +100,15 @@ void task_motor_encoder::run(void) {
 
 		last_encoder_count = encoder_count;							// make present encoder_count the previous for the next calculation
 		previous_x = x;
+		
+		/*
+		portTickType workEnd = xTaskGetTickCount();
+        uint16_t work_duration = workEnd - workStart;
+
+		if (runs % 500 == 0) {
+			*p_serial << "MtrEnc: " << work_duration << " ticks" << endl;
+		}
+		*/
 		
 		// Increment counter for debugging
 		runs++;

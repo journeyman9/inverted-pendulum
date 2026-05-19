@@ -40,10 +40,10 @@ task_system_controller::task_system_controller(
 void task_system_controller::run(void) {
 	// Make a variable which will hold times to use for precise task scheduling
 	portTickType previousTicks = xTaskGetTickCount ();
+	portTickType lastMeasuredTicks = previousTicks;   // For measurement
 	
-	uint16_t timing_samples[5] = {0};
+	uint32_t timing_samples[10] = {0};
 	uint8_t sample_idx = 0;
-	bool timing_initialized = false;
 	
 	Lqr controller;
 	Planner planner;
@@ -53,31 +53,27 @@ void task_system_controller::run(void) {
 	float u = 0.0f;
 		
 	while(1) {
-		/*
 		currentTicks = xTaskGetTickCount();
-		if (!timing_initialized) {
-			previousTicks = currentTicks;
-			timing_initialized = true;
-		}
+		uint32_t delta = currentTicks - lastMeasuredTicks;
+		lastMeasuredTicks = currentTicks;
 		
-		uint16_t delta = currentTicks - previousTicks;
 		timing_samples[sample_idx] = delta;
-		sample_idx = (sample_idx + 1) % 5;
+		sample_idx = (sample_idx + 1) % 10;
 		
-		if (runs % 1000 == 0) {
+		if (runs % 100 == 0) {
 			*p_serial  << "Timing: ";
 			for (int i=0; i<10; i++) {
 				*p_serial << timing_samples[i] << " ";
 			}
 			*p_serial << endl;
 		}
-		*/
 		
 		switch (state) {
 			// Home right
 			case(0): 
 				linear_offset->put(0);
 				set_already = false;
+				integrated_error = 0.0f; // Reset integral
 				if (begin->get()) {
 					reset->put(0);
 					stop->put(0);
@@ -123,17 +119,12 @@ void task_system_controller::run(void) {
 				// Aim for the middle of the carriage
 				position_set = left_home / 2.0;
 				position_error = position_set - linear_position->get();
+				
 				integrated_error = integrated_error + position_error; 
 				
 				// P controller to get to middle position
 
 				motor_command->put((int16_t)(Kp * position_error + ((Ki * integrated_error))));
-				
-				/*
-				if (runs%100 == 0) {
-					*p_serial << "motor command: " << motor_command->get() << endl;
-				}
-				*/
 				
 				// Print out all of our linear control 
 				/*
@@ -173,6 +164,7 @@ void task_system_controller::run(void) {
 				}
 				
 				go->put(0);
+
 				// Atomic read of state to prevent race conditions
 				taskENTER_CRITICAL();
 				x[0] = linear_position->get();
@@ -180,6 +172,7 @@ void task_system_controller::run(void) {
 				x[2] = pendulum_encoder_radians->get();
 				x[3] = pendulum_encoder_w_radians->get();
 				taskEXIT_CRITICAL();
+
 				planner.plan(x);
 				
 				// Error handling for too great of angle

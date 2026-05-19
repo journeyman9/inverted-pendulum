@@ -49,6 +49,7 @@ void task_motor_command::run(void) {
 	TCC0.CTRLB |= TC0_CCAEN_bm | TC0_CCBEN_bm; // Enable output compare on channels A and B
 	
 	while(1) {
+		//portTickType workStart = xTaskGetTickCount();
 		
 		output = motor_command->get();
 		
@@ -65,6 +66,15 @@ void task_motor_command::run(void) {
 		/*
 		if (runs % 100 == 0) {
 			*p_serial << "output" << output << endl;
+		}
+		*/
+		
+		/*
+		portTickType workEnd = xTaskGetTickCount();
+        uint16_t work_duration = workEnd - workStart;
+
+		if (runs % 500 == 0) {
+			*p_serial << "MtrCmd: " << work_duration << " ticks" << endl;
 		}
 		*/
 		

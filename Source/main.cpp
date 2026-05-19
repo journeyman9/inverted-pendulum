@@ -165,10 +165,10 @@ int main (void)
 	// but it is desired to exercise the RTOS more thoroughly in this test program
 	new task_user ("UserInt", task_priority (0), 260, &ser_dev);
 
-	new task_motor_command ("MtrCmd", task_priority (6), 260, &ser_dev);
-	new task_system_controller ("SysCtrl", task_priority (5), 260, &ser_dev);
-	new task_pendulum_encoder ("EncPen", task_priority (4), 260, &ser_dev);
-	new task_motor_encoder ("EncMtr", task_priority (3), 260, &ser_dev);
+	new task_pendulum_encoder ("EncPen", task_priority (6), 260, &ser_dev);
+	new task_motor_encoder ("EncMtr", task_priority (5), 260, &ser_dev);
+	new task_system_controller ("SysCtrl", task_priority (4), 260, &ser_dev);
+	new task_motor_command ("MtrCmd", task_priority (3), 260, &ser_dev);
 	new task_limit_switch ("LeftSw", task_priority (2), 260, &ser_dev, (1<<0));
 	new task_limit_switch ("RightSw", task_priority (1), 260, &ser_dev, (1<<2));
 
