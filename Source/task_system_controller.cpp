@@ -41,6 +41,10 @@ void task_system_controller::run(void) {
 	// Make a variable which will hold times to use for precise task scheduling
 	portTickType previousTicks = xTaskGetTickCount ();
 	
+	uint16_t timing_samples[5] = {0};
+	uint8_t sample_idx = 0;
+	bool timing_initialized = false;
+	
 	Lqr controller;
 	Planner planner;
 	bool set_already = false;
@@ -49,6 +53,26 @@ void task_system_controller::run(void) {
 	float u = 0.0f;
 		
 	while(1) {
+		/*
+		currentTicks = xTaskGetTickCount();
+		if (!timing_initialized) {
+			previousTicks = currentTicks;
+			timing_initialized = true;
+		}
+		
+		uint16_t delta = currentTicks - previousTicks;
+		timing_samples[sample_idx] = delta;
+		sample_idx = (sample_idx + 1) % 5;
+		
+		if (runs % 1000 == 0) {
+			*p_serial  << "Timing: ";
+			for (int i=0; i<10; i++) {
+				*p_serial << timing_samples[i] << " ";
+			}
+			*p_serial << endl;
+		}
+		*/
+		
 		switch (state) {
 			// Home right
 			case(0): 
@@ -149,10 +173,13 @@ void task_system_controller::run(void) {
 				}
 				
 				go->put(0);
+				// Atomic read of state to prevent race conditions
+				taskENTER_CRITICAL();
 				x[0] = linear_position->get();
 				x[1] = linear_velocity->get();
 				x[2] = pendulum_encoder_radians->get();
 				x[3] = pendulum_encoder_w_radians->get();
+				taskEXIT_CRITICAL();
 				planner.plan(x);
 				
 				// Error handling for too great of angle
@@ -164,6 +191,7 @@ void task_system_controller::run(void) {
 				u = controller.calculate_action(x, x_r, position_set, angle_set);				
 				motor_command->put(u);
 				
+				/*
 				if (runs%100 == 0) {
 					char buf[6];
 					char buf2[6];
@@ -172,6 +200,7 @@ void task_system_controller::run(void) {
 					*p_serial << " Angle error: " << dtostrf(x[2] - 3.14159f, 0, 6, buf2);
 					*p_serial << " Motor u: " << dtostrf(u, 0, 6, buf3) << endl;
 				}
+				*/
 			
 				if (leftLimitSwitch->get() || rightLimitSwitch->get()) {
 					*p_serial << "LIMIT SWITCH HIT ERROR" << endl;

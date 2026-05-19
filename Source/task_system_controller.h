@@ -30,8 +30,9 @@ class task_system_controller : public frt_task{
 		
 		float left_home;
 		float position_set;
-		float position_error;
-		float integrated_error;
+		float position_error = 0.0f;
+		float integrated_error = 0.0f;
+		portTickType currentTicks;
 		float Kp = 6000;
 		float Ki = 3;
 		float angle_set; 
