@@ -56,23 +56,21 @@ void task_pendulum_encoder::run(void) {
 	
 	const float counts_per_rev = 1997.0f;
 	const float PI = 3.141592f;
-	const float dt = 0.001f;
+	//const float dt = 0.001f;
 	
 	float theta_unwrapped = 0;
 	float omega = 0;
-	/*
+
 	portTickType currentTicks;
 	portTickType lastTicks = previousTicks;
 	float dt;
-	*/
 
 	while(1) {
 		//portTickType workStart = xTaskGetTickCount();
-		/*
+		
 		currentTicks = xTaskGetTickCount();
 		dt = (float)(currentTicks - lastTicks) * portTICK_RATE_MS / 1000.0f;
 		lastTicks = currentTicks;
-		*/
 
 		raw_count = TCC1.CNT; 							// Read value from hardware
 		dcount_raw = raw_count - prev_raw_count;
@@ -113,7 +111,6 @@ void task_pendulum_encoder::run(void) {
 			*p_serial << "PendEnc: " << work_duration << " ticks" << endl;
 		}
 		*/
-		
 		// Increment counter for debugging
 		runs++;
 

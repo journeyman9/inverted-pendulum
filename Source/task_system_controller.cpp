@@ -53,6 +53,7 @@ void task_system_controller::run(void) {
 	float u = 0.0f;
 		
 	while(1) {
+		/*
 		currentTicks = xTaskGetTickCount();
 		uint32_t delta = currentTicks - lastMeasuredTicks;
 		lastMeasuredTicks = currentTicks;
@@ -67,6 +68,7 @@ void task_system_controller::run(void) {
 			}
 			*p_serial << endl;
 		}
+		*/
 		
 		switch (state) {
 			// Home right
