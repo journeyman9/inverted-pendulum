@@ -15,14 +15,18 @@ m2 = mr + ms # kg
 l = 0.3048 # m
 r = 0.0188 # m
 r3 = 0.0181 # m 
-L = (1 / (mr + ms)) * (mr * (l/2) + ms * l)
+L = (1 / (mr + ms)) * (mr * (l/2) + ms * l) # COM
 
-I2 = 1/3 * mr * l ** 2 + (2/5) * ms * r3 ** 2 + ms * l ** 2 - (m2 * L ** 2) # Subtracting to not double count
+Ipivot = 1/3 * mr * l ** 2 + (2/5) * ms * r3 ** 2 + ms * l ** 2
+I2 = Ipivot - (m2 * L ** 2) # Subtracting to not double count
 b = 1.0
-mp = 0.035 # kg
-Jp = 0.5 * mp * r ** 2
-Jm = 2.12e-5 + Jp # kg-m^2
-sigma = 1 + (Jm / (r ** 2 * (m1 + m2))) - ((m2 * L) ** 2 / ((m1 + m2) * (I2 + m2 * L ** 2)))
+m_pulley = 0.035 # kg
+J_pulley = 0.5 * m_pulley * r ** 2
+m_idler = 0.045 # kg Double check
+J_idler = 0.5 * m_idler * r ** 2
+Jm = 2.12e-5  # kg-m^2
+Jt = Jm + J_pulley + J_idler
+sigma = 1 + (Jt / (r ** 2 * (m1 + m2))) - ((m2 * L) ** 2 / ((m1 + m2) * (I2 + m2 * L ** 2)))
 g = 9.81 # m/s^2
 
 A = np.array(
@@ -30,8 +34,7 @@ A = np.array(
         [0, 1, 0, 0], 
         [0, (-1.0 / (sigma * (m1 + m2))) * ( Bm / (r ** 2 ) + (kt*kb)/(R * r ** 2) + b), (1.0 / (sigma * (m1 + m2))) * (m2 * L) ** 2 * g / (I2 + m2 * L ** 2), 0],
         [0, 0, 0, 1],
-        [0, (-1.0 / (sigma * (m1 + m2) * (I2 + m2 * L ** 2))) * ( m2 * L) * ( Bm / (r ** 2) + (kt * kb) / (R * r ** 2) + b), (1.0 / (sigma * (m1 + m2) * (I2 + m2 * L ** 2))) * (m2 * L * g) * (m1 + m2 + (Jm / (r ** 2))), 0]
-    ]
+        [0, (-1.0 / (sigma * (m1 + m2) * (I2 + m2 * L ** 2))) * ( m2 * L) * ( Bm / (r ** 2) + (kt * kb) / (R * r ** 2) + b), (1.0 / (sigma * (m1 + m2) * (I2 + m2 * L ** 2))) * (m2 * L * g) * (m1 + m2 + (Jt / (r ** 2))), 0] ]
 )
 
 B = np.array([
