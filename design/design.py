@@ -22,7 +22,7 @@ I2 = Ipivot - (m2 * L ** 2) # Subtracting to not double count
 b = 1.0
 m_pulley = 0.035 # kg
 J_pulley = 0.5 * m_pulley * r ** 2
-m_idler = 0.045 # kg Double check
+m_idler = 0.048 #
 J_idler = 0.5 * m_idler * r ** 2
 Jm = 2.12e-5  # kg-m^2
 Jt = Jm + J_pulley + J_idler
@@ -93,6 +93,7 @@ plt.show()
 
 
 # LQR
+'''
 Q = np.array(
     [
         [10, 0, 0, 0],
@@ -103,19 +104,18 @@ Q = np.array(
 )
 
 R = 100
+'''
 
-"""
 Q = np.array(
     [
-        [1 / (0.4 ** 2), 0, 0, 0],
-        [0, 1 / (0.3 ** 2), 0, 0],
-        [0, 0, 1 / (0.384 ** 2), 0],
-        [0, 0, 0, 1 / (3.9 ** 2)],
+        [10 / (0.4), 0, 0, 0],
+        [0, 1 / (0.3), 0, 0],
+        [0, 0, 100 / (0.384), 0],
+        [0, 0, 0, 1 / (3.9)],
     ]
 )
 
-R = 1 / (24 ** 2)
-"""
+R = 100 / (8)
 
 K, S, E = ct.lqr(sys, Q, R)
 
