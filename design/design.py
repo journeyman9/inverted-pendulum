@@ -49,25 +49,23 @@ B = np.array([
 
 # print("Controllable? ", np.linalg.matrix_rank(ct.ctrb(A, B)) == 4)
 
-# Plot pole zero
 C = np.eye(4)
 D = np.zeros((4, 1))
 sys = ct.ss(A, B, C, D)
-
-# print("Eigenvalues OL")
-values, vectors = np.linalg.eig(A)
-# print(values)
 
 # Discrete 
 dt = 0.001
 dsys = ct.c2d(sys, dt, method='zoh')
 
-# Print poles and zeros before pole placement  
 """
-poles_before = ct.poles(sys)  
-zeros_before = ct.zeros(sys)  
-print("Poles before pole placement:", poles_before)  
-print("Zeros before pole placement:", zeros_before)
+wn = np.sqrt((m2 * g * L) / (I2 + m2*L**2))
+print("Wn = {} rad/s".format(wn))
+
+print("OL: A")
+values, vectors = np.linalg.eig(A)
+np.set_printoptions(precision=4, suppress=True)
+for i in range(len(values)):
+    print("x{} approx e ^ ({:.2f})t * {}".format(i, values[i], vectors[:, i]))
 
 # Plot Pole-Zero Map
 plt.figure()
@@ -75,9 +73,19 @@ ct.pzmap(sys, title='Pole-Zero Map Before Pole Placement')
 plt.show()
 
 # Pole Placement
-K = ct.place(A, B, [-1, -2, -3])
-#K = ct.place(A, B, [-5-1j, -5+1j, -2])
-print("K: ", K)
+# conservative
+#poles = [-3+2j, -3-2j, -7, -9]
+
+# more centered/faster
+#poles = [-4+3j, -4-3j, -9, -12]
+
+# aggressive
+#poles = [-5+3j, -5-3j, -10, -14]
+
+# Design from Wn and zeta
+poles = [-7+7j, -7-7j, -15, -20]
+
+K = ct.place(A, B, poles)
 
 # New A matrix after pole placement
 A_new = A - B @ K
@@ -85,12 +93,13 @@ A_new = A - B @ K
 # Create new state space system with new A matrix
 sys_new = ct.ss(A_new, B, C, D)
 
+eigvals, eigvecs = np.linalg.eig(A_new)
+
 # Plot Pole-Zero Map After Pole Placement
 plt.figure()
 ct.pzmap(sys_new, title='Pole-Zero Map After Pole Placement')
 plt.show()
 """
-
 
 # LQR
 '''
@@ -105,7 +114,7 @@ Q = np.array(
 
 R = 100
 '''
-
+'''
 Q = np.array(
     [
         [10 / (0.4), 0, 0, 0],
@@ -116,15 +125,38 @@ Q = np.array(
 )
 
 R = 100 / (8)
+'''
+'''
+Q = np.array(
+    [
+        [1000, 0, 0, 0],
+        [0, 1, 0, 0],
+        [0, 0, 100, 0],
+        [0, 0, 0, 1],
+    ]
+)
+
+R = 40
+'''
+Q = np.array(
+    [
+        [10, 0, 0, 0],
+        [0, 1, 0, 0],
+        [0, 0, 10, 0],
+        [0, 0, 0, 1],
+    ]
+)
+
+R = 1
 
 K, S, E = ct.lqr(sys, Q, R)
 
+print("CL: A-BK")
 values, vectors = np.linalg.eig(A - B@K)
 np.set_printoptions(precision=4, suppress=True)
 for i in range(len(values)):
     print("x{} approx e ^ ({:.2f})t * {}".format(i, values[i], vectors[:, i]))
  
-
 db_path = os.path.join(os.path.dirname(__file__), "k_q_values.json")
 if os.path.exists(db_path):
     with open(db_path, "r") as f:
@@ -161,4 +193,5 @@ with open(db_path, "w") as f:
 
 np.set_printoptions(precision=6, suppress=True)
 K = K[0]
+print()
 print("K: [{:.6f}, {:.6f}, {:.6f}, {:.6f}]".format(K[0], K[1], K[2], K[3]))
