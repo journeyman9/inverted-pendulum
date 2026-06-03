@@ -68,9 +68,9 @@ for i in range(len(values)):
     print("x{} approx e ^ ({:.2f})t * {}".format(i, values[i], vectors[:, i]))
 
 # Plot Pole-Zero Map
-plt.figure()
-ct.pzmap(sys, title='Pole-Zero Map Before Pole Placement')
-plt.show()
+#plt.figure()
+#ct.pzmap(sys, title='Pole-Zero Map Before Pole Placement')
+#plt.show()
 
 # Pole Placement
 # conservative
@@ -83,7 +83,12 @@ plt.show()
 #poles = [-5+3j, -5-3j, -10, -14]
 
 # Design from Wn and zeta
-poles = [-7+7j, -7-7j, -15, -20]
+#poles = [-5.208+1.711j, -5.208-1.711j, -1, -30] # zeta=0.95, wn=5.482
+poles = [-4.557+1.498j, -4.557-1.498j, -1, -20] # zeta=0.95, wn=4.797 try this
+#poles = [-7.812+2.568j, -7.812-2.568j, -1, -5] # zeta=0.95 , wn=8.223
+#poles = [-7.812+10.416j, -7.812-10.416j, -1, -2] # zeta=0.6, wn=13.02
+#poles = [-5.208+6.944j, -5.208-6.944j, -1, -2] # zeta=0.6, wn=8.68
+#poles = [-5+3.75j, -5-3.75j, -1, -20] # zeta=0.8, wn=6.25
 
 K = ct.place(A, B, poles)
 
@@ -96,9 +101,9 @@ sys_new = ct.ss(A_new, B, C, D)
 eigvals, eigvecs = np.linalg.eig(A_new)
 
 # Plot Pole-Zero Map After Pole Placement
-plt.figure()
-ct.pzmap(sys_new, title='Pole-Zero Map After Pole Placement')
-plt.show()
+#plt.figure()
+#ct.pzmap(sys_new, title='Pole-Zero Map After Pole Placement')
+#plt.show()
 """
 
 # LQR
@@ -156,7 +161,8 @@ values, vectors = np.linalg.eig(A - B@K)
 np.set_printoptions(precision=4, suppress=True)
 for i in range(len(values)):
     print("x{} approx e ^ ({:.2f})t * {}".format(i, values[i], vectors[:, i]))
- 
+
+''' 
 db_path = os.path.join(os.path.dirname(__file__), "k_q_values.json")
 if os.path.exists(db_path):
     with open(db_path, "r") as f:
@@ -190,6 +196,7 @@ def _json_compact(obj, indent=0):
 
 with open(db_path, "w") as f:
     f.write(_json_compact(db))
+'''
 
 np.set_printoptions(precision=6, suppress=True)
 K = K[0]
