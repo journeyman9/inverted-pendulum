@@ -57,7 +57,6 @@ sys = ct.ss(A, B, C, D)
 dt = 0.001
 dsys = ct.c2d(sys, dt, method='zoh')
 
-"""
 wn = np.sqrt((m2 * g * L) / (I2 + m2*L**2))
 print("Wn = {} rad/s".format(wn))
 
@@ -81,14 +80,15 @@ for i in range(len(values)):
 
 # aggressive
 #poles = [-5+3j, -5-3j, -10, -14]
+poles = [-5+2j, -5-2j, -10, -11]
 
 # Design from Wn and zeta
-#poles = [-5.208+1.711j, -5.208-1.711j, -1, -30] # zeta=0.95, wn=5.482
-poles = [-4.557+1.498j, -4.557-1.498j, -1, -20] # zeta=0.95, wn=4.797 try this
-#poles = [-7.812+2.568j, -7.812-2.568j, -1, -5] # zeta=0.95 , wn=8.223
-#poles = [-7.812+10.416j, -7.812-10.416j, -1, -2] # zeta=0.6, wn=13.02
-#poles = [-5.208+6.944j, -5.208-6.944j, -1, -2] # zeta=0.6, wn=8.68
-#poles = [-5+3.75j, -5-3.75j, -1, -20] # zeta=0.8, wn=6.25
+#poles = [-5.208+1.711j, -5.208-1.711j, -1, -30] # zeta=0.95, wn=5.482 (better centering, needs help balancing)
+#poles = [-4.557+1.498j, -4.557-1.498j, -1, -20] # zeta=0.95, wn=4.797 try this
+#poles = [-7.812+2.568j, -7.812-2.568j, -1, -5] # zeta=0.95 , wn=8.223 (terrible, not good at either task)
+#poles = [-7.812+10.416j, -7.812-10.416j, -1, -2] # zeta=0.6, wn=13.02 (sluggish)
+#poles = [-5.208+6.944j, -5.208-6.944j, -1, -2] # zeta=0.6, wn=8.68 (terrible, hardly moves)
+#poles = [-5+3.75j, -5-3.75j, -1, -20] # zeta=0.8, wn=6.25 (stays upright, but doesnt center)
 
 K = ct.place(A, B, poles)
 
@@ -104,22 +104,9 @@ eigvals, eigvecs = np.linalg.eig(A_new)
 #plt.figure()
 #ct.pzmap(sys_new, title='Pole-Zero Map After Pole Placement')
 #plt.show()
-"""
 
 # LQR
-'''
-Q = np.array(
-    [
-        [10, 0, 0, 0],
-        [0, 1, 0, 0],
-        [0, 0, 100, 0],
-        [0, 0, 0, 1],
-    ]
-)
-
-R = 100
-'''
-'''
+"""
 Q = np.array(
     [
         [10 / (0.4), 0, 0, 0],
@@ -130,7 +117,7 @@ Q = np.array(
 )
 
 R = 100 / (8)
-'''
+"""
 '''
 Q = np.array(
     [
@@ -143,6 +130,7 @@ Q = np.array(
 
 R = 40
 '''
+'''
 Q = np.array(
     [
         [10, 0, 0, 0],
@@ -153,8 +141,9 @@ Q = np.array(
 )
 
 R = 1
+'''
 
-K, S, E = ct.lqr(sys, Q, R)
+#K, S, E = ct.lqr(sys, Q, R)
 
 print("CL: A-BK")
 values, vectors = np.linalg.eig(A - B@K)

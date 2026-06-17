@@ -2552,16 +2552,16 @@ Disassembly of section .text:
     18cc:	c3 01       	movw	r24, r6
     18ce:	b2 01       	movw	r22, r4
     18d0:	0e 94 bc 22 	call	0x4578	; 0x4578 <__subsf3>
-    18d4:	27 ef       	ldi	r18, 0xF7	; 247
-    18d6:	34 e0       	ldi	r19, 0x04	; 4
-    18d8:	45 eb       	ldi	r20, 0xB5	; 181
-    18da:	5f eb       	ldi	r21, 0xBF	; 191
+    18d4:	2c e8       	ldi	r18, 0x8C	; 140
+    18d6:	32 e3       	ldi	r19, 0x32	; 50
+    18d8:	4f e3       	ldi	r20, 0x3F	; 63
+    18da:	51 ec       	ldi	r21, 0xC1	; 193
     18dc:	0e 94 8d 24 	call	0x491a	; 0x491a <__mulsf3>
     18e0:	2b 01       	movw	r4, r22
     18e2:	3c 01       	movw	r6, r24
-    18e4:	2f ec       	ldi	r18, 0xCF	; 207
-    18e6:	31 ec       	ldi	r19, 0xC1	; 193
-    18e8:	44 e0       	ldi	r20, 0x04	; 4
+    18e4:	21 e0       	ldi	r18, 0x01	; 1
+    18e6:	3b e5       	ldi	r19, 0x5B	; 91
+    18e8:	44 e2       	ldi	r20, 0x24	; 36
     18ea:	51 ec       	ldi	r21, 0xC1	; 193
     18ec:	c5 01       	movw	r24, r10
     18ee:	b4 01       	movw	r22, r8
@@ -2580,9 +2580,9 @@ Disassembly of section .text:
     190c:	c7 01       	movw	r24, r14
     190e:	b6 01       	movw	r22, r12
     1910:	0e 94 bc 22 	call	0x4578	; 0x4578 <__subsf3>
-    1914:	23 e3       	ldi	r18, 0x33	; 51
-    1916:	37 e1       	ldi	r19, 0x17	; 23
-    1918:	46 e8       	ldi	r20, 0x86	; 134
+    1914:	25 e6       	ldi	r18, 0x65	; 101
+    1916:	32 e6       	ldi	r19, 0x62	; 98
+    1918:	4a e8       	ldi	r20, 0x8A	; 138
     191a:	51 e4       	ldi	r21, 0x41	; 65
     191c:	0e 94 8d 24 	call	0x491a	; 0x491a <__mulsf3>
     1920:	9b 01       	movw	r18, r22
@@ -2592,9 +2592,9 @@ Disassembly of section .text:
     1928:	0e 94 bd 22 	call	0x457a	; 0x457a <__addsf3>
     192c:	6b 01       	movw	r12, r22
     192e:	7c 01       	movw	r14, r24
-    1930:	24 ef       	ldi	r18, 0xF4	; 244
-    1932:	30 ec       	ldi	r19, 0xC0	; 192
-    1934:	4e e1       	ldi	r20, 0x1E	; 30
+    1930:	24 ed       	ldi	r18, 0xD4	; 212
+    1932:	37 e4       	ldi	r19, 0x47	; 71
+    1934:	49 e2       	ldi	r20, 0x29	; 41
     1936:	50 e4       	ldi	r21, 0x40	; 64
     1938:	69 85       	ldd	r22, Y+9	; 0x09
     193a:	7a 85       	ldd	r23, Y+10	; 0x0a
@@ -5172,14 +5172,14 @@ void *pvReturn = NULL;
 				}
 				
 				xFreeBytesRemaining -= pxBlock->xBlockSize;
-    2e6a:	80 91 00 20 	lds	r24, 0x2000	; 0x802000 <__data_start>
-    2e6e:	90 91 01 20 	lds	r25, 0x2001	; 0x802001 <__data_start+0x1>
+    2e6a:	80 91 00 20 	lds	r24, 0x2000	; 0x802000 <__DATA_REGION_ORIGIN__>
+    2e6e:	90 91 01 20 	lds	r25, 0x2001	; 0x802001 <__DATA_REGION_ORIGIN__+0x1>
     2e72:	22 81       	ldd	r18, Z+2	; 0x02
     2e74:	33 81       	ldd	r19, Z+3	; 0x03
     2e76:	82 1b       	sub	r24, r18
     2e78:	93 0b       	sbc	r25, r19
-    2e7a:	80 93 00 20 	sts	0x2000, r24	; 0x802000 <__data_start>
-    2e7e:	90 93 01 20 	sts	0x2001, r25	; 0x802001 <__data_start+0x1>
+    2e7a:	80 93 00 20 	sts	0x2000, r24	; 0x802000 <__DATA_REGION_ORIGIN__>
+    2e7e:	90 93 01 20 	sts	0x2001, r25	; 0x802001 <__DATA_REGION_ORIGIN__+0x1>
     2e82:	08 c0       	rjmp	.+16     	; 0x2e94 <pvPortMalloc+0x124>
 
 void *pvPortMalloc( size_t xWantedSize )
@@ -5268,14 +5268,14 @@ xBlockLink *pxLink;
     2ee0:	0d 93       	st	X+, r16
     2ee2:	1c 93       	st	X, r17
 			xFreeBytesRemaining += pxLink->xBlockSize;
-    2ee4:	20 91 00 20 	lds	r18, 0x2000	; 0x802000 <__data_start>
-    2ee8:	30 91 01 20 	lds	r19, 0x2001	; 0x802001 <__data_start+0x1>
+    2ee4:	20 91 00 20 	lds	r18, 0x2000	; 0x802000 <__DATA_REGION_ORIGIN__>
+    2ee8:	30 91 01 20 	lds	r19, 0x2001	; 0x802001 <__DATA_REGION_ORIGIN__+0x1>
     2eec:	8a 81       	ldd	r24, Y+2	; 0x02
     2eee:	9b 81       	ldd	r25, Y+3	; 0x03
     2ef0:	82 0f       	add	r24, r18
     2ef2:	93 1f       	adc	r25, r19
-    2ef4:	80 93 00 20 	sts	0x2000, r24	; 0x802000 <__data_start>
-    2ef8:	90 93 01 20 	sts	0x2001, r25	; 0x802001 <__data_start+0x1>
+    2ef4:	80 93 00 20 	sts	0x2000, r24	; 0x802000 <__DATA_REGION_ORIGIN__>
+    2ef8:	90 93 01 20 	sts	0x2001, r25	; 0x802001 <__DATA_REGION_ORIGIN__+0x1>
 		}
 		xTaskResumeAll();
     2efc:	0e 94 ee 1e 	call	0x3ddc	; 0x3ddc <xTaskResumeAll>
@@ -5294,8 +5294,8 @@ size_t xPortGetFreeHeapSize( void )
 {
 	return xFreeBytesRemaining;
 }
-    2f0a:	80 91 00 20 	lds	r24, 0x2000	; 0x802000 <__data_start>
-    2f0e:	90 91 01 20 	lds	r25, 0x2001	; 0x802001 <__data_start+0x1>
+    2f0a:	80 91 00 20 	lds	r24, 0x2000	; 0x802000 <__DATA_REGION_ORIGIN__>
+    2f0e:	90 91 01 20 	lds	r25, 0x2001	; 0x802001 <__DATA_REGION_ORIGIN__+0x1>
     2f12:	08 95       	ret
 
 00002f14 <vListInitialise>:
