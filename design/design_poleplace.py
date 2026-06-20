@@ -59,7 +59,7 @@ K = ct.place(A, B, poles)
 #plt.show()
 
 print("\nCL: A-BK")
-values, vectors = np.linalg.eig(A - B@K)
+values, vectors = np.linalg.eig(A - B @ K)
 np.set_printoptions(precision=4, suppress=True)
 for i in range(len(values)):
     print("x{} approx e ^ ({:.2f})t * {}".format(i, values[i], vectors[:, i]))
@@ -70,5 +70,41 @@ print("\nK: [{:.6f}, {:.6f}, {:.6f}, {:.6f}]".format(K[0], K[1], K[2], K[3]))
 
 # Evaluate actuator saturation
 x0 = [0.2, 0, 0.0873, 0]
-u = K@x0
+u = K @ x0
 print("\nu: {:.6f}".format(u))
+
+# Step 1: settling time per eigenvalue
+Ts_modes = 4 / np.abs(np.real(values))
+
+# Step 2: sort by dominance (slowest → fastest)
+idx_sorted = np.argsort(np.abs(np.real(values)))  # small real part = dominant
+
+def classify_mode(v):
+    cart = np.abs(v[0]) + np.abs(v[1])
+    pend = np.abs(v[2]) + np.abs(v[3])
+    return "cart-dominant" if cart > pend else "pendulum-dominant"
+
+rows = []
+
+for i in idx_sorted:
+    lam = values[i]
+    v = vectors[:, i]
+
+    sigma = np.real(lam)
+
+    # settling time from eigenvalue (mode-based)
+    Ts = np.inf if sigma == 0 else 4 / np.abs(sigma)
+
+    rows.append({
+        "Eigenvalue": lam,
+        "Settling Time (s)": Ts,
+        "Mode Type": classify_mode(v)
+    })
+
+mode_df = pd.DataFrame(rows)
+
+mode_df["Eigenvalue (real)"] = mode_df["Eigenvalue"].apply(np.real)
+mode_df["Eigenvalue (imag)"] = mode_df["Eigenvalue"].apply(np.imag)
+mode_df = mode_df.drop(columns=["Eigenvalue"])
+
+print("\n", mode_df.to_string(index=False, float_format=lambda x: f"{x:0.3f}"))

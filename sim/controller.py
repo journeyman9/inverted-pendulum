@@ -28,7 +28,4 @@ class Controller():
             u = -self.sat_limit
         else:
             pass
-        
-        print(u)
-
         return float(u)
