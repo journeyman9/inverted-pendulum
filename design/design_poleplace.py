@@ -2,6 +2,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import control as ct
 from model import A, B, C, D, wn_pend, sys, dsys
+import pandas as pd
 
 print("Wn = {} rad/s".format(wn_pend))
 
@@ -73,16 +74,9 @@ x0 = [0.2, 0, 0.0873, 0]
 u = K @ x0
 print("\nu: {:.6f}".format(u))
 
-# Step 1: settling time per eigenvalue
-Ts_modes = 4 / np.abs(np.real(values))
+idx_sorted = np.argsort(np.abs(np.real(values)))
 
-# Step 2: sort by dominance (slowest → fastest)
-idx_sorted = np.argsort(np.abs(np.real(values)))  # small real part = dominant
-
-def classify_mode(v):
-    cart = np.abs(v[0]) + np.abs(v[1])
-    pend = np.abs(v[2]) + np.abs(v[3])
-    return "cart-dominant" if cart > pend else "pendulum-dominant"
+state_names = ["x", "xdot", "theta", "thetadot"]
 
 rows = []
 
@@ -91,20 +85,34 @@ for i in idx_sorted:
     v = vectors[:, i]
 
     sigma = np.real(lam)
-
-    # settling time from eigenvalue (mode-based)
     Ts = np.inf if sigma == 0 else 4 / np.abs(sigma)
 
+    # eigenvector energy contribution
+    energy = np.abs(v)**2
+    energy = energy / np.sum(energy)
+
+    # NEW: dominant state index
+    max_state_idx = np.argmax(energy)
+    max_state = state_names[max_state_idx]
+
     rows.append({
-        "Eigenvalue": lam,
+        "Eigenvalue (real)": np.real(lam),
+        "Eigenvalue (imag)": np.imag(lam),
         "Settling Time (s)": Ts,
-        "Mode Type": classify_mode(v)
+
+        #"x contribution": energy[0],
+        #"xdot contribution": energy[1],
+        #"theta contribution": energy[2],
+        #"thetadot contribution": energy[3],
+
+        "Most Contributing State": max_state
     })
 
 mode_df = pd.DataFrame(rows)
 
-mode_df["Eigenvalue (real)"] = mode_df["Eigenvalue"].apply(np.real)
-mode_df["Eigenvalue (imag)"] = mode_df["Eigenvalue"].apply(np.imag)
-mode_df = mode_df.drop(columns=["Eigenvalue"])
-
-print("\n", mode_df.to_string(index=False, float_format=lambda x: f"{x:0.3f}"))
+print("\n",
+    mode_df.to_string(
+        index=False,
+        float_format=lambda x: f"{x:0.3f}"
+    )
+)
