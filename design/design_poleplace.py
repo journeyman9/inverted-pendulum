@@ -20,7 +20,7 @@ for i in range(len(values)):
 # Pole Placement
 #poles = [-5+3j, -5-3j, -10, -14] # Doing it, but occasionally unstable
 #poles = [-5+2j, -5-2j, -10, -11] # Best right now
-#poles = [-7, -24.92, -6.36, -6.51] # Match equally fast unstable pole, move integrator faster
+#poles = [-7, -24.92, -6.36, -6.51] # Match equally fast unstable pole, move integrator faster. Try this.
 #poles = [-3+12j, -3-12j, -2.4+2j, -2.4-2j] # Should it have two conjugate poles?
 
 # Design from Wn and zeta
@@ -32,8 +32,8 @@ for i in range(len(values)):
 #poles = [-5+3.75j, -5-3.75j, -1, -20] # zeta=0.8, wn=6.25 (stays upright, but doesnt center)
 #poles = [-2+3.9040j, -2-3.9040j, -5, -10] # zeta=0.4559 20% OS, wn=4.38664 settling time 2s
 
-settling_time_target = 2.0 # 4.0
-overshoot_target = 20.0 # 10.0
+settling_time_target = 0.6 # 2.0, 4.0
+overshoot_target = 4.33 # 20.0, 10.0
 
 # Dominant pole real
 dominant_real = -4.0 / settling_time_target
@@ -43,8 +43,12 @@ if PO <= 0:
     zeta = 1.0
 else:
     zeta = -np.log(PO) / np.sqrt(np.pi**2 + (np.log(PO))**2)
+    
+print("\nzeta: {:.3f}".format(zeta))
 
 wn = abs(dominant_real) / zeta
+print("\nWn: {:.3f}".format(wn))
+
 dominant_pair = [complex(dominant_real, wn * np.sqrt(1 - zeta**2)),
                  complex(dominant_real, -wn * np.sqrt(1 - zeta**2))]
 
