@@ -5,7 +5,7 @@ from model import A, B, C, D, sys, dsys
 import pandas as pd
 
 # LQR
-'''
+''' Something here
 Q = np.array(
     [
         [500, 0, 0, 0],
@@ -15,9 +15,9 @@ Q = np.array(
     ]
 )
 
-R = 1
+R = 75
 '''
-'''
+''' Stable but not centering
 Q = np.array(
     [
         [177, 0, 0, 0],
@@ -27,9 +27,9 @@ Q = np.array(
     ]
 )
 
-R = 0.25
+R = 150
 '''
-'''
+''' Smooth but not centering
 Q = np.array(
     [
         [1 / (0.3**2), 0, 0, 0],
@@ -38,9 +38,9 @@ Q = np.array(
         [0, 0, 0, 0],
     ]
 )
-R = 1 / (6 **2)
+R = 100 / (6 **2)
 '''
-'''
+''' Smooth but not centering
 Q = np.array(
     [
         [1 / (0.2**2), 0, 0, 0],
@@ -50,11 +50,11 @@ Q = np.array(
     ]
 )
 
-R = 1 / (12 **2)
+R = 100 / (12 ** 2)
 '''
 
 # Brysons
-'''
+''' Did not work well
 Q = np.array(
     [
         [1/(0.1**2), 0, 0, 0],
@@ -65,7 +65,7 @@ Q = np.array(
 )
 R = 1 / (6 **2)
 '''
-'''
+''' On this one now
 Q = np.array(
     [
         [1/(0.5**2), 0, 0, 0],
@@ -148,8 +148,7 @@ Q = np.array(
 )
 R = 1000 / (12 ** 2)
 '''
-
-''' Try this
+''' Try this - did not work well
 Q = np.array(
     [
         [100/(0.1**2), 0, 0, 0],
@@ -172,6 +171,7 @@ Q = np.array(
 )
 R = 10000 / (12 ** 2)
 '''
+''' Did not work well
 Q = np.array(
     [
         [10000/(0.05**2), 0, 0, 0],
@@ -181,6 +181,7 @@ Q = np.array(
     ]
 )
 R = 100000 / (12 ** 2)
+'''
 
 K, S, E = ct.lqr(sys, Q, R)
 

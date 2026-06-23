@@ -19,21 +19,17 @@ for i in range(len(values)):
 
 # Pole Placement
 #poles = [-5+3j, -5-3j, -10, -14] # Doing it, but occasionally unstable
-#poles = [-5+2j, -5-2j, -10, -11] # Best right now
-#poles = [-7, -24.92, -6.36, -6.51] # Match equally fast unstable pole, move integrator faster. Try this.
-#poles = [-3+12j, -3-12j, -2.4+2j, -2.4-2j] # Should it have two conjugate poles?
+poles = [-5+2j, -5-2j, -10, -11] # First gains that worked
+#poles = [-4.55+4.55j, -4.55-4.55j, -9.65+7.75j, -9.65-7.75j]
 
 # Design from Wn and zeta
-#poles = [-5.208+1.711j, -5.208-1.711j, -1, -30] # zeta=0.95, wn=5.482 (better centering, needs help balancing)
-#poles = [-4.557+1.498j, -4.557-1.498j, -1, -20] # zeta=0.95, wn=4.797 try this
-#poles = [-7.812+2.568j, -7.812-2.568j, -1, -5] # zeta=0.95 , wn=8.223 (terrible, not good at either task)
-#poles = [-7.812+10.416j, -7.812-10.416j, -1, -2] # zeta=0.6, wn=13.02 (sluggish)
-#poles = [-5.208+6.944j, -5.208-6.944j, -1, -2] # zeta=0.6, wn=8.68 (terrible, hardly moves)
-#poles = [-5+3.75j, -5-3.75j, -1, -20] # zeta=0.8, wn=6.25 (stays upright, but doesnt center)
-#poles = [-2+3.9040j, -2-3.9040j, -5, -10] # zeta=0.4559 20% OS, wn=4.38664 settling time 2s
+# poles = [] settling time 0.7, overshoot target 0.001
+# poles = [] settling time 0.8, overshoot target 1
+# poles = [] settling time 0.9, overshoot target 4.33
+# poles = [] settling time 0.88, overshoot target 4.33
 
-settling_time_target = 0.6 # 2.0, 4.0
-overshoot_target = 4.33 # 20.0, 10.0
+settling_time_target = 0.88
+overshoot_target = 4.33
 
 # Dominant pole real
 dominant_real = -4.0 / settling_time_target
