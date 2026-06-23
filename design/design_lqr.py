@@ -5,7 +5,6 @@ from model import A, B, C, D, sys, dsys
 import pandas as pd
 
 # LQR
-''' Something here
 Q = np.array(
     [
         [500, 0, 0, 0],
@@ -16,7 +15,6 @@ Q = np.array(
 )
 
 R = 75
-'''
 ''' Stable but not centering
 Q = np.array(
     [
@@ -65,18 +63,18 @@ Q = np.array(
 )
 R = 1 / (6 **2)
 '''
-''' On this one now
+''' Something here
 Q = np.array(
     [
-        [1/(0.5**2), 0, 0, 0],
+        [750/(0.5**2), 0, 0, 0],
         [0, 1, 0, 0],
         [0, 0, 1/(0.1 ** 2), 0],
         [0, 0, 0, 1],
     ]
 )
-R = 0.1
+R = 50
 '''
-'''
+''' Stable not centering
 Q = np.array(
     [
         [800, 0, 0, 0],
@@ -86,9 +84,9 @@ Q = np.array(
     ]
 )
 
-R = 1
+R = 100
 '''
-'''
+''' Stable not centering
 Q = np.array(
     [
         [10000, 0, 0, 0],
@@ -98,9 +96,9 @@ Q = np.array(
     ]
 )
 
-R = 10
+R = 200
 '''
-'''
+''' Stable and wants to center, but not enough
 Q = np.array(
     [
         [23019, 0, 0, 0],
@@ -110,9 +108,9 @@ Q = np.array(
     ]
 )
 
-R = 1
+R = 300
 '''
-'''
+''' Stable but not centering
 Q = np.array(
     [
         [500, 0, 0, 0],
@@ -122,9 +120,9 @@ Q = np.array(
     ]
 )
 
-R = 1
+R = 75
 '''
-'''
+''' Not centering enough
 Q = np.array(
     [
         [386, 0, 0, 0],
@@ -134,10 +132,9 @@ Q = np.array(
     ]
 )
 
-R = 0.003
+R = 10
 '''
-
-''' Try this
+''' Not centering enough
 Q = np.array(
     [
         [100/(0.1**2), 0, 0, 0],
@@ -146,9 +143,9 @@ Q = np.array(
         [0, 0, 0, 0.001/(0.05**2)],
     ]
 )
-R = 1000 / (12 ** 2)
+R = 20000 / (12 ** 2)
 '''
-''' Try this - did not work well
+''' Not centering enough
 Q = np.array(
     [
         [100/(0.1**2), 0, 0, 0],
@@ -157,10 +154,9 @@ Q = np.array(
         [0, 0, 0, 0.001/(0.05**2)],
     ]
 )
-R = 1000 / (12 ** 2)
+R = 20000 / (12 ** 2)
 '''
-
-''' Try this
+''' Not centering enough
 Q = np.array(
     [
         [10000/(0.1**2), 0, 0, 0],
@@ -169,9 +165,9 @@ Q = np.array(
         [0, 0, 0, 1/(0.05**2)],
     ]
 )
-R = 10000 / (12 ** 2)
+R = 2000000 / (12 ** 2)
 '''
-''' Did not work well
+''' Not centering enough
 Q = np.array(
     [
         [10000/(0.05**2), 0, 0, 0],
@@ -180,7 +176,7 @@ Q = np.array(
         [0, 0, 0, 1/(0.5**2)],
     ]
 )
-R = 100000 / (12 ** 2)
+R = 10000000 / (12 ** 2)
 '''
 
 K, S, E = ct.lqr(sys, Q, R)
