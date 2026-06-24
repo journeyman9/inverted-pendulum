@@ -4,7 +4,25 @@ import control as ct
 from model import A, B, C, D, sys, dsys
 import pandas as pd
 
+# Calculate reasonable max values for velocities
+print("\nOL: A")
+values, vectors = np.linalg.eig(A)
+np.set_printoptions(precision=4, suppress=True)
+for i in range(len(values)):
+    print("x{} approx e ^ ({:.2f})t * {}".format(i, values[i], vectors[:, i]))
+
+th_max = 0.1   
+thd_max = 6.51*th_max
+#print("\nthd_max: ", thd_max)
+
+x_max = 0.1
+time_recover = 0.4
+xd_max = 0.2 / time_recover # Track limited, zero
+#print("\nxd_max: ", xd_max)
+
+
 # LQR
+''' Something here
 Q = np.array(
     [
         [500, 0, 0, 0],
@@ -15,6 +33,7 @@ Q = np.array(
 )
 
 R = 75
+'''
 ''' Stable but not centering
 Q = np.array(
     [
@@ -38,7 +57,7 @@ Q = np.array(
 )
 R = 100 / (6 **2)
 '''
-''' Smooth but not centering
+''' Smooth but not centering (two conjugates)
 Q = np.array(
     [
         [1 / (0.2**2), 0, 0, 0],
@@ -52,16 +71,16 @@ R = 100 / (12 ** 2)
 '''
 
 # Brysons
-''' Did not work well
+''' Grid search 
 Q = np.array(
     [
-        [1/(0.1**2), 0, 0, 0],
-        [0, 1/(0.1**2), 0, 0],
-        [0, 0, 1/(0.05 ** 2), 0],
-        [0, 0, 0, 1/(0.05 **2)],
+        [250/(0.1**2), 0, 0, 0],
+        [0, 0.5/(0.1**2), 0, 0],
+        [0, 0, 0.5/(0.05 ** 2), 0],
+        [0, 0, 0, 0.1/(0.05 **2)],
     ]
 )
-R = 1 / (6 **2)
+R = 800 / (6 **2)
 '''
 ''' Something here
 Q = np.array(
@@ -145,6 +164,7 @@ Q = np.array(
 )
 R = 20000 / (12 ** 2)
 '''
+
 ''' Not centering enough
 Q = np.array(
     [
@@ -179,9 +199,103 @@ Q = np.array(
 R = 10000000 / (12 ** 2)
 '''
 
+''' Grid search 
+'''
+Q = np.array(
+    [
+        [500/(0.2**2), 0, 0, 0],
+        [0, 0.5/(0.2**2), 0, 0],
+        [0, 0, 0.5/(0.0873 ** 2), 0],
+        [0, 0, 0, 0.1/(0.0873 **2)],
+    ]
+)
+R = 800 / (6 **2)
+'''
+Q = np.array(
+    [
+        [750/(0.2**2), 0, 0, 0],
+        [0, 0.5/(0.2**2), 0, 0],
+        [0, 0, 0.5/(0.0873 ** 2), 0],
+        [0, 0, 0, 0.1/(0.0873 **2)],
+    ]
+)
+R = 600 / (4 **2)
+
+Q = np.array(
+    [
+        [1000/(0.2**2), 0, 0, 0],
+        [0, 0.5/(0.2**2), 0, 0],
+        [0, 0, 0.5/(0.0873 ** 2), 0],
+        [0, 0, 0, 0.1/(0.0873 **2)],
+    ]
+)
+R = 200 / (2 **2)
+
+Q = np.array(
+    [
+        [750/(0.2**2), 0, 0, 0],
+        [0, 500, 0, 0],
+        [0, 0, 0.5/(0.0873 ** 2), 0],
+        [0, 0, 0, 0.1],
+    ]
+)
+R = 1000 / (6 **2)
+
+Q = np.array(
+    [
+        [750/(0.2**2), 0, 0, 0],
+        [0, 0.5, 0, 0],
+        [0, 0, 0.5/(0.0873 ** 2), 0],
+        [0, 0, 0, 0.1],
+    ]
+)
+R = 1000 / (4 **2)
+
+Q = np.array(
+    [
+        [750/(0.2**2), 0, 0, 0],
+        [0, 0.5/(0.5683**2), 0, 0],
+        [0, 0, 0.5/(0.0873**2), 0],
+        [0, 0, 0, 0.1/(0.5495**2)],
+    ]
+)
+R = 1000 / (4 **2)
+
+Q = np.array(
+    [
+        [250/(0.1**2), 0, 0, 0],
+        [0, 250/(0.651**2), 0, 0],
+        [0, 0, 0.5/(0.1**2), 0],
+        [0, 0, 0, 0.1/(0.5**2)],
+    ]
+)
+R = 600 / (4 **2)
+
+Q = np.array(
+    [
+        [500/(0.1**2), 0, 0, 0],
+        [0, 0.5/(0.651**2), 0, 0],
+        [0, 0, 0.5/(0.1**2), 0],
+        [0, 0, 0, 0.1/(0.5**2)],
+    ]
+)
+R = 600 / (2 **2)
+'''
+
+
+'''
+# Cross weight can be pos/neg: penalizes same sign, rewards opposite sign
+N = np.array([[0], [1], [0], [0]])
+S = np.block([[Q, N], [N.T, np.array([[R]])]])
+psd_block = np.linalg.eigvalsh(S)
+print("Eig val of S: {} >= 0?".format(psd_block))  # should now be all >= 0
+for i in range(len(psd_block)):
+    assert psd_block[i] >= 0
+'''
+
 K, S, E = ct.lqr(sys, Q, R)
 
-print("CL: A-BK")
+print("\nCL: A-BK")
 values, vectors = np.linalg.eig(A - B@K)
 np.set_printoptions(precision=4, suppress=True)
 for i in range(len(values)):

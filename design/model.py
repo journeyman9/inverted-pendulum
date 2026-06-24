@@ -14,8 +14,7 @@ r = 0.0188 # m
 r3 = 0.0181 # m 
 L = (1 / (mr + ms)) * (mr * (l/2) + ms * l) # COM
 
-Ipivot = 1/3 * mr * l ** 2 + (2/5) * ms * r3 ** 2 + ms * l ** 2
-I2 = Ipivot - (m2 * L ** 2) # Subtracting to not double count
+I2 = (1/12) * mr * l ** 2 + mr * (L - 0.5*l) ** 2 + (2/5) * ms * r3 ** 2 + ms * (l - L) ** 2
 b = 1.0
 m_pulley = 0.035 # kg
 J_pulley = 0.5 * m_pulley * r ** 2
