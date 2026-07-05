@@ -19,17 +19,17 @@ for i in range(len(values)):
 
 # Pole Placement
 #poles = [-5+3j, -5-3j, -10, -14] # Doing it, but occasionally unstable
-poles = [-5+2j, -5-2j, -10, -11] # First gains that worked
+#poles = [-5+2j, -5-2j, -10, -11] # First gains that worked
 #poles = [-4.55+4.55j, -4.55-4.55j, -9.65+7.75j, -9.65-7.75j]
 
 # Design from Wn and zeta
-# poles = [] settling time 0.7, overshoot target 0.001
-# poles = [] settling time 0.8, overshoot target 1
-# poles = [] settling time 0.9, overshoot target 4.33
-# poles = [] settling time 0.88, overshoot target 4.33
+# poles = [] settling time 0.7, overshoot target 0.001 # Doing better 2/3 mellow
+# poles = [] settling time 0.8, overshoot target 1 # Doing better 1/3 centering more
+# poles = [] settling time 0.9, overshoot target 4.33 # doing better 3/3
+# poles = [] settling time 0.88, overshoot target 4.33 # Doesnt work
 
-settling_time_target = 0.88
-overshoot_target = 4.33
+settling_time_target = 0.8
+overshoot_target = 1.0
 
 # Dominant pole real
 dominant_real = -4.0 / settling_time_target

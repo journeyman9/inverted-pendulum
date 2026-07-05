@@ -2552,16 +2552,16 @@ Disassembly of section .text:
     18cc:	c3 01       	movw	r24, r6
     18ce:	b2 01       	movw	r22, r4
     18d0:	0e 94 bc 22 	call	0x4578	; 0x4578 <__subsf3>
-    18d4:	2c e8       	ldi	r18, 0x8C	; 140
-    18d6:	32 e3       	ldi	r19, 0x32	; 50
-    18d8:	4f e3       	ldi	r20, 0x3F	; 63
+    18d4:	2c ef       	ldi	r18, 0xFC	; 252
+    18d6:	38 ea       	ldi	r19, 0xA8	; 168
+    18d8:	48 ec       	ldi	r20, 0xC8	; 200
     18da:	51 ec       	ldi	r21, 0xC1	; 193
     18dc:	0e 94 8d 24 	call	0x491a	; 0x491a <__mulsf3>
     18e0:	2b 01       	movw	r4, r22
     18e2:	3c 01       	movw	r6, r24
-    18e4:	21 e0       	ldi	r18, 0x01	; 1
-    18e6:	3b e5       	ldi	r19, 0x5B	; 91
-    18e8:	44 e2       	ldi	r20, 0x24	; 36
+    18e4:	26 e6       	ldi	r18, 0x66	; 102
+    18e6:	36 e6       	ldi	r19, 0x66	; 102
+    18e8:	42 e3       	ldi	r20, 0x32	; 50
     18ea:	51 ec       	ldi	r21, 0xC1	; 193
     18ec:	c5 01       	movw	r24, r10
     18ee:	b4 01       	movw	r22, r8
@@ -2580,9 +2580,9 @@ Disassembly of section .text:
     190c:	c7 01       	movw	r24, r14
     190e:	b6 01       	movw	r22, r12
     1910:	0e 94 bc 22 	call	0x4578	; 0x4578 <__subsf3>
-    1914:	25 e6       	ldi	r18, 0x65	; 101
-    1916:	32 e6       	ldi	r19, 0x62	; 98
-    1918:	4a e8       	ldi	r20, 0x8A	; 138
+    1914:	2e e6       	ldi	r18, 0x6E	; 110
+    1916:	39 e0       	ldi	r19, 0x09	; 9
+    1918:	43 ef       	ldi	r20, 0xF3	; 243
     191a:	51 e4       	ldi	r21, 0x41	; 65
     191c:	0e 94 8d 24 	call	0x491a	; 0x491a <__mulsf3>
     1920:	9b 01       	movw	r18, r22
@@ -2592,9 +2592,9 @@ Disassembly of section .text:
     1928:	0e 94 bd 22 	call	0x457a	; 0x457a <__addsf3>
     192c:	6b 01       	movw	r12, r22
     192e:	7c 01       	movw	r14, r24
-    1930:	24 ed       	ldi	r18, 0xD4	; 212
-    1932:	37 e4       	ldi	r19, 0x47	; 71
-    1934:	49 e2       	ldi	r20, 0x29	; 41
+    1930:	20 e0       	ldi	r18, 0x00	; 0
+    1932:	30 e0       	ldi	r19, 0x00	; 0
+    1934:	40 e4       	ldi	r20, 0x40	; 64
     1936:	50 e4       	ldi	r21, 0x40	; 64
     1938:	69 85       	ldd	r22, Y+9	; 0x09
     193a:	7a 85       	ldd	r23, Y+10	; 0x0a

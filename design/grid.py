@@ -13,7 +13,7 @@ DENOM = {
     "theta": 0.1,
     "thetadot": 0.5,
 }
-DENOM_R = 2.0
+DENOM_R = 6.0
 
 STATE_NAMES = ["x", "xdot", "theta", "thetadot"]
 
@@ -116,15 +116,15 @@ def print_result(r, label="Result"):
 
 if __name__ == "__main__":
     # Coarse first pass — widen/narrow these ranges based on what you see.
-    grid_x = np.linspace(0.5, 1000, 5)
-    grid_xdot = np.linspace(0.5, 1000, 5)
-    grid_theta = np.linspace(0.5, 1000, 6)
-    grid_thetadot = np.linspace(0.1, 1000, 8)   # finest grid here — this is the one you're targeting
-    grid_R = np.linspace(0.5, 1000, 6)
+    grid_x = np.linspace(1, 1000, 10)
+    grid_xdot = np.linspace(1, 1000, 5)
+    grid_theta = np.linspace(1, 1000, 10)
+    grid_thetadot = np.linspace(1, 1000, 5)
+    grid_R = np.linspace(0.5, 1000, 10)
 
     valid, all_results = grid_search(
         grid_x, grid_xdot, grid_theta, grid_thetadot, grid_R,
-        target_Ts=0.8, tol=0.05,
+        target_Ts=1.0, tol=0.05,
     )
 
     if valid:
