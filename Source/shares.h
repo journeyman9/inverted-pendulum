@@ -58,6 +58,7 @@ extern shared_data<int16_t>* motor_command;
 
 extern shared_data<bool>* begin; // case 0
 extern shared_data<bool>* go; // case 4;
+extern shared_date<bool>* swing_up; // case5;
 extern shared_data<bool>* stop; // case 3
 extern shared_data<bool>* reset; // reset to idle
 

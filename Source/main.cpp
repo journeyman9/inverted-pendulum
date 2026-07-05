@@ -151,6 +151,7 @@ int main (void)
 	motor_command = new shared_data<int16_t>;
 	begin = new shared_data<bool>;
 	go = new shared_data<bool>;
+	swing_up = new shared_data<bool>;
 	stop = new shared_data<bool>;
 	reset = new shared_data<bool>;
 

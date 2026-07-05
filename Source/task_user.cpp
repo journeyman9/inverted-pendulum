@@ -172,6 +172,11 @@ void task_user::run (void)
 							*p_serial << PMS ("Commence Balance") << endl;
 							break;
 						
+						case ('w'): 
+							swing_up->put(true);
+							*p_serial << PMS ("Swinging") << endl;
+							break;
+						
 						case('d'):
 							stop->put(true);
 							*p_serial << PMS ("EMERGENCY STOP") << endl;
@@ -233,6 +238,7 @@ void task_user::print_help_message (void)
 	*p_serial << PMS ("    e:   Exit command mode") << endl;
 	*p_serial << PMS ("    b:   Begin Calibration") << endl;
 	*p_serial << PMS ("    g:   Start Balance!") << endl;
+	*p_serial << PMS ("    w:   Swing up!") << endl;
 	*p_serial << PMS ("    d:   Emergency Stop") << endl;
 	*p_serial << PMS ("    r:   Reset to Idle") << endl;
 	*p_serial << PMS ("    h:   HALP!") << endl;

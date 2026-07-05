@@ -153,6 +153,10 @@ void task_system_controller::run(void) {
 				if (go->get() == 1) {
 					transition_to(4);
 				}
+
+				if (swing_up->get() ==1){
+					transition_to(5);
+				}
 				break;
 			
 			// Balance
@@ -212,31 +216,33 @@ void task_system_controller::run(void) {
 				// Swing up control
 				case(5): 
 
-					// Natural frequence of 0.96s or 960ms 	
-					natural_freq = 960; 
+					// period of 0.96s or 960ms 	
+					period = 960/2.0; 
 
 					//start timers 
 					last_swith_time = xTaskGetTickCount();
 					curr_time = xTaskGetTickCount();
 					
-					// Start counter
+					// Init conditions
 					first_postition = true; 
 					reached_top = false; 
 
 					while (reached_top == false) {
 						curr_time = xTaskGetTickCount();
-						
-						if (curr_time - last_swith_time >= natural_freq){
-							first_postition = !first_postition
+
+						if (curr_time - last_swith_time >= period){
+							first_postition = !first_postition;
 							last_swith_time = curr_time;
 						}
 						
 						if first_postition { 
-						// Aim for the middle of the carriage
-						position_set = left_home / 1.5;
+							// Aim for the middle of the carriage
+							position_set = left_home / 1.5;
+							integrated_error = 0; 
 						} else {
-						// Aim for the middle of the carriage
-						position_set = left_home / 3;
+							// Aim for the middle of the carriage
+							position_set = left_home / 3;
+							integrated_error = 0;
 						} 
 					
 						position_error = position_set - linear_position->get();
@@ -247,13 +253,21 @@ void task_system_controller::run(void) {
 
 						// Add logic to check the current theata postition
 						// This is going to
-						if ((x[2] >= 3) || (x[2] < 3.3)){
+						if ((pendulum_encoder_radians >= 3) || (pendulum_encoder_radians < 3.3)){
+							ransition_to(4);
 							reached_top = true;
+							// go to balance
 						}
 
 						// Transition to error if limit switches are hit
 						if (leftLimitSwitch->get() || rightLimitSwitch->get()) {
 							*p_serial << "LIMIT SWITCH HIT ERROR" << endl;
+							transition_to(100);
+						}
+
+						// Protect against going to far
+						if (((linear_position->get()/left_home) >0.8)|| ((linear_position->get()/left_home) < 0.2)){
+							*p_serial << "OUTSIDE displacement range" << endl;
 							transition_to(100);
 						}
 
