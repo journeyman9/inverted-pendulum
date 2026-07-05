@@ -208,21 +208,83 @@ void task_system_controller::run(void) {
 					transition_to(0);
 				}
 				break;
-				
-			case(100):
-				motor_command->put(0);
-				
-				/*
-				if (runs%100 == 0) {
-					*p_serial << "Error State" << endl;
-				}
-				*/
-				
-				if (reset->get()){
-					reset->put(0);
-					stop->put(0);
-					transition_to(0);
-				}
+
+				// Swing up control
+				case(5): 
+
+					// Natural frequence of 0.96s or 960ms 	
+					natural_freq = 960; 
+
+					//start timers 
+					last_swith_time = xTaskGetTickCount();
+					curr_time = xTaskGetTickCount();
+					
+					// Start counter
+					first_postition = true; 
+					reached_top = false; 
+
+					while (reached_top == false) {
+						curr_time = xTaskGetTickCount();
+						
+						if (curr_time - last_swith_time >= natural_freq){
+							first_postition = !first_postition
+							last_swith_time = curr_time;
+						}
+						
+						if first_postition { 
+						// Aim for the middle of the carriage
+						position_set = left_home / 1.5;
+						} else {
+						// Aim for the middle of the carriage
+						position_set = left_home / 3;
+						} 
+					
+						position_error = position_set - linear_position->get();
+						integrated_error = integrated_error + position_error; 
+						
+						// P controller to get to middle position
+						motor_command->put((int16_t)(Kp * position_error + ((Ki * integrated_error))));
+
+						// Add logic to check the current theata postition
+						// This is going to
+						if ((x[2] >= 3) || (x[2] < 3.3)){
+							reached_top = true;
+						}
+
+						// Transition to error if limit switches are hit
+						if (leftLimitSwitch->get() || rightLimitSwitch->get()) {
+							*p_serial << "LIMIT SWITCH HIT ERROR" << endl;
+							transition_to(100);
+						}
+
+						if (reset->get() == 1) {
+							reset->put(0);
+							stop->put(0);
+							transition_to(0);
+						}
+
+						if (go->get() == 1) {
+							transition_to(4);
+							}
+					}
+				break;
+
+					
+				case(100):
+					motor_command->put(0);
+					
+					/*
+					if (runs%100 == 0) {
+						*p_serial << "Error State" << endl;
+					}
+					*/
+					
+					if (reset->get()){
+						reset->put(0);
+						stop->put(0);
+						transition_to(0);
+					}
+					
 			
 				break;
 				
