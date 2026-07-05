@@ -6,6 +6,7 @@ class Controller():
         with open('params.yaml', 'r') as cfg:
             params = yaml.safe_load(cfg)
         self.K = np.array(params["ctrl"]["K"])
+        self.sat_limit = params["ctrl"]["sat_limit"]
     
     def lqr(self, x: np.ndarray, x_r: np.ndarray) -> np.ndarray:
         # Standard state-feedback law from the LQR design.
@@ -20,5 +21,11 @@ class Controller():
         ])
 
         u = -self.K.dot(error)
-
+        
+        if u > self.sat_limit:
+            u = self.sat_limit
+        elif u < -self.sat_limit:
+            u = -self.sat_limit
+        else:
+            pass
         return float(u)
