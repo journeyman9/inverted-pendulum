@@ -141,6 +141,17 @@ Q = np.array(
 R = 10
 '''
 
+Q = np.array(
+    [
+        [15/(0.1**2), 0, 0, 0],
+        [0, 1/(0.651**2), 0, 0],
+        [0, 0, 15/(0.1**2), 0],
+        [0, 0, 0, 1/(0.5**2)],
+    ]
+)
+
+R = 1000 / (6**2)
+
 '''
 # Cross weight can be pos/neg: penalizes same sign, rewards opposite sign
 N = np.array([[0], [1], [0], [0]])
