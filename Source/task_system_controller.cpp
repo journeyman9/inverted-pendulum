@@ -220,19 +220,19 @@ void task_system_controller::run(void) {
 					period = 960/2.0; 
 
 					//start timers 
-					last_swith_time = xTaskGetTickCount();
+					last_switch_time = xTaskGetTickCount();
 					curr_time = xTaskGetTickCount();
 					
-					// Init conditions
-					first_postition = true; 
-					reached_top = false; 
+					// Initial conditions
+					bool first_postition = true; 
+					bool reached_top = false; 
 
 					while (reached_top == false) {
 						curr_time = xTaskGetTickCount();
 
-						if (curr_time - last_swith_time >= period){
+						if (curr_time - last_switch_time >= period){
 							first_postition = !first_postition;
-							last_swith_time = curr_time;
+							last_switch_time = curr_time;
 						}
 						
 						if first_postition { 
@@ -251,10 +251,10 @@ void task_system_controller::run(void) {
 						// P controller to get to middle position
 						motor_command->put((int16_t)(Kp * position_error + ((Ki * integrated_error))));
 
-						// Add logic to check the current theata postition
+						// Add logic to check the current theta position
 						// This is going to
 						if ((pendulum_encoder_radians >= 3) || (pendulum_encoder_radians < 3.3)){
-							ransition_to(4);
+							transition_to(4);
 							reached_top = true;
 							// go to balance
 						}

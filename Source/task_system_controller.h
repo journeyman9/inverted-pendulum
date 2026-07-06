@@ -30,6 +30,9 @@ class task_system_controller : public frt_task{
 		
 		float left_home;
 		float position_set;
+		float period; 
+		float last_switch_time;
+		float curr_time;
 		float position_error = 0.0f;
 		float integrated_error = 0.0f;
 		portTickType currentTicks;
