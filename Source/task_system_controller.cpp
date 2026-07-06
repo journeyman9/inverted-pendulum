@@ -196,7 +196,21 @@ void task_system_controller::run(void) {
 					*p_serial << " Motor u: " << dtostrf(u, 0, 6, buf3) << endl;
 				}
 				*/
-			
+				/*
+				if (runs%100 == 0) {
+					char buf[3];
+					char buf2[3];
+					char buf3[3];
+					char buf4[3];
+					char buf5[3];
+					*p_serial << "x: " << dtostrf(x[0], 0, 3, buf);
+					*p_serial << ", xdot: " << dtostrf(x[1], 0, 3, buf2);
+					*p_serial << ", angle: " << dtostrf(x[2] - 3.14159f, 0, 3, buf3);
+					*p_serial << ", thetadot: " << dtostrf(x[3], 0, 3, buf4);
+					*p_serial << ", Motor u: " << dtostrf(u, 0, 3, buf5) << endl;
+				}
+				*/
+							
 				if (leftLimitSwitch->get() || rightLimitSwitch->get()) {
 					*p_serial << "LIMIT SWITCH HIT ERROR" << endl;
 					transition_to(100);

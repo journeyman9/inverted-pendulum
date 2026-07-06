@@ -39,21 +39,21 @@ c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/..
 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avrxmega7\libc.a(strrev.o)
                               c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avrxmega7\libc.a(ultoa_ncheck.o) (strrev)
 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avrxmega7\libm.a(addsf3.o)
-                              C:\Users\journ\AppData\Local\Temp\cc2YBuRQ.ltrans0.ltrans.o (__subsf3)
+                              C:\Users\journ\AppData\Local\Temp\ccuYHa9W.ltrans0.ltrans.o (__subsf3)
 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avrxmega7\libm.a(addsf3x.o)
                               c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avrxmega7\libm.a(addsf3.o) (__addsf3x)
 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avrxmega7\libm.a(cmpsf2.o)
-                              C:\Users\journ\AppData\Local\Temp\cc2YBuRQ.ltrans0.ltrans.o (__ltsf2)
+                              C:\Users\journ\AppData\Local\Temp\ccuYHa9W.ltrans0.ltrans.o (__ltsf2)
 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avrxmega7\libm.a(divsf3.o)
-                              C:\Users\journ\AppData\Local\Temp\cc2YBuRQ.ltrans0.ltrans.o (__divsf3)
+                              C:\Users\journ\AppData\Local\Temp\ccuYHa9W.ltrans0.ltrans.o (__divsf3)
 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avrxmega7\libm.a(divsf3x.o)
                               c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avrxmega7\libm.a(divsf3.o) (__divsf3x)
 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avrxmega7\libm.a(fixsfsi.o)
-                              C:\Users\journ\AppData\Local\Temp\cc2YBuRQ.ltrans0.ltrans.o (__fixsfsi)
+                              C:\Users\journ\AppData\Local\Temp\ccuYHa9W.ltrans0.ltrans.o (__fixsfsi)
 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avrxmega7\libm.a(fixunssfsi.o)
                               c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avrxmega7\libm.a(fixsfsi.o) (__fixunssfsi)
 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avrxmega7\libm.a(floatsisf.o)
-                              C:\Users\journ\AppData\Local\Temp\cc2YBuRQ.ltrans0.ltrans.o (__floatunsisf)
+                              C:\Users\journ\AppData\Local\Temp\ccuYHa9W.ltrans0.ltrans.o (__floatunsisf)
 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avrxmega7\libm.a(fp_cmp.o)
                               c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avrxmega7\libm.a(cmpsf2.o) (__fp_cmp)
 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avrxmega7\libm.a(fp_inf.o)
@@ -71,19 +71,19 @@ c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/..
 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avrxmega7\libm.a(fp_zero.o)
                               c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avrxmega7\libm.a(addsf3x.o) (__fp_zero)
 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avrxmega7\libm.a(gesf2.o)
-                              C:\Users\journ\AppData\Local\Temp\cc2YBuRQ.ltrans0.ltrans.o (__gesf2)
+                              C:\Users\journ\AppData\Local\Temp\ccuYHa9W.ltrans0.ltrans.o (__gesf2)
 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avrxmega7\libm.a(mulsf3.o)
-                              C:\Users\journ\AppData\Local\Temp\cc2YBuRQ.ltrans0.ltrans.o (__mulsf3)
+                              C:\Users\journ\AppData\Local\Temp\ccuYHa9W.ltrans0.ltrans.o (__mulsf3)
 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avrxmega7\libm.a(mulsf3x.o)
                               c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avrxmega7\libm.a(mulsf3.o) (__mulsf3x)
 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avrxmega7\libgcc.a(_mulsi3.o)
-                              C:\Users\journ\AppData\Local\Temp\cc2YBuRQ.ltrans2.ltrans.o (__mulsi3)
+                              C:\Users\journ\AppData\Local\Temp\ccuYHa9W.ltrans2.ltrans.o (__mulsi3)
 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avrxmega7\libgcc.a(_tablejump2.o)
-                              C:\Users\journ\AppData\Local\Temp\cc2YBuRQ.ltrans0.ltrans.o (__tablejump2__)
+                              C:\Users\journ\AppData\Local\Temp\ccuYHa9W.ltrans0.ltrans.o (__tablejump2__)
 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avrxmega7\libgcc.a(_ctors.o)
-                              C:\Users\journ\AppData\Local\Temp\cc2YBuRQ.ltrans1.ltrans.o (__do_global_ctors)
+                              C:\Users\journ\AppData\Local\Temp\ccuYHa9W.ltrans1.ltrans.o (__do_global_ctors)
 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avrxmega7\libgcc.a(_muluhisi3.o)
-                              C:\Users\journ\AppData\Local\Temp\cc2YBuRQ.ltrans2.ltrans.o (__muluhisi3)
+                              C:\Users\journ\AppData\Local\Temp\ccuYHa9W.ltrans2.ltrans.o (__muluhisi3)
 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avrxmega7\libgcc.a(_umulhisi3.o)
                               c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avrxmega7\libgcc.a(_muluhisi3.o) (__umulhisi3)
 
@@ -141,10 +141,10 @@ Discarded input sections
  .comment       0x00000000       0x31 Source/lib/freertos/croutine.o
  .debug_frame   0x00000000       0xd0 Source/lib/freertos/croutine.o
  .text          0x00000000        0x0 Source/lqr.o (symbol from plugin)
- .data          0x00000000        0x0 C:\Users\journ\AppData\Local\Temp\cc2YBuRQ.ltrans0.ltrans.o
- .bss           0x00000000        0x2 C:\Users\journ\AppData\Local\Temp\cc2YBuRQ.ltrans0.ltrans.o
- .data          0x00000000        0x0 C:\Users\journ\AppData\Local\Temp\cc2YBuRQ.ltrans1.ltrans.o
- .data          0x00000000        0x0 C:\Users\journ\AppData\Local\Temp\cc2YBuRQ.ltrans2.ltrans.o
+ .data          0x00000000        0x0 C:\Users\journ\AppData\Local\Temp\ccuYHa9W.ltrans0.ltrans.o
+ .bss           0x00000000        0x2 C:\Users\journ\AppData\Local\Temp\ccuYHa9W.ltrans0.ltrans.o
+ .data          0x00000000        0x0 C:\Users\journ\AppData\Local\Temp\ccuYHa9W.ltrans1.ltrans.o
+ .data          0x00000000        0x0 C:\Users\journ\AppData\Local\Temp\ccuYHa9W.ltrans2.ltrans.o
  .text          0x00000000        0x0 Source/planner.o (symbol from plugin)
  .gnu.linkonce.t._ZNSt12_Vector_baseIfSaIfEE11_M_allocateEj
                 0x00000000        0x0 Source/planner.o (symbol from plugin)
@@ -560,9 +560,9 @@ Linker script and memory map
 LOAD C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/XMEGAA_DFP/1.1.68/gcc/dev/atxmega128a4u/avrxmega7/crtatxmega128a4u.o
 LOAD Source/lib/freertos/croutine.o
 LOAD Source/lqr.o
-LOAD C:\Users\journ\AppData\Local\Temp\cc2YBuRQ.ltrans0.ltrans.o
-LOAD C:\Users\journ\AppData\Local\Temp\cc2YBuRQ.ltrans1.ltrans.o
-LOAD C:\Users\journ\AppData\Local\Temp\cc2YBuRQ.ltrans2.ltrans.o
+LOAD C:\Users\journ\AppData\Local\Temp\ccuYHa9W.ltrans0.ltrans.o
+LOAD C:\Users\journ\AppData\Local\Temp\ccuYHa9W.ltrans1.ltrans.o
+LOAD C:\Users\journ\AppData\Local\Temp\ccuYHa9W.ltrans2.ltrans.o
 LOAD Source/planner.o
 LOAD Source/task_limit_switch.o
 LOAD Source/task_motor_command.o
@@ -727,7 +727,7 @@ END GROUP
 .rela.plt
  *(.rela.plt)
 
-.text           0x00000000     0x4a5e
+.text           0x00000000     0x4ab2
  *(.vectors)
  .vectors       0x00000000      0x1fc C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/XMEGAA_DFP/1.1.68/gcc/dev/atxmega128a4u/avrxmega7/crtatxmega128a4u.o
                 0x00000000                __vector_default
@@ -735,9 +735,9 @@ END GROUP
  *(.vectors)
  *(.progmem.gcc*)
  .progmem.gcc_sw_table
-                0x000001fc       0xb8 C:\Users\journ\AppData\Local\Temp\cc2YBuRQ.ltrans0.ltrans.o
+                0x000001fc       0xb8 C:\Users\journ\AppData\Local\Temp\ccuYHa9W.ltrans0.ltrans.o
  .progmem.gcc_sw_table
-                0x000002b4       0x16 C:\Users\journ\AppData\Local\Temp\cc2YBuRQ.ltrans2.ltrans.o
+                0x000002b4       0x16 C:\Users\journ\AppData\Local\Temp\ccuYHa9W.ltrans2.ltrans.o
                 0x000002ca                . = ALIGN (0x2)
                 0x000002ca                __trampolines_start = .
  *(.trampolines)
@@ -748,9 +748,9 @@ END GROUP
  *libc.a:*(.progmem.data)
  *(.progmem*)
  .progmem.something
-                0x0000037a      0x2ef C:\Users\journ\AppData\Local\Temp\cc2YBuRQ.ltrans0.ltrans.o
+                0x0000037a      0x2ef C:\Users\journ\AppData\Local\Temp\ccuYHa9W.ltrans0.ltrans.o
  .progmem.something
-                0x00000669       0x61 C:\Users\journ\AppData\Local\Temp\cc2YBuRQ.ltrans2.ltrans.o
+                0x00000669       0x61 C:\Users\journ\AppData\Local\Temp\ccuYHa9W.ltrans2.ltrans.o
                 0x000006ca                . = ALIGN (0x2)
  *(.jumptables)
  *(.jumptables*)
@@ -758,7 +758,7 @@ END GROUP
  *(.lowtext*)
                 0x000006ca                __ctors_start = .
  *(.ctors)
- .ctors         0x000006ca        0x2 C:\Users\journ\AppData\Local\Temp\cc2YBuRQ.ltrans1.ltrans.o
+ .ctors         0x000006ca        0x2 C:\Users\journ\AppData\Local\Temp\ccuYHa9W.ltrans1.ltrans.o
                 0x000006cc                __ctors_end = .
                 0x000006cc                __dtors_start = .
  *(.dtors)
@@ -918,292 +918,292 @@ END GROUP
                 0x00000738                __vector_87
                 0x00000738                __vector_65
                 0x00000738                __vector_120
- .text          0x0000073c     0x13b8 C:\Users\journ\AppData\Local\Temp\cc2YBuRQ.ltrans0.ltrans.o
+ .text          0x0000073c     0x140c C:\Users\journ\AppData\Local\Temp\ccuYHa9W.ltrans0.ltrans.o
                 0x000008fc                _ZN9task_user3runEv
                 0x00000e82                _ZN21task_pendulum_encoder3runEv
-                0x00001044                _ZN18task_motor_encoder3runEv
-                0x000011ca                _ZN18task_motor_command3runEv
-                0x0000128c                _ZN17task_limit_switch3runEv
-                0x0000137c                _ZN22task_system_controller3runEv
- .text          0x00001af4      0x9a2 C:\Users\journ\AppData\Local\Temp\cc2YBuRQ.ltrans1.ltrans.o
-                0x00001c08                main
-                0x00001fea                __vector_58
-                0x000020a6                __vector_91
-                0x00002162                __vector_88
-                0x0000221e                __vector_28
-                0x000022da                __vector_25
-                0x00002396                _ZN8emstreamlsEh
- .text          0x00002496      0x8da C:\Users\journ\AppData\Local\Temp\cc2YBuRQ.ltrans2.ltrans.o
-                0x00002496                _ZN8emstream12clear_screenEv
-                0x00002498                _ZN8emstream12transmit_nowEv
-                0x0000249a                _ZN8emstream14check_for_charEv
-                0x0000249e                _ZN8emstream7getcharEv
-                0x000024a4                _ZN8emstream13ready_to_sendEv
-                0x000024a8                __cxa_pure_virtual
-                0x000024aa                _ZN14frt_text_queue7getcharEv
-                0x000024e6                _ZN14frt_text_queue14check_for_charEv
-                0x000024fc                _ZN14frt_text_queue7putcharEc
-                0x00002556                _ZN8emstreamlsE15ser_manipulator
-                0x000025e4                _ZN8emstream4putsEPKc
-                0x00002652                _ZN8emstreamlsEm
-                0x000026d6                _ZN8emstreamlsEj
-                0x0000273e                _ZN8frt_task12print_statusER8emstream
-                0x0000285e                _Z15hex_dump_memoryPhS_P8emstreambh
-                0x000029bc                _ZN10time_stamp10set_to_nowEv
-                0x000029ec                _ZlsR8emstreamR10time_stamp
-                0x00002b0e                _ZN8frt_task20print_status_in_listEP8emstream
-                0x00002b46                _ZN8frt_task19print_stack_in_listEP8emstream
-                0x00002be2                _ZN8frt_taskC2EPKchjP8emstream
-                0x00002d70                . = ALIGN (0x2)
+                0x00001098                _ZN18task_motor_encoder3runEv
+                0x0000121e                _ZN18task_motor_command3runEv
+                0x000012e0                _ZN17task_limit_switch3runEv
+                0x000013d0                _ZN22task_system_controller3runEv
+ .text          0x00001b48      0x9a2 C:\Users\journ\AppData\Local\Temp\ccuYHa9W.ltrans1.ltrans.o
+                0x00001c5c                main
+                0x0000203e                __vector_58
+                0x000020fa                __vector_91
+                0x000021b6                __vector_88
+                0x00002272                __vector_28
+                0x0000232e                __vector_25
+                0x000023ea                _ZN8emstreamlsEh
+ .text          0x000024ea      0x8da C:\Users\journ\AppData\Local\Temp\ccuYHa9W.ltrans2.ltrans.o
+                0x000024ea                _ZN8emstream12clear_screenEv
+                0x000024ec                _ZN8emstream12transmit_nowEv
+                0x000024ee                _ZN8emstream14check_for_charEv
+                0x000024f2                _ZN8emstream7getcharEv
+                0x000024f8                _ZN8emstream13ready_to_sendEv
+                0x000024fc                __cxa_pure_virtual
+                0x000024fe                _ZN14frt_text_queue7getcharEv
+                0x0000253a                _ZN14frt_text_queue14check_for_charEv
+                0x00002550                _ZN14frt_text_queue7putcharEc
+                0x000025aa                _ZN8emstreamlsE15ser_manipulator
+                0x00002638                _ZN8emstream4putsEPKc
+                0x000026a6                _ZN8emstreamlsEm
+                0x0000272a                _ZN8emstreamlsEj
+                0x00002792                _ZN8frt_task12print_statusER8emstream
+                0x000028b2                _Z15hex_dump_memoryPhS_P8emstreambh
+                0x00002a10                _ZN10time_stamp10set_to_nowEv
+                0x00002a40                _ZlsR8emstreamR10time_stamp
+                0x00002b62                _ZN8frt_task20print_status_in_listEP8emstream
+                0x00002b9a                _ZN8frt_task19print_stack_in_listEP8emstream
+                0x00002c36                _ZN8frt_taskC2EPKchjP8emstream
+                0x00002dc4                . = ALIGN (0x2)
  *(.text.*)
  .text.pvPortMalloc
-                0x00002d70      0x134 Source/lib/freertos/heap_2.o
-                0x00002d70                pvPortMalloc
+                0x00002dc4      0x134 Source/lib/freertos/heap_2.o
+                0x00002dc4                pvPortMalloc
  .text.vPortFree
-                0x00002ea4       0x66 Source/lib/freertos/heap_2.o
-                0x00002ea4                vPortFree
+                0x00002ef8       0x66 Source/lib/freertos/heap_2.o
+                0x00002ef8                vPortFree
  .text.xPortGetFreeHeapSize
-                0x00002f0a        0xa Source/lib/freertos/heap_2.o
-                0x00002f0a                xPortGetFreeHeapSize
+                0x00002f5e        0xa Source/lib/freertos/heap_2.o
+                0x00002f5e                xPortGetFreeHeapSize
  .text.vListInitialise
-                0x00002f14       0x22 Source/lib/freertos/list.o
-                0x00002f14                vListInitialise
+                0x00002f68       0x22 Source/lib/freertos/list.o
+                0x00002f68                vListInitialise
  .text.vListInitialiseItem
-                0x00002f36        0x8 Source/lib/freertos/list.o
-                0x00002f36                vListInitialiseItem
+                0x00002f8a        0x8 Source/lib/freertos/list.o
+                0x00002f8a                vListInitialiseItem
  .text.vListInsertEnd
-                0x00002f3e       0x4e Source/lib/freertos/list.o
-                0x00002f3e                vListInsertEnd
+                0x00002f92       0x4e Source/lib/freertos/list.o
+                0x00002f92                vListInsertEnd
  .text.vListInsert
-                0x00002f8c       0x96 Source/lib/freertos/list.o
-                0x00002f8c                vListInsert
+                0x00002fe0       0x96 Source/lib/freertos/list.o
+                0x00002fe0                vListInsert
  .text.vListRemove
-                0x00003022       0x4c Source/lib/freertos/list.o
-                0x00003022                vListRemove
+                0x00003076       0x4c Source/lib/freertos/list.o
+                0x00003076                vListRemove
  .text.pxPortInitialiseStack
-                0x0000306e       0xec Source/lib/freertos/port.o
-                0x0000306e                pxPortInitialiseStack
+                0x000030c2       0xec Source/lib/freertos/port.o
+                0x000030c2                pxPortInitialiseStack
  .text.xPortStartScheduler
-                0x0000315a       0x7c Source/lib/freertos/port.o
-                0x0000315a                xPortStartScheduler
+                0x000031ae       0x7c Source/lib/freertos/port.o
+                0x000031ae                xPortStartScheduler
  .text.vPortYield
-                0x000031d6       0xc2 Source/lib/freertos/port.o
-                0x000031d6                vPortYield
+                0x0000322a       0xc2 Source/lib/freertos/port.o
+                0x0000322a                vPortYield
  .text.vPortYieldFromTick
-                0x00003298       0xc6 Source/lib/freertos/port.o
-                0x00003298                vPortYieldFromTick
+                0x000032ec       0xc6 Source/lib/freertos/port.o
+                0x000032ec                vPortYieldFromTick
  .text.__vector_49
-                0x0000335e        0x6 Source/lib/freertos/port.o
-                0x0000335e                __vector_49
+                0x000033b2        0x6 Source/lib/freertos/port.o
+                0x000033b2                __vector_49
  .text.prvCopyDataToQueue
-                0x00003364       0x98 Source/lib/freertos/queue.o
+                0x000033b8       0x98 Source/lib/freertos/queue.o
  .text.prvCopyDataFromQueue
-                0x000033fc       0x34 Source/lib/freertos/queue.o
+                0x00003450       0x34 Source/lib/freertos/queue.o
  .text.prvUnlockQueue
-                0x00003430       0x94 Source/lib/freertos/queue.o
+                0x00003484       0x94 Source/lib/freertos/queue.o
  .text.xQueueGenericReset
-                0x000034c4       0x78 Source/lib/freertos/queue.o
-                0x000034c4                xQueueGenericReset
+                0x00003518       0x78 Source/lib/freertos/queue.o
+                0x00003518                xQueueGenericReset
  .text.xQueueGenericCreate
-                0x0000353c       0x5c Source/lib/freertos/queue.o
-                0x0000353c                xQueueGenericCreate
+                0x00003590       0x5c Source/lib/freertos/queue.o
+                0x00003590                xQueueGenericCreate
  .text.xQueueGenericSend
-                0x00003598      0x136 Source/lib/freertos/queue.o
-                0x00003598                xQueueGenericSend
+                0x000035ec      0x136 Source/lib/freertos/queue.o
+                0x000035ec                xQueueGenericSend
  .text.xQueueGenericReceive
-                0x000036ce      0x188 Source/lib/freertos/queue.o
-                0x000036ce                xQueueGenericReceive
+                0x00003722      0x188 Source/lib/freertos/queue.o
+                0x00003722                xQueueGenericReceive
  .text.uxQueueMessagesWaiting
-                0x00003856       0x10 Source/lib/freertos/queue.o
-                0x00003856                uxQueueMessagesWaiting
+                0x000038aa       0x10 Source/lib/freertos/queue.o
+                0x000038aa                uxQueueMessagesWaiting
  .text.prvIdleTask
-                0x00003866       0x10 Source/lib/freertos/tasks.o
+                0x000038ba       0x10 Source/lib/freertos/tasks.o
  .text.prvAddCurrentTaskToDelayedList
-                0x00003876       0x9c Source/lib/freertos/tasks.o
+                0x000038ca       0x9c Source/lib/freertos/tasks.o
  .text.xTaskGenericCreate
-                0x00003912      0x204 Source/lib/freertos/tasks.o
-                0x00003912                xTaskGenericCreate
+                0x00003966      0x204 Source/lib/freertos/tasks.o
+                0x00003966                xTaskGenericCreate
  .text.uxTaskPriorityGet
-                0x00003b16       0x1c Source/lib/freertos/tasks.o
-                0x00003b16                uxTaskPriorityGet
+                0x00003b6a       0x1c Source/lib/freertos/tasks.o
+                0x00003b6a                uxTaskPriorityGet
  .text.vTaskStartScheduler
-                0x00003b32       0x66 Source/lib/freertos/tasks.o
-                0x00003b32                vTaskStartScheduler
+                0x00003b86       0x66 Source/lib/freertos/tasks.o
+                0x00003b86                vTaskStartScheduler
  .text.vTaskSuspendAll
-                0x00003b98        0xc Source/lib/freertos/tasks.o
-                0x00003b98                vTaskSuspendAll
+                0x00003bec        0xc Source/lib/freertos/tasks.o
+                0x00003bec                vTaskSuspendAll
  .text.xTaskGetTickCount
-                0x00003ba4       0x1c Source/lib/freertos/tasks.o
-                0x00003ba4                xTaskGetTickCount
+                0x00003bf8       0x1c Source/lib/freertos/tasks.o
+                0x00003bf8                xTaskGetTickCount
  .text.pcTaskGetTaskName
-                0x00003bc0       0x10 Source/lib/freertos/tasks.o
-                0x00003bc0                pcTaskGetTaskName
+                0x00003c14       0x10 Source/lib/freertos/tasks.o
+                0x00003c14                pcTaskGetTaskName
  .text.xTaskGetIdleTaskHandle
-                0x00003bd0        0xa Source/lib/freertos/tasks.o
-                0x00003bd0                xTaskGetIdleTaskHandle
+                0x00003c24        0xa Source/lib/freertos/tasks.o
+                0x00003c24                xTaskGetIdleTaskHandle
  .text.vTaskIncrementTick
-                0x00003bda      0x202 Source/lib/freertos/tasks.o
-                0x00003bda                vTaskIncrementTick
+                0x00003c2e      0x202 Source/lib/freertos/tasks.o
+                0x00003c2e                vTaskIncrementTick
  .text.xTaskResumeAll
-                0x00003ddc      0x104 Source/lib/freertos/tasks.o
-                0x00003ddc                xTaskResumeAll
+                0x00003e30      0x104 Source/lib/freertos/tasks.o
+                0x00003e30                xTaskResumeAll
  .text.vTaskDelayUntil
-                0x00003ee0       0xda Source/lib/freertos/tasks.o
-                0x00003ee0                vTaskDelayUntil
+                0x00003f34       0xda Source/lib/freertos/tasks.o
+                0x00003f34                vTaskDelayUntil
  .text.vTaskDelay
-                0x00003fba       0x5c Source/lib/freertos/tasks.o
-                0x00003fba                vTaskDelay
+                0x0000400e       0x5c Source/lib/freertos/tasks.o
+                0x0000400e                vTaskDelay
  .text.vTaskSwitchContext
-                0x00004016       0xba Source/lib/freertos/tasks.o
-                0x00004016                vTaskSwitchContext
+                0x0000406a       0xba Source/lib/freertos/tasks.o
+                0x0000406a                vTaskSwitchContext
  .text.vTaskPlaceOnEventList
-                0x000040d0       0x54 Source/lib/freertos/tasks.o
-                0x000040d0                vTaskPlaceOnEventList
+                0x00004124       0x54 Source/lib/freertos/tasks.o
+                0x00004124                vTaskPlaceOnEventList
  .text.xTaskRemoveFromEventList
-                0x00004124       0x7e Source/lib/freertos/tasks.o
-                0x00004124                xTaskRemoveFromEventList
+                0x00004178       0x7e Source/lib/freertos/tasks.o
+                0x00004178                xTaskRemoveFromEventList
  .text.vTaskSetTimeOutState
-                0x000041a2       0x22 Source/lib/freertos/tasks.o
-                0x000041a2                vTaskSetTimeOutState
+                0x000041f6       0x22 Source/lib/freertos/tasks.o
+                0x000041f6                vTaskSetTimeOutState
  .text.xTaskCheckForTimeOut
-                0x000041c4       0xda Source/lib/freertos/tasks.o
-                0x000041c4                xTaskCheckForTimeOut
+                0x00004218       0xda Source/lib/freertos/tasks.o
+                0x00004218                xTaskCheckForTimeOut
  .text.vTaskMissedYield
-                0x0000429e        0x8 Source/lib/freertos/tasks.o
-                0x0000429e                vTaskMissedYield
+                0x000042f2        0x8 Source/lib/freertos/tasks.o
+                0x000042f2                vTaskMissedYield
  .text.uxTaskGetStackHighWaterMark
-                0x000042a6       0x32 Source/lib/freertos/tasks.o
-                0x000042a6                uxTaskGetStackHighWaterMark
+                0x000042fa       0x32 Source/lib/freertos/tasks.o
+                0x000042fa                uxTaskGetStackHighWaterMark
  .text.xTaskGetCurrentTaskHandle
-                0x000042d8        0xa Source/lib/freertos/tasks.o
-                0x000042d8                xTaskGetCurrentTaskHandle
+                0x0000432c        0xa Source/lib/freertos/tasks.o
+                0x0000432c                xTaskGetCurrentTaskHandle
  .text.vTaskPriorityInherit
-                0x000042e2       0xaa Source/lib/freertos/tasks.o
-                0x000042e2                vTaskPriorityInherit
+                0x00004336       0xaa Source/lib/freertos/tasks.o
+                0x00004336                vTaskPriorityInherit
  .text.vTaskPriorityDisinherit
-                0x0000438c       0x68 Source/lib/freertos/tasks.o
-                0x0000438c                vTaskPriorityDisinherit
+                0x000043e0       0x68 Source/lib/freertos/tasks.o
+                0x000043e0                vTaskPriorityDisinherit
  .text.libgcc.div
-                0x000043f4       0x2e c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avrxmega7\libgcc.a(_divmodsi4.o)
-                0x000043f4                __divmodsi4
+                0x00004448       0x2e c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avrxmega7\libgcc.a(_divmodsi4.o)
+                0x00004448                __divmodsi4
  .text.libgcc.div
-                0x00004422       0x10 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avrxmega7\libgcc.a(_negsi2.o)
-                0x00004422                __negsi2
+                0x00004476       0x10 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avrxmega7\libgcc.a(_negsi2.o)
+                0x00004476                __negsi2
  .text.libgcc.div
-                0x00004432       0x44 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avrxmega7\libgcc.a(_udivmodsi4.o)
-                0x00004432                __udivmodsi4
+                0x00004486       0x44 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avrxmega7\libgcc.a(_udivmodsi4.o)
+                0x00004486                __udivmodsi4
  .text.avr-libc
-                0x00004476       0x12 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avrxmega7\libc.a(memcpy.o)
-                0x00004476                memcpy
+                0x000044ca       0x12 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avrxmega7\libc.a(memcpy.o)
+                0x000044ca                memcpy
  .text.avr-libc
-                0x00004488        0xe c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avrxmega7\libc.a(memset.o)
-                0x00004488                memset
+                0x000044dc        0xe c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avrxmega7\libc.a(memset.o)
+                0x000044dc                memset
  .text.avr-libc
-                0x00004496       0x1e c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avrxmega7\libc.a(strncpy.o)
-                0x00004496                strncpy
+                0x000044ea       0x1e c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avrxmega7\libc.a(strncpy.o)
+                0x000044ea                strncpy
  .text.avr-libc
-                0x000044b4       0x16 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avrxmega7\libc.a(ultoa.o)
-                0x000044b4                ultoa
-                0x000044b4                __ultoa
+                0x00004508       0x16 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avrxmega7\libc.a(ultoa.o)
+                0x00004508                ultoa
+                0x00004508                __ultoa
  .text.avr-libc
-                0x000044ca       0x44 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avrxmega7\libc.a(ultoa_ncheck.o)
-                0x000044ca                __ultoa_ncheck
-                0x000044cc                __ultoa_common
+                0x0000451e       0x44 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avrxmega7\libc.a(ultoa_ncheck.o)
+                0x0000451e                __ultoa_ncheck
+                0x00004520                __ultoa_common
  .text.avr-libc
-                0x0000450e       0x16 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avrxmega7\libc.a(utoa.o)
-                0x0000450e                __utoa
-                0x0000450e                utoa
+                0x00004562       0x16 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avrxmega7\libc.a(utoa.o)
+                0x00004562                __utoa
+                0x00004562                utoa
  .text.avr-libc
-                0x00004524       0x34 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avrxmega7\libc.a(utoa_ncheck.o)
-                0x00004524                __utoa_ncheck
-                0x00004526                __utoa_common
+                0x00004578       0x34 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avrxmega7\libc.a(utoa_ncheck.o)
+                0x00004578                __utoa_ncheck
+                0x0000457a                __utoa_common
  .text.avr-libc
-                0x00004558       0x20 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avrxmega7\libc.a(strrev.o)
-                0x00004558                strrev
+                0x000045ac       0x20 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avrxmega7\libc.a(strrev.o)
+                0x000045ac                strrev
  .text.avr-libc.fplib
-                0x00004578        0xe c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avrxmega7\libm.a(addsf3.o)
-                0x00004578                __subsf3
-                0x0000457a                __addsf3
+                0x000045cc        0xe c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avrxmega7\libm.a(addsf3.o)
+                0x000045cc                __subsf3
+                0x000045ce                __addsf3
  .text.avr-libc.fplib
-                0x00004586       0xcc c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avrxmega7\libm.a(addsf3x.o)
-                0x000045a8                __addsf3x
+                0x000045da       0xcc c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avrxmega7\libm.a(addsf3x.o)
+                0x000045fc                __addsf3x
  .text.avr-libc.fplib
-                0x00004652        0xa c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avrxmega7\libm.a(cmpsf2.o)
-                0x00004652                __nesf2
-                0x00004652                __eqsf2
-                0x00004652                __cmpsf2
-                0x00004652                __ltsf2
-                0x00004652                __lesf2
+                0x000046a6        0xa c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avrxmega7\libm.a(cmpsf2.o)
+                0x000046a6                __nesf2
+                0x000046a6                __eqsf2
+                0x000046a6                __cmpsf2
+                0x000046a6                __ltsf2
+                0x000046a6                __lesf2
  .text.avr-libc.fplib
-                0x0000465c        0x8 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avrxmega7\libm.a(divsf3.o)
-                0x0000465c                __divsf3
+                0x000046b0        0x8 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avrxmega7\libm.a(divsf3.o)
+                0x000046b0                __divsf3
  .text.avr-libc.fplib
-                0x00004664       0xdc c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avrxmega7\libm.a(divsf3x.o)
-                0x00004684                __divsf3x
-                0x0000468a                __divsf3_pse
+                0x000046b8       0xdc c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avrxmega7\libm.a(divsf3x.o)
+                0x000046d8                __divsf3x
+                0x000046de                __divsf3_pse
  .text.avr-libc.fplib
-                0x00004740        0xe c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avrxmega7\libm.a(fixsfsi.o)
-                0x00004740                __fixsfsi
+                0x00004794        0xe c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avrxmega7\libm.a(fixsfsi.o)
+                0x00004794                __fixsfsi
  .text.avr-libc.fplib
-                0x0000474e       0x5e c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avrxmega7\libm.a(fixunssfsi.o)
-                0x0000474e                __fixunssfsi
+                0x000047a2       0x5e c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avrxmega7\libm.a(fixunssfsi.o)
+                0x000047a2                __fixunssfsi
  .text.avr-libc.fplib
-                0x000047ac       0x7a c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avrxmega7\libm.a(floatsisf.o)
-                0x000047ac                __floatunsisf
-                0x000047b0                __floatsisf
+                0x00004800       0x7a c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avrxmega7\libm.a(floatsisf.o)
+                0x00004800                __floatunsisf
+                0x00004804                __floatsisf
  .text.avr-libc.fplib
-                0x00004826       0x48 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avrxmega7\libm.a(fp_cmp.o)
-                0x00004826                __fp_cmp
+                0x0000487a       0x48 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avrxmega7\libm.a(fp_cmp.o)
+                0x0000487a                __fp_cmp
  .text.avr-libc.fplib
-                0x0000486e        0xc c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avrxmega7\libm.a(fp_inf.o)
-                0x0000486e                __fp_inf
+                0x000048c2        0xc c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avrxmega7\libm.a(fp_inf.o)
+                0x000048c2                __fp_inf
  .text.avr-libc.fplib
-                0x0000487a        0x6 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avrxmega7\libm.a(fp_nan.o)
-                0x0000487a                __fp_nan
+                0x000048ce        0x6 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avrxmega7\libm.a(fp_nan.o)
+                0x000048ce                __fp_nan
  .text.avr-libc.fplib
-                0x00004880        0xe c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avrxmega7\libm.a(fp_pscA.o)
-                0x00004880                __fp_pscA
+                0x000048d4        0xe c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avrxmega7\libm.a(fp_pscA.o)
+                0x000048d4                __fp_pscA
  .text.avr-libc.fplib
-                0x0000488e        0xe c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avrxmega7\libm.a(fp_pscB.o)
-                0x0000488e                __fp_pscB
+                0x000048e2        0xe c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avrxmega7\libm.a(fp_pscB.o)
+                0x000048e2                __fp_pscB
  .text.avr-libc.fplib
-                0x0000489c       0x22 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avrxmega7\libm.a(fp_round.o)
-                0x0000489c                __fp_round
+                0x000048f0       0x22 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avrxmega7\libm.a(fp_round.o)
+                0x000048f0                __fp_round
  .text.avr-libc.fplib
-                0x000048be       0x44 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avrxmega7\libm.a(fp_split3.o)
-                0x000048be                __fp_split3
-                0x000048ce                __fp_splitA
+                0x00004912       0x44 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avrxmega7\libm.a(fp_split3.o)
+                0x00004912                __fp_split3
+                0x00004922                __fp_splitA
  .text.avr-libc.fplib
-                0x00004902        0xe c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avrxmega7\libm.a(fp_zero.o)
-                0x00004902                __fp_zero
-                0x00004904                __fp_szero
+                0x00004956        0xe c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avrxmega7\libm.a(fp_zero.o)
+                0x00004956                __fp_zero
+                0x00004958                __fp_szero
  .text.avr-libc.fplib
-                0x00004910        0xa c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avrxmega7\libm.a(gesf2.o)
-                0x00004910                __gesf2
-                0x00004910                __gtsf2
+                0x00004964        0xa c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avrxmega7\libm.a(gesf2.o)
+                0x00004964                __gesf2
+                0x00004964                __gtsf2
  .text.avr-libc.fplib
-                0x0000491a        0x8 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avrxmega7\libm.a(mulsf3.o)
-                0x0000491a                __mulsf3
+                0x0000496e        0x8 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avrxmega7\libm.a(mulsf3.o)
+                0x0000496e                __mulsf3
  .text.avr-libc.fplib
-                0x00004922       0xd2 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avrxmega7\libm.a(mulsf3x.o)
-                0x00004940                __mulsf3x
-                0x00004946                __mulsf3_pse
+                0x00004976       0xd2 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avrxmega7\libm.a(mulsf3x.o)
+                0x00004994                __mulsf3x
+                0x0000499a                __mulsf3_pse
  .text.libgcc.mul
-                0x000049f4       0x20 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avrxmega7\libgcc.a(_mulsi3.o)
-                0x000049f4                __mulsi3
- .text.libgcc   0x00004a14       0x12 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avrxmega7\libgcc.a(_tablejump2.o)
-                0x00004a14                __tablejump2__
+                0x00004a48       0x20 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avrxmega7\libgcc.a(_mulsi3.o)
+                0x00004a48                __mulsi3
+ .text.libgcc   0x00004a68       0x12 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avrxmega7\libgcc.a(_tablejump2.o)
+                0x00004a68                __tablejump2__
  .text.libgcc.mul
-                0x00004a26       0x16 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avrxmega7\libgcc.a(_muluhisi3.o)
-                0x00004a26                __muluhisi3
+                0x00004a7a       0x16 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avrxmega7\libgcc.a(_muluhisi3.o)
+                0x00004a7a                __muluhisi3
  .text.libgcc.mul
-                0x00004a3c       0x1e c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avrxmega7\libgcc.a(_umulhisi3.o)
-                0x00004a3c                __umulhisi3
-                0x00004a5a                . = ALIGN (0x2)
+                0x00004a90       0x1e c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avrxmega7\libgcc.a(_umulhisi3.o)
+                0x00004a90                __umulhisi3
+                0x00004aae                . = ALIGN (0x2)
  *(.fini9)
- .fini9         0x00004a5a        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avrxmega7\libgcc.a(_exit.o)
-                0x00004a5a                _exit
-                0x00004a5a                exit
+ .fini9         0x00004aae        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avrxmega7\libgcc.a(_exit.o)
+                0x00004aae                _exit
+                0x00004aae                exit
  *(.fini9)
  *(.fini8)
  *(.fini8)
@@ -1222,11 +1222,11 @@ END GROUP
  *(.fini1)
  *(.fini1)
  *(.fini0)
- .fini0         0x00004a5a        0x4 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avrxmega7\libgcc.a(_exit.o)
+ .fini0         0x00004aae        0x4 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avrxmega7\libgcc.a(_exit.o)
  *(.fini0)
-                0x00004a5e                _etext = .
+                0x00004ab2                _etext = .
 
-.data           0x00802000      0x104 load address 0x00004a5e
+.data           0x00802000      0x104 load address 0x00004ab2
                 0x00802000                PROVIDE (__data_start, .)
  *(.data)
  *(.data*)
@@ -1236,14 +1236,14 @@ END GROUP
                 0x00802002        0x4 Source/lib/freertos/tasks.o
  *(.gnu.linkonce.d*)
  *(.rodata)
- .rodata        0x00802006       0x10 C:\Users\journ\AppData\Local\Temp\cc2YBuRQ.ltrans0.ltrans.o
- .rodata        0x00802016       0x60 C:\Users\journ\AppData\Local\Temp\cc2YBuRQ.ltrans1.ltrans.o
- .rodata        0x00802076        0x8 C:\Users\journ\AppData\Local\Temp\cc2YBuRQ.ltrans2.ltrans.o
+ .rodata        0x00802006       0x10 C:\Users\journ\AppData\Local\Temp\ccuYHa9W.ltrans0.ltrans.o
+ .rodata        0x00802016       0x60 C:\Users\journ\AppData\Local\Temp\ccuYHa9W.ltrans1.ltrans.o
+ .rodata        0x00802076        0x8 C:\Users\journ\AppData\Local\Temp\ccuYHa9W.ltrans2.ltrans.o
  *(.rodata*)
  .rodata.str1.1
-                0x0080207e       0x2e C:\Users\journ\AppData\Local\Temp\cc2YBuRQ.ltrans0.ltrans.o
+                0x0080207e       0x2e C:\Users\journ\AppData\Local\Temp\ccuYHa9W.ltrans0.ltrans.o
  .rodata.str1.1
-                0x008020ac       0x53 C:\Users\journ\AppData\Local\Temp\cc2YBuRQ.ltrans1.ltrans.o
+                0x008020ac       0x53 C:\Users\journ\AppData\Local\Temp\ccuYHa9W.ltrans1.ltrans.o
  .rodata.str1.1
                 0x008020ff        0x5 Source/lib/freertos/tasks.o
  *(.gnu.linkonce.r*)
@@ -1254,7 +1254,7 @@ END GROUP
 .bss            0x00802104     0x10b6
                 0x00802104                PROVIDE (__bss_start, .)
  *(.bss)
- .bss           0x00802104       0x48 C:\Users\journ\AppData\Local\Temp\cc2YBuRQ.ltrans1.ltrans.o
+ .bss           0x00802104       0x48 C:\Users\journ\AppData\Local\Temp\ccuYHa9W.ltrans1.ltrans.o
                 0x00802104                reset
                 0x00802106                stop
                 0x00802108                go
@@ -1269,7 +1269,7 @@ END GROUP
                 0x0080211a                rightLimitSwitch
                 0x0080211c                leftLimitSwitch
                 0x0080211e                print_ser_queue
- .bss           0x0080214c        0x2 C:\Users\journ\AppData\Local\Temp\cc2YBuRQ.ltrans2.ltrans.o
+ .bss           0x0080214c        0x2 C:\Users\journ\AppData\Local\Temp\ccuYHa9W.ltrans2.ltrans.o
                 0x0080214c                last_created_task_pointer
  *(.bss*)
  .bss.xHeapHasBeenInitialised.4150
@@ -1318,8 +1318,8 @@ END GROUP
  COMMON         0x008031b8        0x2 Source/lib/freertos/port.o
                 0x008031b8                portStackTopForTask
                 0x008031ba                PROVIDE (__bss_end, .)
-                0x00004a5e                __data_load_start = LOADADDR (.data)
-                0x00004b62                __data_load_end = (__data_load_start + SIZEOF (.data))
+                0x00004ab2                __data_load_start = LOADADDR (.data)
+                0x00004bb6                __data_load_end = (__data_load_start + SIZEOF (.data))
 
 .noinit         0x008031ba        0x0
                 [!provide]                PROVIDE (__noinit_start, .)
@@ -1367,9 +1367,9 @@ END GROUP
 
 .comment        0x00000000       0x30
  *(.comment)
- .comment       0x00000000       0x31 C:\Users\journ\AppData\Local\Temp\cc2YBuRQ.ltrans0.ltrans.o
- .comment       0x00000000       0x31 C:\Users\journ\AppData\Local\Temp\cc2YBuRQ.ltrans1.ltrans.o
- .comment       0x00000000       0x31 C:\Users\journ\AppData\Local\Temp\cc2YBuRQ.ltrans2.ltrans.o
+ .comment       0x00000000       0x31 C:\Users\journ\AppData\Local\Temp\ccuYHa9W.ltrans0.ltrans.o
+ .comment       0x00000000       0x31 C:\Users\journ\AppData\Local\Temp\ccuYHa9W.ltrans1.ltrans.o
+ .comment       0x00000000       0x31 C:\Users\journ\AppData\Local\Temp\ccuYHa9W.ltrans2.ltrans.o
  .comment       0x00000000       0x30 Source/lib/freertos/heap_2.o
                                  0x31 (size before relaxing)
  .comment       0x00000030       0x31 Source/lib/freertos/list.o

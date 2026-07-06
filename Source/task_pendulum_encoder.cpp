@@ -60,6 +60,8 @@ void task_pendulum_encoder::run(void) {
 	
 	float theta_unwrapped = 0;
 	float omega = 0;
+	float omega_filtered = 0;
+	const float alpha = 0.3f;
 
 	portTickType currentTicks;
 	portTickType lastTicks = previousTicks;
@@ -74,23 +76,38 @@ void task_pendulum_encoder::run(void) {
 
 		raw_count = TCC1.CNT; 							// Read value from hardware
 		dcount_raw = raw_count - prev_raw_count;
+		
+		bool wrapped = false;
 		if (dcount_raw > counts_per_rev / 2.0) {
 			dcount_raw -= counts_per_rev;
+			wrapped = true;
 		}
 		else if (dcount_raw < -counts_per_rev / 2.0) {
 			dcount_raw += counts_per_rev;
+			wrapped = true;
 		}
 		
 		dcount_signed = -dcount_raw;
 		count_unwrapped += dcount_signed;
 		theta_unwrapped = count_unwrapped * (2.0 * PI / counts_per_rev);
 		
-		omega = (dcount_signed * (2.0 * PI / counts_per_rev)) / dt;
+		if(dt > 0.0f) {
+			omega = (dcount_signed * (2.0 * PI / counts_per_rev)) / dt;
+			omega_filtered = alpha * omega + (1.0 - alpha) * omega_filtered;	
+		}
+		
+		/*
+		if ((runs%100 == 0) && (theta_unwrapped > 3.0)) {	
+			if (wrapped || (omega > 2.0f || omega < -2.0f)) {
+				*p_serial << "WRAP: raw=" << raw_count << " prev=" << prev_raw_count << " dcount=" << dcount_signed << " omega_raw=" << omega << " omega_filt=" << omega_filtered << " dt=" << dt << endl;
+			}
+		}
+		*/
 		
 		pendulum_encoder->put((int16_t)count_unwrapped);
 		pendulum_encoder_radians->put(theta_unwrapped); 	// Convert to radians
 		
-		pendulum_encoder_w_radians->put(omega);
+		pendulum_encoder_w_radians->put(omega_filtered);
 
 		// Section of code used for unit testing, prints out curr count and queue value
 		/*
