@@ -56,6 +56,7 @@ shared_data<int16_t>* motor_command;
 
 shared_data<bool>* begin; // case 0
 shared_data<bool>* go; // case 2;
+shared_data<bool>* swing_up; // case 5;
 shared_data<bool>* stop; // case 3
 shared_data<bool>* reset; // reset to idle
 

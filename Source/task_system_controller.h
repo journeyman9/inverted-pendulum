@@ -31,11 +31,13 @@ class task_system_controller : public frt_task{
 		float left_home;
 		float position_set;
 		float period; 
-		float last_switch_time;
-		float curr_time;
+		portTickType last_switch_time;
+		portTickType curr_time;
 		float position_error = 0.0f;
 		float integrated_error = 0.0f;
 		portTickType currentTicks;
+		bool first_position;
+		bool reached_top;
 		float Kp = 6000;
 		float Ki = 3;
 		float angle_set; 

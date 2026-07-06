@@ -223,18 +223,18 @@ void task_system_controller::run(void) {
 				curr_time = xTaskGetTickCount();
 					
 				// Initial conditions
-				bool first_postition = true; 
-				bool reached_top = false; 
+				first_position = true; 
+				reached_top = false; 
 
 				while (reached_top == false) {
 					curr_time = xTaskGetTickCount();
 
 					if (curr_time - last_switch_time >= period){
-						first_postition = !first_postition;
+						first_position = !first_position;
 						last_switch_time = curr_time;
 					}
 						
-					if (first_postition) { 
+					if (first_position) { 
 						// Aim for the middle of the carriage
 						position_set = left_home / 1.5;
 						integrated_error = 0; 
@@ -253,7 +253,7 @@ void task_system_controller::run(void) {
 
 					// Add logic to check the current theta position
 					// This is going to
-					if ((pendulum_encoder_radians->get() > 3.0) || (pendulum_encoder_radians->get() < 3.3)){
+					if ((pendulum_encoder_radians->get() > 3.0) && (pendulum_encoder_radians->get() < 3.3)){
 						transition_to(4);
 						reached_top = true;
 						// go to balance
