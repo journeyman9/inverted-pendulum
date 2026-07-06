@@ -196,31 +196,8 @@ void task_system_controller::run(void) {
 					*p_serial << " Motor u: " << dtostrf(u, 0, 6, buf3) << endl;
 				}
 				*/
+				/*
 				if (runs%100 == 0) {
-					/*
-					x: -0.159, xdot: 0.000, angle: -0.017, thetadot: 0.000, Motor u: 31.316
-					x: -0.158, xdot: 0.000, angle: -0.024, thetadot: 0.000, Motor u: 39.541
-					x: -0.152, xdot: 0.000, angle: -0.011, thetadot: 0.000, Motor u: 30.284
-					x: -0.150, xdot: 0.000, angle: -0.027, thetadot: 0.000, Motor u: 49.569
-					x: -0.147, xdot: 0.000, angle: -0.052, thetadot: 0.000, Motor u: 80.388
-					x: -0.136, xdot: 0.240, angle: -0.058, thetadot: 3.141, Motor u: -289.933
-					x: -0.103, xdot: 0.300, angle: -0.005, thetadot: 0.000, Motor u: 264.534
-					x: -0.066, xdot: 0.300, angle: 0.068, thetadot: 0.000, Motor u: 211.067
-					x: -0.047, xdot: 0.120, angle: 0.093, thetadot: 0.000, Motor u: 76.008
-					x: -0.045, xdot: 0.000, angle: 0.080, thetadot: 0.000, Motor u: 10.583
-					x: -0.046, xdot: 0.000, angle: 0.090, thetadot: 0.000, Motor u: -0.998
-					x: -0.057, xdot: -0.120, angle: 0.087, thetadot: 0.000, Motor u: -87.941
-					x: -0.071, xdot: -0.240, angle: 0.112, thetadot: 0.000, Motor u: -208.733
-					x: -0.113, xdot: -0.600, angle: 0.061, thetadot: 0.000, Motor u: -428.829
-					x: -0.177, xdot: -0.600, angle: -0.055, thetadot: 0.000, Motor u: -345.795
-					x: -0.222, xdot: -0.180, angle: -0.118, thetadot: 0.000, Motor u: -24.754
-					x: -0.236, xdot: -0.120, angle: -0.096, thetadot: -3.141, Motor u: 528.965
-					x: -0.243, xdot: 0.120, angle: -0.099, thetadot: -6.281, Motor u: 1238.889
-					x: -0.206, xdot: 0.420, angle: 0.058, thetadot: 22.000, Motor u: -1600.000
-					x: -0.200, xdot: -0.300, angle: 0.200, thetadot: 22.000, Motor u: -1600.000
-					x: -0.252, xdot: -0.360, angle: 0.087, thetadot: -6.281, Motor u: 693.908
-					x: -0.288, xdot: -0.180, angle: 0.027, thetadot: -28.250, Motor u: 1600.000
-					*/
 					char buf[3];
 					char buf2[3];
 					char buf3[3];
@@ -232,6 +209,7 @@ void task_system_controller::run(void) {
 					*p_serial << ", thetadot: " << dtostrf(x[3], 0, 3, buf4);
 					*p_serial << ", Motor u: " << dtostrf(u, 0, 3, buf5) << endl;
 				}
+				*/
 							
 				if (leftLimitSwitch->get() || rightLimitSwitch->get()) {
 					*p_serial << "LIMIT SWITCH HIT ERROR" << endl;
