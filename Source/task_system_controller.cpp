@@ -213,95 +213,86 @@ void task_system_controller::run(void) {
 				}
 				break;
 
-				// Swing up control
-				case(5): 
+			// Swing up control
+			case(5): 
+				// period of 0.96s or 960ms 	
+				period = 960/2.0; 
 
-					// period of 0.96s or 960ms 	
-					period = 960/2.0; 
+				//start timers 
+				last_switch_time = xTaskGetTickCount();
+				curr_time = xTaskGetTickCount();
+					
+				// Initial conditions
+				bool first_postition = true; 
+				bool reached_top = false; 
 
-					//start timers 
-					last_switch_time = xTaskGetTickCount();
+				while (reached_top == false) {
 					curr_time = xTaskGetTickCount();
-					
-					// Initial conditions
-					bool first_postition = true; 
-					bool reached_top = false; 
 
-					while (reached_top == false) {
-						curr_time = xTaskGetTickCount();
-
-						if (curr_time - last_switch_time >= period){
-							first_postition = !first_postition;
-							last_switch_time = curr_time;
-						}
+					if (curr_time - last_switch_time >= period){
+						first_postition = !first_postition;
+						last_switch_time = curr_time;
+					}
 						
-						if first_postition { 
-							// Aim for the middle of the carriage
-							position_set = left_home / 1.5;
-							integrated_error = 0; 
-						} else {
-							// Aim for the middle of the carriage
-							position_set = left_home / 3;
-							integrated_error = 0;
-						} 
+					if (first_postition) { 
+						// Aim for the middle of the carriage
+						position_set = left_home / 1.5;
+						integrated_error = 0; 
+					} 
+					else {
+						// Aim for the middle of the carriage
+						position_set = left_home / 3.0;
+						integrated_error = 0;
+					} 
 					
-						position_error = position_set - linear_position->get();
-						integrated_error = integrated_error + position_error; 
+					position_error = position_set - linear_position->get();
+					integrated_error = integrated_error + position_error; 
 						
-						// P controller to get to middle position
-						motor_command->put((int16_t)(Kp * position_error + ((Ki * integrated_error))));
+					// P controller to get to middle position
+					motor_command->put((int16_t)(Kp * position_error + ((Ki * integrated_error))));
 
-						// Add logic to check the current theta position
-						// This is going to
-						if ((pendulum_encoder_radians >= 3) || (pendulum_encoder_radians < 3.3)){
-							transition_to(4);
-							reached_top = true;
-							// go to balance
-						}
-
-						// Transition to error if limit switches are hit
-						if (leftLimitSwitch->get() || rightLimitSwitch->get()) {
-							*p_serial << "LIMIT SWITCH HIT ERROR" << endl;
-							transition_to(100);
-						}
-
-						// Protect against going to far
-						if (((linear_position->get()/left_home) >0.8)|| ((linear_position->get()/left_home) < 0.2)){
-							*p_serial << "OUTSIDE displacement range" << endl;
-							transition_to(100);
-						}
-
-						if (reset->get() == 1) {
-							reset->put(0);
-							stop->put(0);
-							transition_to(0);
-						}
-
-						if (go->get() == 1) {
-							transition_to(4);
-							}
+					// Add logic to check the current theta position
+					// This is going to
+					if ((pendulum_encoder_radians->get() > 3.0) || (pendulum_encoder_radians->get() < 3.3)){
+						transition_to(4);
+						reached_top = true;
+						// go to balance
 					}
+
+					// Transition to error if limit switches are hit
+					if (leftLimitSwitch->get() || rightLimitSwitch->get()) {
+						*p_serial << "LIMIT SWITCH HIT ERROR" << endl;
+						transition_to(100);
+					}
+
+					// Protect against going to far
+					if (((linear_position->get()/left_home) >0.8)|| ((linear_position->get()/left_home) < 0.2)){
+						*p_serial << "OUTSIDE displacement range" << endl;
+						transition_to(100);
+					}
+					
+					// Safety stop with "d" 
+					if (stop->get() == true) {
+						transition_to(100);
+					}
+				}
 				break;
-
 					
-				case(100):
-					motor_command->put(0);
+			case(100):
+				motor_command->put(0);
 					
-					/*
-					if (runs%100 == 0) {
-						*p_serial << "Error State" << endl;
-					}
-					*/
+				/*
+				if (runs%100 == 0) {
+					*p_serial << "Error State" << endl;
+				}
+				*/
 					
-					if (reset->get()){
-						reset->put(0);
-						stop->put(0);
-						transition_to(0);
-					}
-					
-			
+				if (reset->get()){
+					reset->put(0);
+					stop->put(0);
+					transition_to(0);
+				}
 				break;
-				
 		}	
 		
 		/*
