@@ -88,6 +88,17 @@ void task_pendulum_encoder::run(void) {
 		omega = (dcount_signed * (2.0 * PI / counts_per_rev)) / dt;
 		
 		pendulum_encoder->put((int16_t)count_unwrapped);
+		
+		if (theta_unwrapped < -2.0 * PI) {
+			theta_unwrapped += 2.0 * PI;
+		}
+		else if (theta_unwrapped > 2.0 * PI) {
+			theta_unwrapped -= 2.0 * PI;
+		}
+		else {
+			//
+		}
+		
 		pendulum_encoder_radians->put(theta_unwrapped); 	// Convert to radians
 		
 		pendulum_encoder_w_radians->put(omega);

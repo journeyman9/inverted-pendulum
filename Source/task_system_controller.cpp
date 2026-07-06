@@ -154,7 +154,14 @@ void task_system_controller::run(void) {
 					transition_to(4);
 				}
 
-				if (swing_up->get() ==1){
+				if (swing_up->get() == 1){
+					//start timers
+					last_switch_time = xTaskGetTickCount();
+					curr_time = xTaskGetTickCount();
+									
+					// Initial conditions
+					first_position = true;
+					reached_top = false;
 					transition_to(5);
 				}
 				break;
@@ -214,19 +221,10 @@ void task_system_controller::run(void) {
 				break;
 
 			// Swing up control
-			case(5): 
-				// period of 0.96s or 960ms 	
-				period = 960/2.0; 
+			case(5):
+				if (reset)
 
-				//start timers 
-				last_switch_time = xTaskGetTickCount();
-				curr_time = xTaskGetTickCount();
-					
-				// Initial conditions
-				first_position = true; 
-				reached_top = false; 
-
-				while (reached_top == false) {
+				if (reached_top == false) {
 					curr_time = xTaskGetTickCount();
 
 					if (curr_time - last_switch_time >= period){
@@ -246,16 +244,24 @@ void task_system_controller::run(void) {
 					} 
 					
 					position_error = position_set - linear_position->get();
-					integrated_error = integrated_error + position_error; 
-						
+					integrated_error = integrated_error + position_error;
+					
+					if (runs%100 == 0) {
+						char buf[6];
+						char buf1[6];
+						char buf2[6];
+						*p_serial << "position: " << dtostrf(-1.0*(position_error - position_set), 0, 6, buf) << " , ";
+						*p_serial << "position_error: " << dtostrf(position_error, 0, 6, buf1) << " , ";
+						*p_serial << "angle: " << dtostrf(pendulum_encoder_radians->get(), 0, 6, buf2) << endl;
+					}
+											
 					// P controller to get to middle position
 					motor_command->put((int16_t)(Kp * position_error + ((Ki * integrated_error))));
 
 					// Add logic to check the current theta position
 					// This is going to
 					if ((pendulum_encoder_radians->get() > 3.0) && (pendulum_encoder_radians->get() < 3.3)){
-						transition_to(4);
-						reached_top = true;
+						reached_top = true; 
 						// go to balance
 					}
 
@@ -275,6 +281,10 @@ void task_system_controller::run(void) {
 					if (stop->get() == true) {
 						transition_to(100);
 					}
+				}
+				else {
+					*p_serial << "Transitioning to Balance" << endl;
+					transition_to(4);
 				}
 				break;
 					
