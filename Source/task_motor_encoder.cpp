@@ -58,6 +58,10 @@ void task_motor_encoder::run(void) {
 	portTickType lastTicks = previousTicks;
 	float dt;
 
+	const float alpha_low = 0.99f;
+	const float alpha_high = 1.0f;
+	float alpha = 1.0f;
+	float velocity_filtered = 0.0f;
 
 	while(1) {
 		//portTickType workStart = xTaskGetTickCount();
@@ -74,8 +78,19 @@ void task_motor_encoder::run(void) {
 		linear_position->put(x);
 		
 		if (dt > 0.0f) {
-			linear_velocity->put((x - previous_x) / dt);
+			float velocity_raw = (x - previous_x) / dt;
+			
+			if (encoder_count >= -1 && encoder_count <= 1) {
+				alpha = alpha_low;
+			}
+			else {
+				alpha = alpha_high;
+			}
+			
+			velocity_filtered = alpha * velocity_raw + (1.0f - alpha) * velocity_filtered;
 		}
+		
+		linear_velocity->put(velocity_filtered);
 		
 		/*
 		if(runs%100==0)

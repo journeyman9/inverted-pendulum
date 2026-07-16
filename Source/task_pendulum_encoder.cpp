@@ -61,7 +61,9 @@ void task_pendulum_encoder::run(void) {
 	float theta_unwrapped = 0;
 	float omega = 0;
 	float omega_filtered = 0;
-	const float alpha = 0.3f;
+	const float alpha_low = 0.99f;
+	const float alpha_high = 1.0f;
+	float alpha = 1.0f;
 
 	portTickType currentTicks;
 	portTickType lastTicks = previousTicks;
@@ -93,6 +95,14 @@ void task_pendulum_encoder::run(void) {
 		
 		if(dt > 0.0f) {
 			omega = (dcount_signed * (2.0 * PI / counts_per_rev)) / dt;
+			
+			if (dcount_signed >= -1 && dcount_signed <= 1) {
+				alpha = alpha_low;
+			}
+			else {
+				alpha = alpha_high;
+			}
+			
 			omega_filtered = alpha * omega + (1.0 - alpha) * omega_filtered;	
 		}
 		
