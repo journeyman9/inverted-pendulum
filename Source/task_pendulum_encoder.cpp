@@ -60,12 +60,17 @@ void task_pendulum_encoder::run(void) {
 	
 	float theta_unwrapped = 0;
 	float omega = 0;
-	float omega_filtered = 0;
-	const float alpha = 0.3f;
 
 	portTickType currentTicks;
 	portTickType lastTicks = previousTicks;
 	float dt;
+	
+	const float alpha = 0.80f; // Must match motor alpha
+	const float beta = pow(alpha, 2) / (2.0 - alpha); 
+	float theta_hat = 0.0f;
+	float omega_hat = 0.0f;
+	float omega_raw = 0.0f;
+	bool filter_initialized = false;
 
 	while(1) {
 		//portTickType workStart = xTaskGetTickCount();
@@ -91,9 +96,29 @@ void task_pendulum_encoder::run(void) {
 		count_unwrapped += dcount_signed;
 		theta_unwrapped = count_unwrapped * (2.0 * PI / counts_per_rev);
 		
-		if(dt > 0.0f) {
-			omega = (dcount_signed * (2.0 * PI / counts_per_rev)) / dt;
-			omega_filtered = alpha * omega + (1.0 - alpha) * omega_filtered;	
+		if (dt > 0.0f) {
+			omega_raw = (dcount_signed * (2.0 * PI / counts_per_rev)) / dt;
+			
+			if (!filter_initialized) {
+				theta_hat = theta_unwrapped;
+				omega_hat = omega_raw;
+				filter_initialized = true;
+			}
+			else {
+				// Alpha-beta filter prediction step
+				float theta_predict = theta_hat + omega_hat * dt;
+				float omega_predict = omega_hat;
+				
+				// Correction step
+				float residual = theta_unwrapped - theta_predict;
+				theta_hat = theta_predict + alpha * residual;
+				omega_hat = omega_predict + (beta / dt) * residual;	
+			}
+			
+			omega = omega_hat;
+		}
+		else {
+			omega = omega_hat;
 		}
 		
 		/*
@@ -107,7 +132,7 @@ void task_pendulum_encoder::run(void) {
 		pendulum_encoder->put((int16_t)count_unwrapped);
 		pendulum_encoder_radians->put(theta_unwrapped); 	// Convert to radians
 		
-		pendulum_encoder_w_radians->put(omega_filtered);
+		pendulum_encoder_w_radians->put(omega);
 
 		// Section of code used for unit testing, prints out curr count and queue value
 		/*

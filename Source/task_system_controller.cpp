@@ -197,6 +197,35 @@ void task_system_controller::run(void) {
 				}
 				*/
 				/*
+				x: -0.167, xdot: -0.039, angle: 0.042, thetadot: 0.001, Motor u: -68.793
+				x: -0.170, xdot: -0.059, angle: 0.074, thetadot: 1.117, Motor u: -316.444
+				x: -0.197, xdot: -0.299, angle: 0.030, thetadot: -0.410, Motor u: -183.117
+				x: -0.229, xdot: -0.286, angle: -0.017, thetadot: -0.410, Motor u: -144.540
+				x: -0.258, xdot: -0.181, angle: -0.061, thetadot: 0.004, Motor u: -118.681
+				x: -0.267, xdot: -0.020, angle: -0.046, thetadot: 0.001, Motor u: -34.358
+				x: -0.268, xdot: -0.009, angle: -0.011, thetadot: 1.117, Motor u: -262.377
+				x: -0.272, xdot: -0.013, angle: 0.002, thetadot: -0.004, Motor u: -86.752
+				x: -0.280, xdot: -0.110, angle: 0.002, thetadot: 1.680, Motor u: -452.902
+				x: -0.298, xdot: -0.127, angle: -0.046, thetadot: 1.313, Motor u: -360.817
+				x: -0.302, xdot: 0.006, angle: -0.052, thetadot: -1.117, Motor u: 159.541
+				x: -0.301, xdot: 0.032, angle: -0.055, thetadot: -1.672, Motor u: 278.006
+				x: -0.300, xdot: 0.053, angle: -0.080, thetadot: -0.050, Motor u: 36.939
+				x: -0.295, xdot: 0.111, angle: -0.121, thetadot: -0.410, Motor u: 190.593
+				x: -0.268, xdot: 0.402, angle: -0.121, thetadot: -0.004, Motor u: 338.090
+				x: -0.214, xdot: 0.577, angle: -0.052, thetadot: 0.391, Motor u: 351.265
+				x: -0.148, xdot: 0.599, angle: 0.039, thetadot: 0.367, Motor u: 317.649
+				x: -0.092, xdot: 0.421, angle: 0.115, thetadot: 1.117, Motor u: 24.346
+				x: -0.058, xdot: 0.180, angle: 0.137, thetadot: 0.049, Motor u: 49.395
+				x: -0.049, xdot: 0.001, angle: 0.115, thetadot: -0.001, Motor u: -31.430
+				x: -0.049, xdot: 0.011, angle: 0.105, thetadot: 0.001, Motor u: -13.960
+				x: -0.052, xdot: -0.067, angle: 0.127, thetadot: 1.117, Motor u: -289.596
+				x: -0.081, xdot: -0.352, angle: 0.096, thetadot: 0.019, Motor u: -276.938
+				x: -0.125, xdot: -0.449, angle: 0.036, thetadot: 0.048, Motor u: -315.126
+				x: -0.177, xdot: -0.434, angle: -0.042, thetadot: -0.410, Motor u: -176.408
+				x: -0.219, xdot: -0.340, angle: -0.093, thetadot: -2.156, Motor u: 216.725
+				x: -0.248, xdot: -0.211, angle: -0.140, thetadot: -15.500, Motor u: 1600.000
+				x: -0.216, xdot: 0.781, angle: -0.005, thetadot: -8.875, Motor u: 1600.000
+				
 				if (runs%100 == 0) {
 					char buf[3];
 					char buf2[3];

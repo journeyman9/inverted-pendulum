@@ -58,6 +58,13 @@ void task_motor_encoder::run(void) {
 	portTickType lastTicks = previousTicks;
 	float dt;
 
+	const float alpha = 0.80f; // Must match pendulum alpha
+	const float beta = pow(alpha, 2) / (2.0 - alpha);
+	float x_hat = 0.0f;
+	float xdot = 0.0f;
+	float xdot_hat = 0.0f;
+	float xdot_raw = 0.0f;
+	bool filter_initialized = false;
 
 	while(1) {
 		//portTickType workStart = xTaskGetTickCount();
@@ -74,8 +81,30 @@ void task_motor_encoder::run(void) {
 		linear_position->put(x);
 		
 		if (dt > 0.0f) {
-			linear_velocity->put((x - previous_x) / dt);
+			xdot_raw = (x - previous_x) / dt;
+			if (!filter_initialized) {
+				x_hat = x;
+				xdot_hat = xdot_raw;
+				filter_initialized = true;
+			}
+			else {
+				// Alpha-beta filter prediction step
+				float x_predict = x_hat + xdot_hat * dt;
+				float xdot_predict = xdot_hat;
+				
+				// Correction step
+				float residual = x - x_predict;
+				x_hat = x_predict + alpha * residual;
+				xdot_hat = xdot_predict + (beta / dt) * residual;
+			}
+			
+			xdot = xdot_hat;
 		}
+		else {
+			xdot = xdot_hat;
+		}
+		
+		linear_velocity->put(xdot);
 		
 		/*
 		if(runs%100==0)
