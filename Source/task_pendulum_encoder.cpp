@@ -61,7 +61,7 @@ void task_pendulum_encoder::run(void) {
 	float theta_unwrapped = 0;
 	float omega = 0;
 	float omega_filtered = 0;
-	const float alpha_low = 0.99f;
+	const float alpha_low = 0.5f;
 	const float alpha_high = 1.0f;
 	float alpha = 1.0f;
 

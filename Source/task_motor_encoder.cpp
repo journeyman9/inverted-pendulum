@@ -58,7 +58,7 @@ void task_motor_encoder::run(void) {
 	portTickType lastTicks = previousTicks;
 	float dt;
 
-	const float alpha_low = 0.99f;
+	const float alpha_low = 0.5f;
 	const float alpha_high = 1.0f;
 	float alpha = 1.0f;
 	float velocity_filtered = 0.0f;

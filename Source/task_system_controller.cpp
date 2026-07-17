@@ -198,6 +198,41 @@ void task_system_controller::run(void) {
 				*/
 				
 				/*
+				x: -0.310, xdot: 0.000, angle: -0.020, thetadot: 0.002, Motor u: -84.113
+				x: -0.310, xdot: 0.000, angle: -0.005, thetadot: 0.002, Motor u: -102.073
+				x: -0.310, xdot: -0.060, angle: 0.005, thetadot: 0.006, Motor u: -154.658
+				x: -0.311, xdot: 0.000, angle: 0.011, thetadot: 0.000, Motor u: -120.854
+				x: -0.314, xdot: 0.000, angle: 0.011, thetadot: -0.000, Motor u: -122.936
+				x: -0.322, xdot: 0.000, angle: -0.005, thetadot: -0.000, Motor u: -111.033
+				x: -0.324, xdot: 0.000, angle: -0.005, thetadot: 0.000, Motor u: -112.926
+				x: -0.326, xdot: -0.060, angle: 0.002, thetadot: 0.086, Motor u: -176.973
+				x: -0.328, xdot: 0.000, angle: -0.005, thetadot: -0.000, Motor u: -116.096
+				x: -0.330, xdot: 0.000, angle: -0.008, thetadot: -0.000, Motor u: -114.064
+				x: -0.330, xdot: 0.000, angle: -0.008, thetadot: -0.000, Motor u: -114.066
+				x: -0.330, xdot: 0.000, angle: -0.011, thetadot: -0.000, Motor u: -110.474
+				x: -0.330, xdot: 0.000, angle: -0.020, thetadot: -0.000, Motor u: -99.696
+				x: -0.330, xdot: 0.060, angle: -0.039, thetadot: -0.006, Motor u: -36.326
+				x: -0.330, xdot: 0.000, angle: -0.074, thetadot: -0.025, Motor u: -33.835
+				x: -0.326, xdot: 0.060, angle: -0.131, thetadot: -0.055, Motor u: 79.432
+				x: -0.296, xdot: 0.480, angle: -0.127, thetadot: 0.785, Motor u: 237.730
+				x: -0.238, xdot: 0.600, angle: -0.064, thetadot: 0.789, Motor u: 292.282
+				x: -0.166, xdot: 0.720, angle: 0.030, thetadot: 0.836, Motor u: 314.228
+				x: -0.099, xdot: 0.540, angle: 0.115, thetadot: 0.209, Motor u: 258.006
+				x: -0.051, xdot: 0.300, angle: 0.162, thetadot: 0.001, Motor u: 115.162
+				x: -0.034, xdot: 0.060, angle: 0.149, thetadot: -0.393, Motor u: 49.411
+				x: -0.034, xdot: 0.000, angle: 0.127, thetadot: -0.000, Motor u: -34.567
+				x: -0.037, xdot: -0.060, angle: 0.146, thetadot: 0.098, Motor u: -116.333
+				x: -0.061, xdot: -0.360, angle: 0.134, thetadot: -0.050, Motor u: -298.727
+				x: -0.114, xdot: -0.540, angle: 0.055, thetadot: -0.836, Motor u: -234.713
+				x: -0.172, xdot: -0.540, angle: -0.024, thetadot: -1.617, Motor u: -53.606
+				x: -0.225, xdot: -0.360, angle: -0.093, thetadot: -0.393, Motor u: -109.582
+				x: -0.260, xdot: -0.240, angle: -0.115, thetadot: 0.590, Motor u: -202.662
+				x: -0.271, xdot: -0.120, angle: -0.077, thetadot: -9.438, Motor u: 1577.682
+				x: -0.271, xdot: 0.600, angle: -0.127, thetadot: -31.375, Motor u: 1600.000
+				x: -0.225, xdot: 0.000, angle: 0.080, thetadot: 22.000, Motor u: -1600.000
+				x: -0.210, xdot: -0.300, angle: 0.241, thetadot: 44.000, Motor u: -1600.000
+				x: -0.252, xdot: -0.480, angle: 0.288, thetadot: 37.750, Motor u: -1600.000
+
 				if (runs%100 == 0) {
 					char buf[3];
 					char buf2[3];
@@ -211,7 +246,7 @@ void task_system_controller::run(void) {
 					*p_serial << ", Motor u: " << dtostrf(u, 0, 3, buf5) << endl;
 				}
 				*/
-							
+						
 				if (leftLimitSwitch->get() || rightLimitSwitch->get()) {
 					*p_serial << "LIMIT SWITCH HIT ERROR" << endl;
 					transition_to(100);
