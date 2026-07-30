@@ -1,6 +1,5 @@
 #include <stdlib.h>                         // Prototype declarations for I/O functions
 #include <avr/io.h>                         // Port I/O for SFR's
-#include <vector>
 
 class Lqr {
 public:

@@ -1,7 +1,6 @@
 #include <stdlib.h>                         // Prototype declarations for I/O functions
 #include <avr/io.h>                         // Port I/O for SFR's
 #include "lqr.h"
-#include <vector>
 
 Lqr::Lqr() {
 }

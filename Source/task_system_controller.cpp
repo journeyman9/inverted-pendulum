@@ -23,7 +23,6 @@
 #include "task_system_controller.h"                  // Template
 #include "lqr.h"
 #include "planner.h"
-#include <vector>
 
 task_system_controller::task_system_controller(
 	const char* a_name,
