@@ -1,13 +1,13 @@
 import numpy as np
 import matplotlib.pyplot as plt
 import control as ct
-from model import A, B, C, D, wn_pend, sys, dsys
+from model import A, B, C, D, wn_pend, sys, dsys, dt
 import pandas as pd
 
 print("Wn = {} rad/s".format(wn_pend))
 
 print("\nOL: A")
-values, vectors = np.linalg.eig(A)
+values, vectors = np.linalg.eig(dsys.A)
 np.set_printoptions(precision=4, suppress=True)
 for i in range(len(values)):
     print("x{} approx e ^ ({:.2f})t * {}".format(i, values[i], vectors[:, i]))
@@ -51,8 +51,9 @@ dominant_pair = [complex(dominant_real, wn * np.sqrt(1 - zeta**2)),
 # Place remaining poles further left 
 remaining_poles = [-wn*1.5, -wn*2.0] # or 5x dominant pole
 poles = np.array(dominant_pair + remaining_poles)
+discrete_poles = np.exp(poles * dt)
 
-K = ct.place(A, B, poles)
+K = ct.place(dsys.A, dsys.B, discrete_poles)
 
 # Plot Pole-Zero Map After Pole Placement
 #plt.figure()
@@ -60,7 +61,7 @@ K = ct.place(A, B, poles)
 #plt.show()
 
 print("\nCL: A-BK")
-values, vectors = np.linalg.eig(A - B @ K)
+values, vectors = np.linalg.eig(dsys.A - dsys.B @ K)
 np.set_printoptions(precision=4, suppress=True)
 for i in range(len(values)):
     print("x{} approx e ^ ({:.2f})t * {}".format(i, values[i], vectors[:, i]))
@@ -74,7 +75,8 @@ x0 = [0.2, 0, 0.0873, 0]
 u = K @ x0
 print("\nu: {:.6f}".format(u))
 
-idx_sorted = np.argsort(np.abs(np.real(values)))
+# Sort by magnitude |z| closest to 0 is fastest
+idx_sorted = np.argsort(np.abs(values))
 
 state_names = ["x", "xdot", "theta", "thetadot"]
 
@@ -84,8 +86,14 @@ for i in idx_sorted:
     lam = values[i]
     v = vectors[:, i]
 
-    sigma = np.real(lam)
-    Ts = np.inf if sigma == 0 else 4 / np.abs(sigma)
+    magnitude = np.abs(lam)
+    
+    if magnitude >= 1.0:
+        Ts = np.inf
+    elif magnitude == 0:
+        Ts = 0.0
+    else:
+        Ts = (-4 * dt) / np.log(magnitude)
 
     # eigenvector energy contribution
     energy = np.abs(v)**2

@@ -23,6 +23,7 @@
 #include "task_system_controller.h"                  // Template
 #include "lqr.h"
 #include "planner.h"
+#include "kalman.h"
 
 task_system_controller::task_system_controller(
 	const char* a_name,
@@ -46,6 +47,7 @@ void task_system_controller::run(void) {
 	
 	Lqr controller;
 	Planner planner;
+	Kalman kalman;
 	bool set_already = false;
 	float x[4] = {0.0f, 0.0f, 0.0f, 0.0f};
 	float x_r[4] = {0.0f, 0.0f, 0.0f, 0.0f};
