@@ -1,4 +1,3 @@
-#include <iostream>
 #include "kalman.h"
 
 Kalman::Kalman(const Vector& x0): x_hat(x0) {
@@ -56,7 +55,7 @@ Matrix Kalman::inverse(const Matrix& A) {
     }
     
     if (A.size() != A[0].size()) {
-      throw std::invalid_argument("Matrix must be square");
+      //throw std::invalid_argument("Matrix must be square");
     }
 
     size_t n = A.size();
@@ -86,7 +85,7 @@ Matrix Kalman::inverse(const Matrix& A) {
         float pivotValue = aug[pivot][pivot];
 
         if (std::abs(pivotValue) < 1e-8) {
-            throw std::runtime_error("Matrix is singular");
+            //throw std::runtime_error("Matrix is singular");
         }
 
         for (size_t col = 0; col < 2 * n; ++col) {
@@ -124,7 +123,7 @@ Matrix Kalman::multiplyMatrices(const Matrix& A, const Matrix& B) {
     }
 
     if (A[0].size() != B.size()) {
-        throw std::invalid_argument("Matrix dimensions do not align");
+        //throw std::invalid_argument("Matrix dimensions do not align");
     }
 
     size_t rows = A.size();
@@ -146,7 +145,7 @@ Matrix Kalman::multiplyMatrices(const Matrix& A, const Matrix& B) {
 
 Matrix Kalman::addMatrices(const Matrix& A, const Matrix& B) {
     if (A.size() != B.size() || A[0].size() != B[0].size()) {
-        throw std::invalid_argument("Matrix dimensions must match");
+        //throw std::invalid_argument("Matrix dimensions must match");
     }
 
     Matrix result(A.size(), Vector(A[0].size(), 0.0));
@@ -162,7 +161,7 @@ Matrix Kalman::addMatrices(const Matrix& A, const Matrix& B) {
 
 Matrix Kalman::subMatrices(const Matrix& A, const Matrix& B) {
     if (A.size() != B.size() || A[0].size() != B[0].size()) {
-        throw std::invalid_argument("Matrix dimensions must match");
+        //throw std::invalid_argument("Matrix dimensions must match");
     }
 
     Matrix result(A.size(), Vector(A[0].size(), 0.0));

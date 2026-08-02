@@ -1,7 +1,5 @@
-#include <iostream>
 #include <cmath>
 #include <vector>
-#include <stdexcept>
 
 using Vector = std::vector<float>;
 using Matrix = std::vector<std::vector<float>>;

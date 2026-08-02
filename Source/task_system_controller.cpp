@@ -52,8 +52,8 @@ void task_system_controller::run(void) {
 	Kalman observer(x);
 	float x_r[4] = {0.0f, 0.0f, 0.0f, 0.0f};
 	float u = 0.0f;
-	float x_hat[4] = {0.0f, 0.0f, 0.0f, 0.0f};
-	observer.predict(u);
+	std::vector<float> x_hat{0.0f, 0.0f, 0.0f, 0.0f};
+	//observer.predict(u);
 		
 	while(1) {
 		/*
@@ -178,7 +178,7 @@ void task_system_controller::run(void) {
 				x[3] = pendulum_encoder_w_radians->get();
 				taskEXIT_CRITICAL();
 				
-				observer.update(x);
+				//observer.update(x_hat(std::vector<float>(std::begin(x), std::end(x))));
 				x_hat = observer.getStateEstimate();
 
 				planner.plan(x);
@@ -190,7 +190,7 @@ void task_system_controller::run(void) {
 					
 				}
 				u = controller.calculate_action(x, x_r, position_set, angle_set);				
-				observer.predict(u);
+				//observer.predict(u(std::vector<float>(std::begin(u), std::end(u))));
 				motor_command->put(u);
 				
 				/*

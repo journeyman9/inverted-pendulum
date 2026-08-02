@@ -192,6 +192,12 @@
     </ToolchainSettings>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Source\kalman.cpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Source\kalman.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="Source\lib\freertos\croutine.c">
       <SubType>compile</SubType>
     </Compile>
