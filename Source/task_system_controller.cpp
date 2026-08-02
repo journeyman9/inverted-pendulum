@@ -47,11 +47,13 @@ void task_system_controller::run(void) {
 	
 	Lqr controller;
 	Planner planner;
-	Kalman kalman;
 	bool set_already = false;
 	float x[4] = {0.0f, 0.0f, 0.0f, 0.0f};
+	Kalman observer(x);
 	float x_r[4] = {0.0f, 0.0f, 0.0f, 0.0f};
 	float u = 0.0f;
+	float x_hat[4] = {0.0f, 0.0f, 0.0f, 0.0f};
+	observer.predict(u);
 		
 	while(1) {
 		/*
@@ -175,6 +177,9 @@ void task_system_controller::run(void) {
 				x[2] = pendulum_encoder_radians->get();
 				x[3] = pendulum_encoder_w_radians->get();
 				taskEXIT_CRITICAL();
+				
+				observer.update(x);
+				x_hat = observer.getStateEstimate();
 
 				planner.plan(x);
 				
@@ -185,6 +190,7 @@ void task_system_controller::run(void) {
 					
 				}
 				u = controller.calculate_action(x, x_r, position_set, angle_set);				
+				observer.predict(u);
 				motor_command->put(u);
 				
 				/*

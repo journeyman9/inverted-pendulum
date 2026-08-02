@@ -1,61 +1,73 @@
 #include <iostream>
 #include <cmath>
 #include <vector>
+#include <stdexcept>
+
+using Vector = std::vector<float>;
+using Matrix = std::vector<std::vector<float>>;
 
 class Kalman {
-public:
-    Kalman();
-    ~Kalman();
-    std::vector<std::vector<float>> F{
+private:
+    Vector multiplyMatrixVector(const Matrix& A, const Vector& x);
+    Vector addVectors(const Vector& a, const Vector& b);
+    Vector subVectors(const Vector& a, const Vector& b);
+    Matrix transpose(const Matrix& A);    
+    Matrix inverse(const Matrix& A);
+    Matrix multiplyMatrices(const Matrix& A, const Matrix& B);
+    Matrix addMatrices(const Matrix& A, const Matrix& B);
+    Matrix subMatrices(const Matrix& A, const Matrix& B);
+    const Matrix F{
         {1.0, 0.000988, 0.0, 0.0},
         {0.0, 0.975533, 0.000818, 0.0},
         {0.0, -0.000052, 1.000023, 0.001},
         {0.0, -0.104024, 0.045185, 1.000023}
 
     };
-    std::vector<std::vector<float>> G{
+    const Matrix G{
         {0.000003},
         {0.006322},
         {0.000013},
         {0.026878}
     };
-    std::vector<std::vector<float>> Q{
+    const Matrix Q{
         {1.0, 0.0, 0.0, 0.0},
         {0.0, 1.0, 0.0, 0.0},
         {0.0, 0.0, 1.0, 0.0},
         {0.0, 0.0, 0.0, 1.0}
     };
-    std::vector<std::vector<float>> R{
-        {1.0}
-    };
-    std::vector<std::vector<float>> H{
+    const Matrix R{
         {1.0, 0.0, 0.0, 0.0},
         {0.0, 1.0, 0.0, 0.0},
         {0.0, 0.0, 1.0, 0.0},
         {0.0, 0.0, 0.0, 1.0}
     };
-    std::vector<std::vector<float>> P{
+    const Matrix H{
+        {1.0, 0.0, 0.0, 0.0},
+        {0.0, 1.0, 0.0, 0.0},
+        {0.0, 0.0, 1.0, 0.0},
+        {0.0, 0.0, 0.0, 1.0}
+    };
+    Matrix P{
         {0.001, 0.0, 0.0, 0.0},
         {0.0, 0.001, 0.0, 0.0},
         {0.0, 0.0, 0.001, 0.0},
         {0.0, 0.0, 0.0, 0.001}
     };
-    const std::vector<std::vector<float>> I{
+    const Matrix I{
         {1.0, 0.0, 0.0, 0.0},
         {0.0, 1.0, 0.0, 0.0},
         {0.0, 0.0, 1.0, 0.0},
         {0.0, 0.0, 0.0, 1.0}
     };
-    std::vector<float> z;
-    std::vector<float> x_hat;
-    std::vector<float> u_k;
-    std::vector<float> Kf;
-    
-    std::vector<float> multiplyMatrixVector(const std::vector<std::vector<float>>& A, const std::vector<float>& x);
-    std::vector<float> addVectors(const std::vector<float>& a, const std::vector<float>& b);
-    std::vector<float> subVectors(const std::vector<float>& a, const std::vector<float>& b);
-    std::vector<float> transpose(const std::vector<float>& A);
-    
-    void predict(std::vector<float>& x_hat, std::vector<float>& u_k);
-    void update(std::vector<float>& u_k, std::vector<float>& z)
+public:
+    Kalman(const std::vector<float>& x0);
+    ~Kalman();
+    Vector y;
+    Vector z;
+    Vector x_hat;
+    Vector u_k;
+    Matrix Kf;
+    Vector getStateEstimate();
+    void predict(Vector& u_k);
+    void update(Vector& z);
 };
