@@ -191,12 +191,12 @@ void Kalman::update(const Vector& z) {
     Kf = multiplyMatrices(
         multiplyMatrices(P, transpose(H)),
         inverse(
-            multiplyMatrices(
-                H,
-                addMatrices(
-                    multiplyMatrices(P, transpose(H)),
-                    R
-                )
+            addMatrices(
+                multiplyMatrices(
+                    H,
+                    multiplyMatrices(P, transpose(H))
+                ),
+                R
             )
         )
     );
