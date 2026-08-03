@@ -68,5 +68,5 @@ public:
     Matrix Kf;
     Vector getStateEstimate();
     void predict(float& u_k);
-    void update(Vector& z);
+    void update(const Vector& z);
 };

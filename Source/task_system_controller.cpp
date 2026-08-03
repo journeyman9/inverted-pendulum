@@ -24,7 +24,7 @@
 #include "lqr.h"
 #include "planner.h"
 #include <array>
-//#include "kalman.h"
+#include "kalman.h"
 
 task_system_controller::task_system_controller(
 	const char* a_name,
@@ -53,8 +53,8 @@ void task_system_controller::run(void) {
 	float x_r[4] = {0.0f, 0.0f, 0.0f, 0.0f};
 	float u = 0.0f;
 	std::array<float, 4> x_hat{{0.0f, 0.0f, 0.0f, 0.0f}};
-	//Kalman observer(x_hat);
-	//observer.predict(u);
+	Kalman observer(x_hat);
+	observer.predict(u);
 		
 	while(1) {
 		/*
@@ -179,8 +179,8 @@ void task_system_controller::run(void) {
 				x[3] = pendulum_encoder_w_radians->get();
 				taskEXIT_CRITICAL();
 				
-				//observer.update(x_hat(std::vector<float>(std::begin(x), std::end(x))));
-				//x_hat = observer.getStateEstimate();
+				observer.update(std::array<float, 4>{x[0], x[1], x[2], x[3]});
+				x_hat = observer.getStateEstimate();
 
 				planner.plan(x);
 				
@@ -191,7 +191,7 @@ void task_system_controller::run(void) {
 					
 				}
 				u = controller.calculate_action(x, x_r, position_set, angle_set);				
-				//observer.predict(u(std::vector<float>(std::begin(u), std::end(u))));
+				observer.predict(u);
 				motor_command->put(u);
 				
 				/*

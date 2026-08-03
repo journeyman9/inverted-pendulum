@@ -186,7 +186,7 @@ void Kalman::predict(float& u_k) {
     );
 }
 
-void Kalman::update(Vector& z) {
+void Kalman::update(const Vector& z) {
     y = subVectors(z, multiplyMatrixVector(H, x_hat));
     Kf = multiplyMatrices(
         multiplyMatrices(P, transpose(H)),
