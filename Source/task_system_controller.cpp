@@ -23,7 +23,8 @@
 #include "task_system_controller.h"                  // Template
 #include "lqr.h"
 #include "planner.h"
-#include "kalman.h"
+#include <array>
+//#include "kalman.h"
 
 task_system_controller::task_system_controller(
 	const char* a_name,
@@ -49,10 +50,10 @@ void task_system_controller::run(void) {
 	Planner planner;
 	bool set_already = false;
 	float x[4] = {0.0f, 0.0f, 0.0f, 0.0f};
-	Kalman observer(x);
 	float x_r[4] = {0.0f, 0.0f, 0.0f, 0.0f};
 	float u = 0.0f;
-	std::vector<float> x_hat{0.0f, 0.0f, 0.0f, 0.0f};
+	std::array<float, 4> x_hat{{0.0f, 0.0f, 0.0f, 0.0f}};
+	//Kalman observer(x_hat);
 	//observer.predict(u);
 		
 	while(1) {
@@ -179,7 +180,7 @@ void task_system_controller::run(void) {
 				taskEXIT_CRITICAL();
 				
 				//observer.update(x_hat(std::vector<float>(std::begin(x), std::end(x))));
-				x_hat = observer.getStateEstimate();
+				//x_hat = observer.getStateEstimate();
 
 				planner.plan(x);
 				

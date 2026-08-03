@@ -7,7 +7,7 @@ Kalman::~Kalman() {
 }
 
 Vector Kalman::multiplyMatrixVector(const Matrix& A, const Vector& x) {
-    Vector result(A.size(), 0.0);
+    Vector result{0.0f, 0.0f, 0.0f, 0.0f};
     for (int i=0; i<A.size(); ++i) {
         for (int j=0; j<x.size(); ++j) {
             result[i] += A[i][j] * x[j];
@@ -17,7 +17,7 @@ Vector Kalman::multiplyMatrixVector(const Matrix& A, const Vector& x) {
 }
 
 Vector Kalman::addVectors(const Vector& a, const Vector& b) {
-    Vector result(a.size(), 0.0);
+    Vector result{0.0f, 0.0f, 0.0f, 0.0f};
     for (int i=0; i<a.size(); ++i) {
         result[i] = a[i] + b[i];
     }
@@ -25,7 +25,7 @@ Vector Kalman::addVectors(const Vector& a, const Vector& b) {
 }
 
 Vector Kalman::subVectors(const Vector& a, const Vector& b) {
-    Vector result(a.size(), 0.0);
+    Vector result {};
     for (int i=0; i<a.size(); ++i) {
         result[i] = a[i] - b[i];
     }
@@ -37,12 +37,10 @@ Matrix Kalman::transpose(const Matrix& A) {
         return {};
     }
 
-    size_t rows = A.size();
-    size_t cols = A[0].size();
-    Matrix result(cols, Vector(rows));
+	Matrix result {};
 
-    for (size_t i = 0; i < rows; ++i) {
-        for (size_t j = 0; j < cols; ++j) {
+    for (size_t i = 0; i < 4; ++i) {
+        for (size_t j = 0; j < 4; ++j) {
             result[j][i] = A[i][j];
         }
     }
@@ -59,7 +57,7 @@ Matrix Kalman::inverse(const Matrix& A) {
     }
 
     size_t n = A.size();
-    Matrix aug(n, Vector(2 * n, 0.0));
+    AugMatrix aug{};
     for (size_t i = 0; i < n; ++i) {
         for (size_t j = 0; j < n; ++j) {
             aug[i][j] = A[i][j];
@@ -106,7 +104,7 @@ Matrix Kalman::inverse(const Matrix& A) {
         }
     }
     
-    Matrix result(n, Vector(n));
+     Matrix result{};
 
     for (size_t i = 0; i < n; ++i) {
         for (size_t j = 0; j < n; ++j) {
@@ -130,7 +128,7 @@ Matrix Kalman::multiplyMatrices(const Matrix& A, const Matrix& B) {
     size_t cols = B[0].size();
     size_t innerDim = B.size();
 
-    Matrix result(rows, Vector(cols, 0.0));
+    Matrix result {};
 
     for (size_t i = 0; i < rows; ++i) {
         for (size_t j = 0; j < cols; ++j) {
@@ -148,7 +146,7 @@ Matrix Kalman::addMatrices(const Matrix& A, const Matrix& B) {
         //throw std::invalid_argument("Matrix dimensions must match");
     }
 
-    Matrix result(A.size(), Vector(A[0].size(), 0.0));
+    Matrix result {};
 
     for (size_t i = 0; i < A.size(); ++i) {
         for (size_t j = 0; j < A[0].size(); ++j) {
@@ -164,7 +162,7 @@ Matrix Kalman::subMatrices(const Matrix& A, const Matrix& B) {
         //throw std::invalid_argument("Matrix dimensions must match");
     }
 
-    Matrix result(A.size(), Vector(A[0].size(), 0.0));
+    Matrix result {};
 
     for (size_t i = 0; i < A.size(); ++i) {
         for (size_t j = 0; j < A[0].size(); ++j) {
@@ -175,8 +173,13 @@ Matrix Kalman::subMatrices(const Matrix& A, const Matrix& B) {
     return result;
 }
 
-void Kalman::predict(Vector& u_k) {
-    x_hat = addVectors(multiplyMatrixVector(F, x_hat), multiplyMatrixVector(G, u_k));
+void Kalman::predict(float& u_k) {
+	Vector Gu {};
+	
+	for (int i = 0; i < 4; ++i) {
+		Gu[i] = G[i] * u_k;
+	}
+    x_hat = addVectors(multiplyMatrixVector(F, x_hat), Gu);
     P = addMatrices(
         multiplyMatrices(F, multiplyMatrices(P, transpose(F))),
         Q

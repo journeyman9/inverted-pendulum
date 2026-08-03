@@ -1,8 +1,9 @@
 #include <cmath>
-#include <vector>
+#include <array>
 
-using Vector = std::vector<float>;
-using Matrix = std::vector<std::vector<float>>;
+ using Vector = std::array<float, 4>;
+ using Matrix = std::array<std::array<float, 4>, 4>;
+ using AugMatrix = std::array<std::array<float, 8>, 4>;
 
 class Kalman {
 private:
@@ -14,58 +15,58 @@ private:
     Matrix multiplyMatrices(const Matrix& A, const Matrix& B);
     Matrix addMatrices(const Matrix& A, const Matrix& B);
     Matrix subMatrices(const Matrix& A, const Matrix& B);
-    const Matrix F{
-        {1.0, 0.000988, 0.0, 0.0},
-        {0.0, 0.975533, 0.000818, 0.0},
-        {0.0, -0.000052, 1.000023, 0.001},
-        {0.0, -0.104024, 0.045185, 1.000023}
-
-    };
-    const Matrix G{
-        {0.000003},
-        {0.006322},
-        {0.000013},
-        {0.026878}
-    };
-    const Matrix Q{
-        {1.0, 0.0, 0.0, 0.0},
-        {0.0, 1.0, 0.0, 0.0},
-        {0.0, 0.0, 1.0, 0.0},
-        {0.0, 0.0, 0.0, 1.0}
-    };
-    const Matrix R{
-        {1.0, 0.0, 0.0, 0.0},
-        {0.0, 1.0, 0.0, 0.0},
-        {0.0, 0.0, 1.0, 0.0},
-        {0.0, 0.0, 0.0, 1.0}
-    };
-    const Matrix H{
-        {1.0, 0.0, 0.0, 0.0},
-        {0.0, 1.0, 0.0, 0.0},
-        {0.0, 0.0, 1.0, 0.0},
-        {0.0, 0.0, 0.0, 1.0}
-    };
-    Matrix P{
-        {0.001, 0.0, 0.0, 0.0},
-        {0.0, 0.001, 0.0, 0.0},
-        {0.0, 0.0, 0.001, 0.0},
-        {0.0, 0.0, 0.0, 0.001}
-    };
-    const Matrix I{
-        {1.0, 0.0, 0.0, 0.0},
-        {0.0, 1.0, 0.0, 0.0},
-        {0.0, 0.0, 1.0, 0.0},
-        {0.0, 0.0, 0.0, 1.0}
-    };
+	
+    const Matrix F{{
+        {{1.0f, 0.000988f, 0.0f, 0.0f}},
+        {{0.0f, 0.975533f, 0.000818f, 0.0f}},
+        {{0.0f, -0.000052f, 1.000023f, 0.001f}},
+        {{0.0f, -0.104024f, 0.045185f, 1.000023f}}
+    }};
+    const Vector G{{
+        0.000003f,
+        0.006322f,
+        0.000013f,
+        0.026878f
+    }};
+    const Matrix Q{{
+        {{1.0f, 0.0f, 0.0f, 0.0f}},
+        {{0.0f, 1.0f, 0.0f, 0.0f}},
+        {{0.0f, 0.0f, 1.0f, 0.0f}},
+        {{0.0f, 0.0f, 0.0f, 1.0f}}
+    }};
+    const Matrix R{{
+        {{1.0f, 0.0f, 0.0f, 0.0f}},
+        {{0.0f, 1.0f, 0.0f, 0.0f}},
+        {{0.0f, 0.0f, 1.0f, 0.0f}},
+        {{0.0f, 0.0f, 0.0f, 1.0f}}
+    }};
+    const Matrix H{{
+        {{1.0f, 0.0f, 0.0f, 0.0f}},
+        {{0.0f, 1.0f, 0.0f, 0.0f}},
+        {{0.0f, 0.0f, 1.0f, 0.0f}},
+        {{0.0f, 0.0f, 0.0f, 1.0f}}
+    }};
+    Matrix P{{
+        {{0.001f, 0.0f, 0.0f, 0.0f}},
+        {{0.0f, 0.001f, 0.0f, 0.0f}},
+        {{0.0f, 0.0f, 0.001f, 0.0f}},
+        {{0.0f, 0.0f, 0.0f, 0.001f}}
+    }};
+    const Matrix I{{
+        {{1.0f, 0.0f, 0.0f, 0.0f}},
+        {{0.0f, 1.0f, 0.0f, 0.0f}},
+        {{0.0f, 0.0f, 1.0f, 0.0f}},
+        {{0.0f, 0.0f, 0.0f, 1.0f}}
+    }};
 public:
-    Kalman(const std::vector<float>& x0);
+    Kalman(const Vector& x0);
     ~Kalman();
     Vector y;
     Vector z;
     Vector x_hat;
-    Vector u_k;
+    float u_k;
     Matrix Kf;
     Vector getStateEstimate();
-    void predict(Vector& u_k);
+    void predict(float& u_k);
     void update(Vector& z);
 };
