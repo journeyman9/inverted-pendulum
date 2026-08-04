@@ -173,7 +173,7 @@ Matrix Kalman::subMatrices(const Matrix& A, const Matrix& B) {
     return result;
 }
 
-void Kalman::predict(float& u_k) {
+void Kalman::predict(const float& u_k) {
 	Vector Gu {};
 	
 	for (int i = 0; i < 4; ++i) {

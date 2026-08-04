@@ -24,11 +24,11 @@ Error		'__builtin_addressof' was not declared in this scope	FREERTOS_SHELL	C:\Us
 
 constexpr uint8_t N = 4;
 
-  };
+};
 
-  struct Matrix {
-      float data[N][N];
-  };
+struct Matrix {
+  float data[N][N];
+};
 
 #define STATES 4
 

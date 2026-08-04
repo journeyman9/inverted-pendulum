@@ -7,14 +7,14 @@
 
 class Kalman {
 private:
-    Vector multiplyMatrixVector(const Matrix& A, const Vector& x);
-    Vector addVectors(const Vector& a, const Vector& b);
-    Vector subVectors(const Vector& a, const Vector& b);
-    Matrix transpose(const Matrix& A);    
-    Matrix inverse(const Matrix& A);
-    Matrix multiplyMatrices(const Matrix& A, const Matrix& B);
-    Matrix addMatrices(const Matrix& A, const Matrix& B);
-    Matrix subMatrices(const Matrix& A, const Matrix& B);
+    static Vector multiplyMatrixVector(const Matrix& A, const Vector& x);
+    static Vector addVectors(const Vector& a, const Vector& b);
+    static Vector subVectors(const Vector& a, const Vector& b);
+    static Matrix transpose(const Matrix& A);    
+    static Matrix inverse(const Matrix& A);
+    static Matrix multiplyMatrices(const Matrix& A, const Matrix& B);
+    static Matrix addMatrices(const Matrix& A, const Matrix& B);
+    static Matrix subMatrices(const Matrix& A, const Matrix& B);
 	
     const Matrix F{{
         {{1.0f, 0.000988f, 0.0f, 0.0f}},
@@ -67,6 +67,6 @@ public:
     float u_k;
     Matrix Kf;
     Vector getStateEstimate();
-    void predict(float& u_k);
+    void predict(const float& u_k);
     void update(const Vector& z);
 };
