@@ -52,6 +52,7 @@ void task_system_controller::run(void) {
 	float x[4] = {0.0f, 0.0f, 0.0f, 0.0f};
 	float x_r[4] = {0.0f, 0.0f, 0.0f, 0.0f};
 	float u = 0.0f;
+	uint16_t next_head = 0;
 	//std::array<float, 4> x_hat{{0.0f, 0.0f, 0.0f, 0.0f}};
 	//Kalman observer(x_hat);
 	//observer.predict(u);
@@ -194,7 +195,7 @@ void task_system_controller::run(void) {
 				u = controller.calculate_action(x, x_r, position_set, angle_set);				
 				//observer.predict(u);
 
-				uint16_t next_head = telemetry_head;
+				next_head = telemetry_head;
 				telemetry_buffer[next_head].timestamp_ms = xTaskGetTickCount();
 				telemetry_buffer[next_head].linear_position_mm = (int16_t)(x[0] * 1000.0f);
 				telemetry_buffer[next_head].linear_velocity_mm_s = (int16_t)(x[1] * 1000.0f);
@@ -248,7 +249,6 @@ void task_system_controller::run(void) {
 					transition_to(0);
 				}
 				break;
-				
 			case(100):
 				motor_command->put(0);
 				
@@ -285,3 +285,7 @@ void task_system_controller::run(void) {
 		delay_from_to (previousTicks, configMS_TO_TICKS (1));
 	}	
 }
+
+
+
+
