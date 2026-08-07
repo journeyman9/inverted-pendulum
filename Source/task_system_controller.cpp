@@ -194,21 +194,24 @@ void task_system_controller::run(void) {
 				}
 				u = controller.calculate_action(x, x_r, position_set, angle_set);				
 				//observer.predict(u);
-				next_head = telemetry_head;
-				telemetry_buffer[next_head].timestamp_ms = xTaskGetTickCount();
-				telemetry_buffer[next_head].linear_position_e4 = (int16_t)(x[0] * 10000.0f);
-				telemetry_buffer[next_head].linear_velocity_e3 = (int16_t)(x[1] * 1000.0f);
-				telemetry_buffer[next_head].pendulum_angle_e4 = (int16_t)(x[2] * 10000.0f);
-				telemetry_buffer[next_head].pendulum_velocity_e3 = (int16_t)(x[3] * 1000.0f);
-				telemetry_buffer[next_head].motor_voltage_e3 = (int16_t)(controller.u_voltage * 1000.0f);
+				
+				if (runs % 1 == 0) {
+					next_head = telemetry_head;
+					telemetry_buffer[next_head].timestamp_ms = xTaskGetTickCount();
+					telemetry_buffer[next_head].linear_position_e4 = (int16_t)(x[0] * 10000.0f);
+					telemetry_buffer[next_head].linear_velocity_e3 = (int16_t)(x[1] * 1000.0f);
+					telemetry_buffer[next_head].pendulum_angle_e4 = (int16_t)(x[2] * 10000.0f);
+					telemetry_buffer[next_head].pendulum_velocity_e3 = (int16_t)(x[3] * 1000.0f);
+					telemetry_buffer[next_head].motor_voltage_e3 = (int16_t)(controller.u_voltage * 1000.0f);
 
-				next_head++;
-				if (next_head >= TELEMETRY_BUFFER_SIZE)
-				{
-					next_head = 0;
-					telemetry_buffer_full = true;
+					next_head++;
+					if (next_head >= TELEMETRY_BUFFER_SIZE)
+					{
+						next_head = 0;
+						telemetry_buffer_full = true;
+					}
+					telemetry_head = next_head;
 				}
-				telemetry_head = next_head;
 
 				motor_command->put(u);
 				
