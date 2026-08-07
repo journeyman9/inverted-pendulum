@@ -60,8 +60,8 @@ void task_pendulum_encoder::run(void) {
 	
 	float theta_unwrapped = 0;
 	float omega = 0;
-	float omega_filtered = 0;
-	const float alpha = 0.3f;
+	//float omega_filtered = 0;
+	//const float alpha = 0.3f;
 
 	portTickType currentTicks;
 	portTickType lastTicks = previousTicks;
@@ -93,7 +93,7 @@ void task_pendulum_encoder::run(void) {
 		
 		if(dt > 0.0f) {
 			omega = (dcount_signed * (2.0 * PI / counts_per_rev)) / dt;
-			omega_filtered = alpha * omega + (1.0 - alpha) * omega_filtered;	
+			//omega_filtered = alpha * omega + (1.0 - alpha) * omega_filtered;	
 		}
 		
 		/*
@@ -107,7 +107,7 @@ void task_pendulum_encoder::run(void) {
 		pendulum_encoder->put((int16_t)count_unwrapped);
 		pendulum_encoder_radians->put(theta_unwrapped); 	// Convert to radians
 		
-		pendulum_encoder_w_radians->put(omega_filtered);
+		pendulum_encoder_w_radians->put(omega);
 
 		// Section of code used for unit testing, prints out curr count and queue value
 		/*
