@@ -24,7 +24,7 @@
 #include "lqr.h"
 #include "planner.h"
 #include <array>
-#include "kalman.h"
+//#include "kalman.h"
 
 task_system_controller::task_system_controller(
 	const char* a_name,
@@ -52,9 +52,9 @@ void task_system_controller::run(void) {
 	float x[4] = {0.0f, 0.0f, 0.0f, 0.0f};
 	float x_r[4] = {0.0f, 0.0f, 0.0f, 0.0f};
 	float u = 0.0f;
-	std::array<float, 4> x_hat{{0.0f, 0.0f, 0.0f, 0.0f}};
-	Kalman observer(x_hat);
-	observer.predict(u);
+	//std::array<float, 4> x_hat{{0.0f, 0.0f, 0.0f, 0.0f}};
+	//Kalman observer(x_hat);
+	//observer.predict(u);
 		
 	while(1) {
 		/*
@@ -179,8 +179,9 @@ void task_system_controller::run(void) {
 				x[3] = pendulum_encoder_w_radians->get();
 				taskEXIT_CRITICAL();
 				
-				observer.update(std::array<float, 4>{x[0], x[1], x[2], x[3]});
-				x_hat = observer.getStateEstimate();
+				// Kalman filter disabled while collecting raw telemetry.
+				//observer.update(std::array<float, 4>{x[0], x[1], x[2], x[3]});
+				//x_hat = observer.getStateEstimate();
 
 				planner.plan(x);
 				
@@ -191,7 +192,24 @@ void task_system_controller::run(void) {
 					
 				}
 				u = controller.calculate_action(x, x_r, position_set, angle_set);				
-				observer.predict(u);
+				//observer.predict(u);
+
+				uint16_t next_head = telemetry_head;
+				telemetry_buffer[next_head].timestamp_ms = xTaskGetTickCount();
+				telemetry_buffer[next_head].linear_position_mm = (int16_t)(x[0] * 1000.0f);
+				telemetry_buffer[next_head].linear_velocity_mm_s = (int16_t)(x[1] * 1000.0f);
+				telemetry_buffer[next_head].pendulum_angle_mrad = (int16_t)(x[2] * 1000.0f);
+				telemetry_buffer[next_head].pendulum_velocity_mrad_s = (int16_t)(x[3] * 1000.0f);
+				telemetry_buffer[next_head].motor_command = (int16_t)u;
+
+				next_head++;
+				if (next_head >= TELEMETRY_BUFFER_SIZE)
+				{
+					next_head = 0;
+					telemetry_buffer_full = true;
+				}
+				telemetry_head = next_head;
+
 				motor_command->put(u);
 				
 				/*

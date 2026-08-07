@@ -59,6 +59,10 @@ shared_data<bool>* go; // case 2;
 shared_data<bool>* stop; // case 3
 shared_data<bool>* reset; // reset to idle
 
+volatile uint16_t telemetry_head = 0;
+volatile bool telemetry_buffer_full = false;
+sample_t telemetry_buffer[TELEMETRY_BUFFER_SIZE];
+
 /*! \brief CCP write helper function written in assembly.
  *
  *  This function is written in assembly because of the time critical

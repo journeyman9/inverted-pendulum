@@ -177,13 +177,31 @@ void task_user::run (void)
 							*p_serial << PMS ("EMERGENCY STOP") << endl;
 							break;
 						
-						case('r'):
-							reset->put(true);
-							*p_serial << PMS ("Reset, try Homing again by pressing 'b'") << endl;
-							break;
+					case('r'):
+						reset->put(true);
+						*p_serial << PMS ("Reset, try Homing again by pressing 'b'") << endl;
+						break;
 
-						// If the character isn't recognized, ask: What's That Function?
-						default:
+					case('t'):
+						*p_serial << PMS("timestamp_ms,x_mm,xdot_mm_s,theta_mrad,thetadot_mrad_s,u") << endl;
+
+						for (uint16_t index = 0; index < TELEMETRY_BUFFER_SIZE; index++)
+						{
+							const sample_t& sample = telemetry_buffer[index];
+
+							*p_serial << sample.timestamp_ms << ",";
+							*p_serial << sample.linear_position_mm << ",";
+							*p_serial << sample.linear_velocity_mm_s << ",";
+							*p_serial << sample.pendulum_angle_mrad << ",";
+							*p_serial << sample.pendulum_velocity_mrad_s << ",";
+							*p_serial << sample.motor_command << endl;
+						}
+
+						*p_serial << PMS("Telemetry dump complete") << endl;
+						break;
+
+					// If the character isn't recognized, ask: What's That Function?
+					default:
 							p_serial->putchar (char_in);
 							*p_serial << PMS (":WTF?") << endl;
 							break;
@@ -235,6 +253,7 @@ void task_user::print_help_message (void)
 	*p_serial << PMS ("    g:   Start Balance!") << endl;
 	*p_serial << PMS ("    d:   Emergency Stop") << endl;
 	*p_serial << PMS ("    r:   Reset to Idle") << endl;
+	*p_serial << PMS ("    t:   Dump telemetry buffer") << endl;
 	*p_serial << PMS ("    h:   HALP!") << endl;
 }
 
@@ -264,4 +283,3 @@ void task_user::show_status (void)
 	// Have the tasks print their status
 	print_task_list (p_serial);
 }
-
