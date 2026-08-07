@@ -11,6 +11,7 @@ public:
 	float calculate_action(float x[4], float x_r[4], float position_set, float angle_set);
    
     float u;
+    float u_voltage;
     float x_tilde;
     float theta_tilde;
 	//float K[4] = {-1.000000, -8.241383, 17.004799, 2.793499}; // Identity
@@ -24,3 +25,5 @@ public:
 	
 	//float K[4] = {};
 };
+
+

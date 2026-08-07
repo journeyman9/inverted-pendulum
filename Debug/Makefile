@@ -43,7 +43,6 @@ SUBDIRS :=  \
 
 # Add inputs and outputs from these tool invocations to the build variables 
 C_SRCS +=  \
-../Source/kalman.cpp \
 ../Source/lib/freertos/croutine.c \
 ../Source/lqr.cpp \
 ../Source/planner.cpp \
@@ -108,7 +107,6 @@ ASM_SRCS +=
 
 
 OBJS +=  \
-Source/kalman.o \
 Source/lib/freertos/croutine.o \
 Source/lqr.o \
 Source/planner.o \
@@ -166,7 +164,6 @@ Source/lib/serial/rs232int.o \
 Source/main.o
 
 OBJS_AS_ARGS +=  \
-Source/kalman.o \
 Source/lib/freertos/croutine.o \
 Source/lqr.o \
 Source/planner.o \
@@ -224,7 +221,6 @@ Source/lib/serial/rs232int.o \
 Source/main.o
 
 C_DEPS +=  \
-Source/kalman.d \
 Source/lib/freertos/croutine.d \
 Source/lqr.d \
 Source/planner.d \
@@ -282,7 +278,6 @@ Source/lib/serial/rs232int.d \
 Source/main.d
 
 C_DEPS_AS_ARGS +=  \
-Source/kalman.d \
 Source/lib/freertos/croutine.d \
 Source/lqr.d \
 Source/planner.d \
@@ -353,13 +348,6 @@ LINKER_SCRIPT_DEP+=
 
 
 # AVR32/GNU C Compiler
-Source/kalman.o: ../Source/kalman.cpp
-	@echo Building file: $<
-	@echo Invoking: AVR8/GNU C Compiler : 5.4.0
-	$(QUOTE)C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr8\avr8-gnu-toolchain\bin\avr-g++.exe$(QUOTE) -funsigned-char -funsigned-bitfields -DDEBUG -DF_CPU=32000000UL  -I"../Source/lib/freertos" -I"../Source/lib/frtcpp" -I"../Source/lib/misc" -I"../Source/lib/serial" -I"C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\XMEGAA_DFP\1.1.68\include" -I"C:\Users\journ\Documents\GitHub\avr-libstdcpp\include"  -O1 -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -g2 -Wall -mmcu=atxmega128a4u -B "C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\XMEGAA_DFP\1.1.68\gcc\dev\atxmega128a4u" -c -std=c++11 -flto -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
-	@echo Finished building: $<
-	
-
 Source/lib/freertos/croutine.o: ../Source/lib/freertos/croutine.c
 	@echo Building file: $<
 	@echo Invoking: AVR8/GNU C Compiler : 5.4.0

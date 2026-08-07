@@ -64,14 +64,14 @@ extern shared_data<bool>* reset; // reset to idle
 typedef struct
 {
 	uint32_t timestamp_ms;
-	int16_t linear_position_mm;
-	int16_t linear_velocity_mm_s;
-	int16_t pendulum_angle_mrad;
-	int16_t pendulum_velocity_mrad_s;
-	int16_t motor_command;
+	int16_t linear_position_e4;
+	int16_t linear_velocity_e3;
+	int16_t pendulum_angle_e4;
+	int16_t pendulum_velocity_e3;
+	int16_t motor_voltage_e3;
 } sample_t;
 
-#define TELEMETRY_BUFFER_SIZE 256
+#define TELEMETRY_BUFFER_SIZE 200
 
 extern volatile uint16_t telemetry_head;
 extern volatile bool telemetry_buffer_full;
