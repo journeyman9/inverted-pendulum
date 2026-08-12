@@ -60,12 +60,11 @@ void task_pendulum_encoder::run(void) {
 	
 	float theta_unwrapped = 0;
 	float omega = 0;
-	//float omega_filtered = 0;
-	//const float alpha = 0.3f;
 
 	portTickType currentTicks;
 	portTickType lastTicks = previousTicks;
 	float dt;
+	int16_t dcount_accum = 0;
 
 	while(1) {
 		//portTickType workStart = xTaskGetTickCount();
@@ -91,9 +90,12 @@ void task_pendulum_encoder::run(void) {
 		count_unwrapped += dcount_signed;
 		theta_unwrapped = count_unwrapped * (2.0 * PI / counts_per_rev);
 		
-		if(dt > 0.0f) {
-			omega = (dcount_signed * (2.0 * PI / counts_per_rev)) / dt;
-			//omega_filtered = alpha * omega + (1.0 - alpha) * omega_filtered;	
+		dcount_accum += dcount_signed;
+		prev_raw_count = raw_count;
+
+		if (dt > 0.0f) {
+			omega = (dcount_accum * (2.0 * PI / counts_per_rev)) / dt;
+			dcount_accum = 0;
 		}
 		
 		/*
@@ -117,8 +119,6 @@ void task_pendulum_encoder::run(void) {
 			*p_serial << "Pendulum Ticks Radians: " << dtostrf(pendulum_encoder_radians->get(), 0, 6, buf) << endl; 
 		}
 		*/
-		
-		prev_raw_count = raw_count;
 	
 		/*
 		portTickType workEnd = xTaskGetTickCount();
