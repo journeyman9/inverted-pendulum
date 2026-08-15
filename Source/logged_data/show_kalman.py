@@ -5,6 +5,7 @@ import matplotlib.pyplot as plt
 if __name__ == "__main__":
     df_kalman = pd.read_csv("./normal_operation/result-data-timestamps-200-001.csv")
 
+    '''
     # Create 7 subplots sharing the x-axis (timestamp or iterations)
     fig, axs = plt.subplots(7, 1, figsize=(10, 18), sharex=True)
 
@@ -49,6 +50,7 @@ if __name__ == "__main__":
 
     plt.tight_layout()
 
+    '''
     # Create 7 subplots sharing the x-axis (timestamp or iterations)
     fig, axs = plt.subplots(7, 1, figsize=(10, 18), sharex=True)
 

@@ -188,6 +188,9 @@ void Kalman::predict(const float& u_k) {
 
 void Kalman::update(const Vector& z) {
     y = subVectors(z, multiplyMatrixVector(H, x_hat));
+    // Wrap theta innovation to [-pi, pi] to handle encoder wrapping
+    while (y[2] > 3.141592f) y[2] -= 2.0f * 3.141592f;
+    while (y[2] < -3.141592f) y[2] += 2.0f * 3.141592f;
     Kf = multiplyMatrices(
         multiplyMatrices(P, transpose(H)),
         inverse(
