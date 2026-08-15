@@ -1,9 +1,9 @@
 #include <cmath>
 #include <array>
 
- using Vector = std::array<float, 4>;
- using Matrix = std::array<std::array<float, 4>, 4>;
- using AugMatrix = std::array<std::array<float, 8>, 4>;
+using Vector = std::array<float, 4>;
+using Matrix = std::array<std::array<float, 4>, 4>;
+using AugMatrix = std::array<std::array<float, 8>, 4>;
 
 class Kalman {
 private:
@@ -46,12 +46,6 @@ private:
         {{0.0f, 0.0f, 1.0f, 0.0f}},
         {{0.0f, 0.0f, 0.0f, 1.0f}}
     }};
-    Matrix P{{
-        {{0.001f, 0.0f, 0.0f, 0.0f}},
-        {{0.0f, 0.001f, 0.0f, 0.0f}},
-        {{0.0f, 0.0f, 0.001f, 0.0f}},
-        {{0.0f, 0.0f, 0.0f, 0.001f}}
-    }};
     const Matrix I{{
         {{1.0f, 0.0f, 0.0f, 0.0f}},
         {{0.0f, 1.0f, 0.0f, 0.0f}},
@@ -61,6 +55,12 @@ private:
 public:
     Kalman(const Vector& x0);
     ~Kalman();
+    Matrix P{{
+        {{0.001f, 0.0f, 0.0f, 0.0f}},
+        {{0.0f, 0.001f, 0.0f, 0.0f}},
+        {{0.0f, 0.0f, 0.001f, 0.0f}},
+        {{0.0f, 0.0f, 0.0f, 0.001f}}
+    }};
     Vector y;
     Vector z;
     Vector x_hat;
