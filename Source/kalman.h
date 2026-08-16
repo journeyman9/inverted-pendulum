@@ -3,6 +3,8 @@
 
 #include <cmath>
 #include <array>
+#include <stdlib.h>                         // Prototype declarations for I/O functions
+#include <avr/io.h>                         // Port I/O for SFR's
 
 using Vector = std::array<float, 4>;
 using Matrix = std::array<std::array<float, 4>, 4>;
