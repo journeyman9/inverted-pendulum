@@ -125,7 +125,7 @@
  *  more priorities available than are needed. Since many tasks can share the same
  *  priority, this number generally does not need to be more than 3 to 5 or so. 
  */
-#define configMAX_PRIORITIES            ( ( unsigned portBASE_TYPE ) 4 )
+#define configMAX_PRIORITIES            ( ( unsigned portBASE_TYPE ) 5 )
 
 /** This define sets the size of the stack used by the idle task. It is also common
  *  for a user to set other task's stack sizes to this same value when calling

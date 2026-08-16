@@ -41,10 +41,10 @@ task_system_controller::task_system_controller(
 void task_system_controller::run(void) {
 	// Make a variable which will hold times to use for precise task scheduling
 	portTickType previousTicks = xTaskGetTickCount ();
-	portTickType lastMeasuredTicks = previousTicks;   // For measurement
+	//portTickType lastMeasuredTicks = previousTicks;   // For measurement
 	
-	uint32_t timing_samples[10] = {0};
-	uint8_t sample_idx = 0;
+	//uint32_t timing_samples[10] = {0};
+	//uint8_t sample_idx = 0;
 	
 	Lqr controller;
 	Planner planner;
@@ -53,7 +53,7 @@ void task_system_controller::run(void) {
 	float x_r[4] = {0.0f, 0.0f, 0.0f, 0.0f};
 	float u = 0.0f;
 	std::array<float, 4> x_hat{{0.0f, 0.0f, 0.0f, 0.0f}};
-	Kalman observer(x_hat);
+	static Kalman observer(x_hat);
 	observer.predict(u);
 		
 	while(1) {
