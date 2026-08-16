@@ -165,12 +165,12 @@ int main (void)
 	// but it is desired to exercise the RTOS more thoroughly in this test program
 	new task_user ("UserInt", task_priority (0), 260, &ser_dev);
 
-	new task_pendulum_encoder ("EncPen", task_priority (4), 260, &ser_dev);
-	new task_motor_encoder ("EncMtr", task_priority (4), 260, &ser_dev);
-	new task_system_controller ("SysCtrl", task_priority (3), 1400, &ser_dev); //Min of 1100, Max of 1500
-	new task_motor_command ("MtrCmd", task_priority (2), 260, &ser_dev);
-	new task_limit_switch ("LeftSw", task_priority (1), 260, &ser_dev, (1<<0));
-	new task_limit_switch ("RightSw", task_priority (1), 260, &ser_dev, (1<<2));
+	new task_pendulum_encoder ("EncPen", task_priority (4), 160, &ser_dev);
+	new task_motor_encoder ("EncMtr", task_priority (4), 150, &ser_dev);
+	new task_system_controller ("SysCtrl", task_priority (3), 1500, &ser_dev); //Min of 1100, Max of 1500
+	new task_motor_command ("MtrCmd", task_priority (2), 150, &ser_dev);
+	new task_limit_switch ("LeftSw", task_priority (1), 150, &ser_dev, (1<<0));
+	new task_limit_switch ("RightSw", task_priority (1), 150, &ser_dev, (1<<2));
 
 	// Enable high level interrupts and global interrupts
 	PMIC_CTRL = (1 << PMIC_HILVLEN_bp | 1 << PMIC_MEDLVLEN_bp | 1 << PMIC_LOLVLEN_bp);
