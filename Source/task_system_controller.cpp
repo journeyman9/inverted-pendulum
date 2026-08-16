@@ -196,8 +196,8 @@ void task_system_controller::run(void) {
 					transition_to(100);
 					
 				}
-				u = controller.calculate_action(x_hat.data(), x_r, position_set, angle_set);
-				observer.predict(u * (24.0f / 1600.0f));
+				u = controller.calculate_action(x, x_r, position_set, angle_set);
+				observer.predict(u * (24.0f / 1600.0f));	
 				motor_command->put(u);
 				
 				/*
@@ -224,6 +224,7 @@ void task_system_controller::run(void) {
 					*p_serial << ", Motor u: " << dtostrf(u, 0, 3, buf5) << endl;
 				}
 				*/
+				
 				/*
 				if (runs%2 == 0) {
 					char buf[3];
@@ -299,6 +300,6 @@ void task_system_controller::run(void) {
 		//_delay_ms(1);
 		// This is a method we use to cause a task to make one run through its task
 		// loop every N milliseconds and let other tasks run at other times
-		delay_from_to (previousTicks, configMS_TO_TICKS (1));
+		delay_from_to (previousTicks, configMS_TO_TICKS (5));
 	}	
 }

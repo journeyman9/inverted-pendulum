@@ -53,5 +53,5 @@ D = np.zeros((4, 1))
 sys = ct.ss(A, B, C, D)
 
 # Discrete 
-dt = 0.001
+dt = 0.005
 dsys = ct.c2d(sys, dt, method='zoh')

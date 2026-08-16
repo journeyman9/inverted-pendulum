@@ -7,9 +7,15 @@ import pandas as pd
 # Calculate reasonable max values for velocities
 print("\nOL: A")
 values, vectors = np.linalg.eig(dsys.A)
-np.set_printoptions(precision=4, suppress=True)
+np.set_printoptions(precision=6, suppress=True)
 for i in range(len(values)):
     print("x{} approx e ^ ({:.2f})t * {}".format(i, values[i], vectors[:, i]))
+
+print("A")
+print(dsys.A)
+print("B")
+print(dsys.B)
+exit()
 
 th_max = 0.1   
 thd_max = 6.51*th_max
