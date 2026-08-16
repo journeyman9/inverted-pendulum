@@ -54,7 +54,7 @@ void task_system_controller::run(void) {
 	float u = 0.0f;
 	std::array<float, 4> x_hat{{0.0f, 0.0f, 0.0f, 0.0f}};
 	static Kalman observer(x_hat);
-	observer.predict(u);
+	bool observer_init = false;
 		
 	while(1) {
 		/*
@@ -179,6 +179,12 @@ void task_system_controller::run(void) {
 				x[3] = pendulum_encoder_w_radians->get();
 				taskEXIT_CRITICAL();
 				
+				if (!observer_init) {
+					observer.x_hat = {{x[0], x[1], x[2], x[3]}};
+					observer.predict(0.0f);
+					observer_init = true;
+				}
+				
 				observer.update(std::array<float, 4>{x[0], x[1], x[2], x[3]});
 				x_hat = observer.getStateEstimate();
 
@@ -215,6 +221,34 @@ void task_system_controller::run(void) {
 					*p_serial << ", xdot: " << dtostrf(x[1], 0, 3, buf2);
 					*p_serial << ", angle: " << dtostrf(x[2] - 3.14159f, 0, 3, buf3);
 					*p_serial << ", thetadot: " << dtostrf(x[3], 0, 3, buf4);
+					*p_serial << ", Motor u: " << dtostrf(u, 0, 3, buf5) << endl;
+				}
+				*/
+				/*
+				if (runs%2 == 0) {
+					char buf[3];
+					char buf2[3];
+					char buf3[3];
+					char buf4[3];
+					char buf5[3];
+					*p_serial << "theta: " << dtostrf(x[2], 0, 3, buf);
+					*p_serial << ", thetadot: " << dtostrf(x[3], 0, 3, buf2);
+					*p_serial << ", theta_hat: " << dtostrf(x_hat[2], 0, 3, buf3);
+					*p_serial << ", thetadot_hat: " << dtostrf(x_hat[3], 0, 3, buf4);
+					*p_serial << ", Motor u: " << dtostrf(u, 0, 3, buf5) << endl;
+				}
+				*/
+				/*
+				if (runs%2 == 0) {
+					char buf[3];
+					char buf2[3];
+					char buf3[3];
+					char buf4[3];
+					char buf5[3];
+					*p_serial << "x: " << dtostrf(x[0], 0, 3, buf);
+					*p_serial << ", xdot: " << dtostrf(x[1], 0, 3, buf2);
+					*p_serial << ", x_hat: " << dtostrf(x_hat[0], 0, 3, buf3);
+					*p_serial << ", xdot_hat: " << dtostrf(x_hat[1], 0, 3, buf4);
 					*p_serial << ", Motor u: " << dtostrf(u, 0, 3, buf5) << endl;
 				}
 				*/
