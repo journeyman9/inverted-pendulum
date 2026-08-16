@@ -20,14 +20,14 @@
 
 class task_system_controller : public frt_task{
 	protected:
-	
-	public: 
+
+	public:
 		// Constructor creates a motor encoder task object
 		task_system_controller(const char*, unsigned portBASE_TYPE, size_t, emstream*);
-			
+
 		// This gets called by the RTOS once to start this task's state loop
 		void run(void);
-		
+
 		float left_home;
 		float position_set;
 		float position_error = 0.0f;
@@ -35,9 +35,9 @@ class task_system_controller : public frt_task{
 		portTickType currentTicks;
 		float Kp = 6000;
 		float Ki = 3;
-		float angle_set; 
+		float angle_set;
 		float error[4] = {0, 0, 0, 0};
-	
+
 	};
 	
 #endif

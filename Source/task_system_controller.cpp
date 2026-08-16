@@ -20,7 +20,7 @@
 #include "shared_data_sender.h"
 #include "shared_data_receiver.h"
 
-#include "task_system_controller.h"                  // Template
+#include "task_system_controller.h"
 #include "lqr.h"
 #include "planner.h"
 #include <array>
@@ -53,8 +53,8 @@ void task_system_controller::run(void) {
 	float x_r[4] = {0.0f, 0.0f, 0.0f, 0.0f};
 	float u = 0.0f;
 	std::array<float, 4> x_hat{{0.0f, 0.0f, 0.0f, 0.0f}};
-	Kalman observer(x_hat);
-	observer.predict(u);
+	static Kalman observer(x_hat);
+	bool observer_initialized = false;
 		
 	while(1) {
 		/*
@@ -168,7 +168,7 @@ void task_system_controller::run(void) {
 					angle_set = pendulum_encoder_radians->get();
 					set_already = true;
 				}
-				
+
 				go->put(0);
 
 				// Atomic read of state to prevent race conditions
@@ -178,7 +178,13 @@ void task_system_controller::run(void) {
 				x[2] = pendulum_encoder_radians->get();
 				x[3] = pendulum_encoder_w_radians->get();
 				taskEXIT_CRITICAL();
-				
+
+				if (!observer_initialized) {
+					observer.x_hat = {{x[0], x[1], x[2], x[3]}};
+					observer.predict(0.0f);
+					observer_initialized = true;
+				}
+
 				observer.update(std::array<float, 4>{x[0], x[1], x[2], x[3]});
 				x_hat = observer.getStateEstimate();
 
@@ -190,9 +196,9 @@ void task_system_controller::run(void) {
 					transition_to(100);
 					
 				}
-				u = controller.calculate_action(x_hat.data(), x_r, position_set, angle_set);				
-				observer.predict(u);
-				motor_command->put(u);
+				u = controller.calculate_action(x_hat.data(), x_r, position_set, angle_set);
+				observer.predict(u * (24.0f / 1600.0f));
+				motor_command->put((int16_t)u);
 				
 				/*
 				if (runs%100 == 0) {
