@@ -171,6 +171,9 @@ void task_system_controller::run(void) {
 
 				go->put(0);
 
+				// Actuate FIRST using previous iteration's computation
+				motor_command->put((int16_t)u);
+
 				// Atomic read of state to prevent race conditions
 				taskENTER_CRITICAL();
 				x[0] = linear_position->get();
@@ -189,16 +192,15 @@ void task_system_controller::run(void) {
 				x_hat = observer.getStateEstimate();
 
 				planner.plan(x_hat.data());
-				
+
 				// Error handling for too great of angle
 				if ((x[2] - angle_set >= 0.2616) || (x[2] - angle_set < -0.2616)){
 					*p_serial << "Outside Angle Recovery" << endl;
 					transition_to(100);
-					
+
 				}
 				u = controller.calculate_action(x_hat.data(), x_r, position_set, angle_set);
 				observer.predict(u * (24.0f / 1600.0f));
-				motor_command->put((int16_t)u);
 				
 				/*
 				if (runs%100 == 0) {
