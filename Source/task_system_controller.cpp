@@ -182,15 +182,15 @@ void task_system_controller::run(void) {
 				observer.update(std::array<float, 4>{x[0], x[1], x[2], x[3]});
 				x_hat = observer.getStateEstimate();
 
-				planner.plan(x_hat);
+				planner.plan(x_hat.data());
 				
 				// Error handling for too great of angle
-				if ((x_hat[2] - angle_set >= 0.2616) || (x_hat[2] - angle_set < -0.2616)){
+				if ((x[2] - angle_set >= 0.2616) || (x[2] - angle_set < -0.2616)){
 					*p_serial << "Outside Angle Recovery" << endl;
 					transition_to(100);
 					
 				}
-				u = controller.calculate_action(x_hat, x_r, position_set, angle_set);				
+				u = controller.calculate_action(x_hat.data(), x_r, position_set, angle_set);				
 				observer.predict(u);
 				motor_command->put(u);
 				
