@@ -170,6 +170,8 @@ void task_system_controller::run(void) {
 				}
 				
 				go->put(0);
+				
+				motor_command->put(u);
 
 				// Atomic read of state to prevent race conditions
 				taskENTER_CRITICAL();
@@ -198,7 +200,6 @@ void task_system_controller::run(void) {
 				}
 				u = controller.calculate_action(x_hat.data(), x_r, position_set, angle_set);
 				observer.predict(u * (24.0f / 1600.0f));
-				motor_command->put(u);
 				
 				/*
 				if (runs%100 == 0) {
