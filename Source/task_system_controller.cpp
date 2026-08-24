@@ -55,6 +55,9 @@ void task_system_controller::run(void) {
 	std::array<float, 4> x_hat{{0.0f, 0.0f, 0.0f, 0.0f}};
 	static Kalman observer(x_hat);
 	bool observer_init = false;
+	portTickType workStart;
+	portTickType workEnd;
+	uint16_t work_duration;
 		
 	while(1) {
 		/*
@@ -172,7 +175,8 @@ void task_system_controller::run(void) {
 				go->put(0);
 				
 				motor_command->put(u);
-
+				//workStart = xTaskGetTickCount();
+				
 				// Atomic read of state to prevent race conditions
 				taskENTER_CRITICAL();
 				x[0] = linear_position->get();
@@ -196,11 +200,20 @@ void task_system_controller::run(void) {
 				if ((x[2] - angle_set >= 0.2616) || (x[2] - angle_set < -0.2616)){
 					*p_serial << "Outside Angle Recovery" << endl;
 					transition_to(100);
-					
 				}
+				
 				u = controller.calculate_action(x_hat.data(), x_r, position_set, angle_set);
 				observer.predict(u * (24.0f / 1600.0f));
 				
+				/*
+				workEnd = xTaskGetTickCount();
+				work_duration = workEnd - workStart;
+
+				if (runs % 50 == 0) {
+					*p_serial << "State estimation time: " << work_duration << " ticks" << endl;
+				}
+				*/
+		
 				/*
 				if (runs%100 == 0) {
 					char buf[6];
@@ -239,7 +252,6 @@ void task_system_controller::run(void) {
 					*p_serial << ", Motor u: " << dtostrf(u, 0, 3, buf5) << endl;
 				}
 				*/
-				
 				/*
 				if (runs%2 == 0) {
 					char buf[3];

@@ -163,7 +163,7 @@ int main (void)
 
 	// The user interface is at low priority; it could have been run in the idle task
 	// but it is desired to exercise the RTOS more thoroughly in this test program
-	new task_user ("UserInt", task_priority (0), 260, &ser_dev);
+	new task_user ("UserInt", task_priority (0), 270, &ser_dev);
 
 	new task_pendulum_encoder ("EncPen", task_priority (4), 160, &ser_dev);
 	new task_motor_encoder ("EncMtr", task_priority (4), 150, &ser_dev);
