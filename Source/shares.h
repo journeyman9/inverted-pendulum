@@ -63,12 +63,12 @@ extern shared_data<bool>* reset; // reset to idle
 
 typedef struct
 {
-	uint32_t timestamp_ms;
-	int16_t linear_position_e4;
-	int16_t linear_velocity_e3;
-	int16_t pendulum_angle_e4;
-	int16_t pendulum_velocity_e3;
-	int16_t motor_voltage_e3;
+	uint16_t timestamp_ms;
+	int16_t raw_count;
+	int16_t dcount_signed;
+	int16_t count_unwrapped;
+	int16_t theta_unwrapped_e3;
+	int16_t omega_e3;
 } sample_t;
 
 #define TELEMETRY_BUFFER_SIZE 200

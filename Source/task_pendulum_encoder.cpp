@@ -64,6 +64,7 @@ void task_pendulum_encoder::run(void) {
 	portTickType currentTicks;
 	portTickType lastTicks = previousTicks;
 	float dt;
+	uint16_t next_head = 0;
 
 	while(1) {
 		//portTickType workStart = xTaskGetTickCount();
@@ -105,6 +106,24 @@ void task_pendulum_encoder::run(void) {
 		pendulum_encoder_radians->put(theta_unwrapped); 	// Convert to radians
 		
 		pendulum_encoder_w_radians->put(omega);
+
+		if (runs % 1 == 0) {
+			next_head = telemetry_head;
+			telemetry_buffer[next_head].timestamp_ms = (uint16_t)xTaskGetTickCount();
+			telemetry_buffer[next_head].raw_count = raw_count;
+			telemetry_buffer[next_head].dcount_signed = dcount_signed;
+			telemetry_buffer[next_head].count_unwrapped = (int16_t)count_unwrapped;
+			telemetry_buffer[next_head].theta_unwrapped_e3 = (int16_t)(theta_unwrapped * 1000.0f);
+			telemetry_buffer[next_head].omega_e3 = (int16_t)(omega * 1000.0f);
+
+			next_head++;
+			if (next_head >= TELEMETRY_BUFFER_SIZE)
+			{
+				next_head = 0;
+				telemetry_buffer_full = true;
+			}
+			telemetry_head = next_head;
+		}
 
 		// Section of code used for unit testing, prints out curr count and queue value
 		/*

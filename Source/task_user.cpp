@@ -183,18 +183,18 @@ void task_user::run (void)
 						break;
 
 					case('t'):
-						*p_serial << PMS("timestamp_ms,x_e4,xdot_e3,theta_e4,thetadot_e3,u_e3") << endl;
+						*p_serial << PMS("timestamp_ms,raw_count,dcount_signed,count_unwrapped,theta_e3,omega_e3") << endl;
 
 						for (uint16_t index = 0; index < TELEMETRY_BUFFER_SIZE; index++)
 						{
 							const sample_t& sample = telemetry_buffer[index];
 
 							*p_serial << sample.timestamp_ms << ",";
-							*p_serial << sample.linear_position_e4 << ",";
-							*p_serial << sample.linear_velocity_e3 << ",";
-							*p_serial << sample.pendulum_angle_e4 << ",";
-							*p_serial << sample.pendulum_velocity_e3 << ",";
-							*p_serial << sample.motor_voltage_e3 << endl;
+							*p_serial << sample.raw_count << ",";
+							*p_serial << sample.dcount_signed << ",";
+							*p_serial << sample.count_unwrapped << ",";
+							*p_serial << sample.theta_unwrapped_e3 << ",";
+							*p_serial << sample.omega_e3 << endl;
 						}
 
 						*p_serial << PMS("Telemetry dump complete") << endl;
@@ -253,7 +253,7 @@ void task_user::print_help_message (void)
 	*p_serial << PMS ("    g:   Start Balance!") << endl;
 	*p_serial << PMS ("    d:   Emergency Stop") << endl;
 	*p_serial << PMS ("    r:   Reset to Idle") << endl;
-	*p_serial << PMS ("    t:   Dump telemetry buffer") << endl;
+	*p_serial << PMS ("    t:   Dump encoder telemetry") << endl;
 	*p_serial << PMS ("    h:   HALP!") << endl;
 }
 
