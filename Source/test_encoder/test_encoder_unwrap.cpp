@@ -146,41 +146,44 @@ static std::vector<ReplayRow> replay_and_verify(const std::vector<TelemetryRow>&
     return results;
 }
 
-class EncoderUnwrapTest : public ::testing::TestWithParam<std::string> {};
-
-TEST_P(EncoderUnwrapTest, ReplayMatchesFirmware) {
-    std::string path = GetParam();
-    if (path == "placeholder") {
-        GTEST_SKIP() << "No CSV files provided. Usage: ./test_encoder_unwrap data.csv";
-    }
-    std::vector<TelemetryRow> rows = load_csv(path);
-    ASSERT_FALSE(rows.empty()) << "Failed to load CSV: " << path;
-
-    std::vector<ReplayRow> results = replay_and_verify(rows);
-
-    std::string out_path = make_output_path(path);
-    write_replay_csv(out_path, results);
-    std::cout << "Replay CSV written to: " << out_path << std::endl;
-}
-
 static std::vector<std::string> csv_paths;
 
-INSTANTIATE_TEST_SUITE_P(
-    CsvFiles,
-    EncoderUnwrapTest,
-    ::testing::ValuesIn(csv_paths.empty()
-        ? std::vector<std::string>{"placeholder"}
-        : csv_paths),
-    [](const ::testing::TestParamInfo<std::string>& info) {
-        std::string name = info.param;
-        auto pos = name.find_last_of("/\\");
-        if (pos != std::string::npos) name = name.substr(pos + 1);
-        for (auto& c : name) {
-            if (!isalnum(c)) c = '_';
-        }
-        return name;
+static std::string sanitize_name(const std::string& path) {
+    std::string name = path;
+    auto pos = name.find_last_of("/\\");
+    if (pos != std::string::npos) name = name.substr(pos + 1);
+    for (auto& c : name) {
+        if (!isalnum(c)) c = '_';
     }
-);
+    return name;
+}
+
+class CsvReplayTest : public ::testing::Test {
+public:
+    std::string csv_path;
+    void TestBody() override {
+        std::vector<TelemetryRow> rows = load_csv(csv_path);
+        ASSERT_FALSE(rows.empty()) << "Failed to load CSV: " << csv_path;
+        std::vector<ReplayRow> results = replay_and_verify(rows);
+        std::string out_path = make_output_path(csv_path);
+        write_replay_csv(out_path, results);
+        std::cout << "Replay CSV written to: " << out_path << std::endl;
+    }
+};
+
+static void register_csv_tests() {
+    for (const auto& path : csv_paths) {
+        ::testing::RegisterTest(
+            "CsvFiles", ("ReplayMatchesFirmware/" + sanitize_name(path)).c_str(),
+            nullptr, sanitize_name(path).c_str(),
+            __FILE__, __LINE__,
+            [path]() -> CsvReplayTest* {
+                auto* t = new CsvReplayTest();
+                t->csv_path = path;
+                return t;
+            });
+    }
+}
 
 // Synthetic test: steady rotation with no wrapping
 TEST(EncoderUnwrapSynthetic, SteadyNoWrap) {
@@ -303,6 +306,13 @@ int main(int argc, char** argv) {
         } else if (arg.size() > 4 && arg.substr(arg.size() - 4) == ".csv") {
             csv_paths.push_back(arg);
         }
+    }
+
+    if (csv_paths.empty()) {
+        std::cout << "No CSV files provided. Usage: ./test_encoder_unwrap data.csv [data2.csv ...]\n";
+        std::cout << "Running synthetic tests only.\n";
+    } else {
+        register_csv_tests();
     }
 
     return RUN_ALL_TESTS();
