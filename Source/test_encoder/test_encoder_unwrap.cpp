@@ -97,8 +97,69 @@ static std::vector<ReplayRow> replay_and_verify(const std::vector<TelemetryRow>&
         results.push_back(rr);
     }
 
+    int reseeds = 0;
+
     for (size_t i = 1; i < rows.size(); i++) {
         const TelemetryRow& row = rows[i];
+
+        uint16_t dt_ms = row.timestamp_ms - last_ts;
+
+        // Detect ring-buffer wraparound: either a timestamp gap or a
+        // count_unwrapped jump that doesn't match the raw_count delta.
+        int16_t expected_dcount_raw = row.raw_count - prev_raw_count;
+        if (expected_dcount_raw > counts_per_rev / 2.0f)
+            expected_dcount_raw -= (int16_t)counts_per_rev;
+        else if (expected_dcount_raw < -counts_per_rev / 2.0f)
+            expected_dcount_raw += (int16_t)counts_per_rev;
+        int16_t expected_dcount_signed = -expected_dcount_raw;
+        int32_t expected_unwrapped = count_unwrapped + expected_dcount_signed;
+
+        // Check replay state vs logged state
+        bool replay_discontinuity = (expected_dcount_signed != row.dcount_signed)
+                                 || ((int16_t)expected_unwrapped != row.count_unwrapped);
+
+        // Check internal self-consistency of the logged row itself.
+        // Torn writes at ring-buffer seams can mix fields from two
+        // different loop iterations.
+        int16_t expected_theta_e3 = (int16_t)(row.count_unwrapped
+                                    * (2.0f * PI / counts_per_rev) * 1000.0f);
+        bool theta_torn = (abs(expected_theta_e3 - row.theta_unwrapped_e3) > 1);
+
+        int16_t expected_omega_e3 = 0;
+        if (dt_ms > 0) {
+            expected_omega_e3 = (int16_t)(row.dcount_signed
+                                * (2.0f * PI / counts_per_rev)
+                                / (dt_ms / 1000.0f) * 1000.0f);
+        }
+        bool omega_torn = (abs(expected_omega_e3 - row.omega_e3) > 1);
+
+        bool data_discontinuity = replay_discontinuity || theta_torn || omega_torn;
+
+        if (dt_ms > 2 || data_discontinuity) {
+            reseeds++;
+            std::cout << "  Reseed at row " << i
+                      << " (dt=" << dt_ms << "ms, gap from "
+                      << last_ts << " to " << row.timestamp_ms << ")\n";
+            prev_raw_count = row.raw_count;
+            count_unwrapped = row.count_unwrapped;
+            last_ts = row.timestamp_ms;
+
+            float theta_logged = row.theta_unwrapped_e3 / 1000.0f;
+            float theta_replayed = count_unwrapped * (2.0f * PI / counts_per_rev);
+            if (!theta_torn && !omega_torn) {
+                EXPECT_NEAR(theta_replayed, theta_logged, quantization_tol)
+                    << "Row " << i << ": theta mismatch at reseed";
+            }
+
+            ReplayRow rr;
+            rr.timestamp_ms = row.timestamp_ms;
+            rr.theta_logged = theta_logged;
+            rr.theta_replayed = theta_replayed;
+            rr.omega_logged = row.omega_e3 / 1000.0f;
+            rr.omega_replayed = 0.0f;
+            results.push_back(rr);
+            continue;
+        }
 
         int16_t raw_count = row.raw_count;
         int16_t dcount_raw = raw_count - prev_raw_count;
@@ -115,7 +176,6 @@ static std::vector<ReplayRow> replay_and_verify(const std::vector<TelemetryRow>&
         float theta_replayed = count_unwrapped * (2.0f * PI / counts_per_rev);
         float theta_logged = row.theta_unwrapped_e3 / 1000.0f;
 
-        uint16_t dt_ms = row.timestamp_ms - last_ts;
         float dt = dt_ms / 1000.0f;
         float omega_replayed = 0.0f;
         if (dt > 0.0f) {
@@ -143,6 +203,8 @@ static std::vector<ReplayRow> replay_and_verify(const std::vector<TelemetryRow>&
         prev_raw_count = raw_count;
         last_ts = row.timestamp_ms;
     }
+
+    std::cout << "  Total reseeds (buffer gaps): " << reseeds << "\n";
     return results;
 }
 
