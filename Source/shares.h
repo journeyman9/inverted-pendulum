@@ -71,7 +71,7 @@ typedef struct
 	int16_t omega_e3;
 } sample_t;
 
-#define TELEMETRY_BUFFER_SIZE 200
+#define TELEMETRY_BUFFER_SIZE 1000
 
 extern volatile uint16_t telemetry_head;
 extern volatile bool telemetry_buffer_full;

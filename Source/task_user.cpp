@@ -185,16 +185,21 @@ void task_user::run (void)
 					case('t'):
 						*p_serial << PMS("timestamp_ms,raw_count,dcount_signed,count_unwrapped,theta_e3,omega_e3") << endl;
 
-						for (uint16_t index = 0; index < TELEMETRY_BUFFER_SIZE; index++)
 						{
-							const sample_t& sample = telemetry_buffer[index];
+							uint16_t count = telemetry_buffer_full ? TELEMETRY_BUFFER_SIZE : telemetry_head;
+							uint16_t start = telemetry_buffer_full ? telemetry_head : 0;
+							for (uint16_t i = 0; i < count; i++)
+							{
+								uint16_t index = (start + i) % TELEMETRY_BUFFER_SIZE;
+								const sample_t& sample = telemetry_buffer[index];
 
-							*p_serial << sample.timestamp_ms << ",";
-							*p_serial << sample.raw_count << ",";
-							*p_serial << sample.dcount_signed << ",";
-							*p_serial << sample.count_unwrapped << ",";
-							*p_serial << sample.theta_unwrapped_e3 << ",";
-							*p_serial << sample.omega_e3 << endl;
+								*p_serial << sample.timestamp_ms << ",";
+								*p_serial << sample.raw_count << ",";
+								*p_serial << sample.dcount_signed << ",";
+								*p_serial << sample.count_unwrapped << ",";
+								*p_serial << sample.theta_unwrapped_e3 << ",";
+								*p_serial << sample.omega_e3 << endl;
+							}
 						}
 
 						*p_serial << PMS("Telemetry dump complete") << endl;
