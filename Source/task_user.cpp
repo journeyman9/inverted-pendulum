@@ -183,6 +183,7 @@ void task_user::run (void)
 						break;
 
 					case('t'):
+						telemetry_freeze = true;
 						*p_serial << PMS("timestamp_ms,raw_count,dcount_signed,count_unwrapped,theta_e3,omega_e3") << endl;
 
 						{
@@ -203,6 +204,7 @@ void task_user::run (void)
 						}
 
 						*p_serial << PMS("Telemetry dump complete") << endl;
+						telemetry_freeze = false;
 						break;
 
 					// If the character isn't recognized, ask: What's That Function?

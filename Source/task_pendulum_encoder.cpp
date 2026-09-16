@@ -107,7 +107,7 @@ void task_pendulum_encoder::run(void) {
 		
 		pendulum_encoder_w_radians->put(omega);
 
-		if (runs % 1 == 0) {
+		if (runs % 1 == 0 && !telemetry_freeze) {
 			next_head = telemetry_head;
 			telemetry_buffer[next_head].timestamp_ms = (uint16_t)xTaskGetTickCount();
 			telemetry_buffer[next_head].raw_count = raw_count;

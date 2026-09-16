@@ -61,6 +61,7 @@ shared_data<bool>* reset; // reset to idle
 
 volatile uint16_t telemetry_head = 0;
 volatile bool telemetry_buffer_full = false;
+volatile bool telemetry_freeze = false;
 sample_t telemetry_buffer[TELEMETRY_BUFFER_SIZE];
 
 /*! \brief CCP write helper function written in assembly.

@@ -75,6 +75,7 @@ typedef struct
 
 extern volatile uint16_t telemetry_head;
 extern volatile bool telemetry_buffer_full;
+extern volatile bool telemetry_freeze;
 extern sample_t telemetry_buffer[TELEMETRY_BUFFER_SIZE];
 
 // Our attempt at a queue
