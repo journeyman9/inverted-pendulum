@@ -17,10 +17,18 @@ struct TelemetryRow {
 
 struct ReplayRow {
     uint16_t timestamp_ms;
+    int16_t raw_count;
+    int16_t dcount_signed_logged;
+    int16_t dcount_signed_replayed;
+    int16_t count_unwrapped_logged;
+    int32_t count_unwrapped_replayed;
     float theta_logged;
     float theta_replayed;
+    float theta_relative_logged;
+    float theta_relative_replayed;
     float omega_logged;
     float omega_replayed;
+    bool reseed;
 };
 
 static std::vector<TelemetryRow> load_csv(const std::string& path) {
@@ -60,14 +68,23 @@ static std::string make_output_path(const std::string& input_path) {
 
 static void write_replay_csv(const std::string& path, const std::vector<ReplayRow>& results) {
     std::ofstream out(path);
-    out << "timestamp_ms,theta_logged,theta_replayed,omega_logged,omega_replayed\n";
+    out << "timestamp_ms,raw_count,"
+        << "dcount_signed_logged,dcount_signed_replayed,"
+        << "count_unwrapped_logged,count_unwrapped_replayed,"
+        << "theta_logged,theta_replayed,"
+        << "theta_relative_logged,theta_relative_replayed,"
+        << "omega_logged,omega_replayed,reseed\n";
     out << std::fixed;
     for (const auto& r : results) {
+        out << r.timestamp_ms << "," << r.raw_count << ","
+            << r.dcount_signed_logged << "," << r.dcount_signed_replayed << ","
+            << r.count_unwrapped_logged << "," << r.count_unwrapped_replayed << ",";
         out.precision(4);
-        out << r.timestamp_ms << ","
-            << r.theta_logged << "," << r.theta_replayed << ",";
+        out << r.theta_logged << "," << r.theta_replayed << ","
+            << r.theta_relative_logged << "," << r.theta_relative_replayed << ",";
         out.precision(2);
-        out << r.omega_logged << "," << r.omega_replayed << "\n";
+        out << r.omega_logged << "," << r.omega_replayed << ","
+            << (r.reseed ? 1 : 0) << "\n";
     }
 }
 
@@ -87,13 +104,24 @@ static std::vector<ReplayRow> replay_and_verify(const std::vector<TelemetryRow>&
     int32_t count_unwrapped = rows[0].count_unwrapped;
     uint16_t last_ts = rows[0].timestamp_ms;
 
+    float angle_set_logged = rows[0].theta_unwrapped_e3 / 1000.0f;
+    float angle_set_replayed = count_unwrapped * (2.0f * PI / counts_per_rev);
+
     {
-        ReplayRow rr;
+        ReplayRow rr = {};
         rr.timestamp_ms = rows[0].timestamp_ms;
-        rr.theta_logged = rows[0].theta_unwrapped_e3 / 1000.0f;
-        rr.theta_replayed = count_unwrapped * (2.0f * PI / counts_per_rev);
+        rr.raw_count = rows[0].raw_count;
+        rr.dcount_signed_logged = rows[0].dcount_signed;
+        rr.dcount_signed_replayed = 0;
+        rr.count_unwrapped_logged = rows[0].count_unwrapped;
+        rr.count_unwrapped_replayed = count_unwrapped;
+        rr.theta_logged = angle_set_logged;
+        rr.theta_replayed = angle_set_replayed;
+        rr.theta_relative_logged = 0.0f;
+        rr.theta_relative_replayed = 0.0f;
         rr.omega_logged = rows[0].omega_e3 / 1000.0f;
         rr.omega_replayed = 0.0f;
+        rr.reseed = true;
         results.push_back(rr);
     }
 
@@ -151,12 +179,20 @@ static std::vector<ReplayRow> replay_and_verify(const std::vector<TelemetryRow>&
                     << "Row " << i << ": theta mismatch at reseed";
             }
 
-            ReplayRow rr;
+            ReplayRow rr = {};
             rr.timestamp_ms = row.timestamp_ms;
+            rr.raw_count = row.raw_count;
+            rr.dcount_signed_logged = row.dcount_signed;
+            rr.dcount_signed_replayed = 0;
+            rr.count_unwrapped_logged = row.count_unwrapped;
+            rr.count_unwrapped_replayed = count_unwrapped;
             rr.theta_logged = theta_logged;
             rr.theta_replayed = theta_replayed;
+            rr.theta_relative_logged = theta_logged - angle_set_logged;
+            rr.theta_relative_replayed = theta_replayed - angle_set_replayed;
             rr.omega_logged = row.omega_e3 / 1000.0f;
             rr.omega_replayed = 0.0f;
+            rr.reseed = true;
             results.push_back(rr);
             continue;
         }
@@ -192,12 +228,20 @@ static std::vector<ReplayRow> replay_and_verify(const std::vector<TelemetryRow>&
         EXPECT_NEAR(omega_replayed, omega_logged, quantization_tol)
             << "Row " << i << ": omega mismatch (float)";
 
-        ReplayRow rr;
+        ReplayRow rr = {};
         rr.timestamp_ms = row.timestamp_ms;
+        rr.raw_count = row.raw_count;
+        rr.dcount_signed_logged = row.dcount_signed;
+        rr.dcount_signed_replayed = dcount_signed;
+        rr.count_unwrapped_logged = row.count_unwrapped;
+        rr.count_unwrapped_replayed = count_unwrapped;
         rr.theta_logged = theta_logged;
         rr.theta_replayed = theta_replayed;
+        rr.theta_relative_logged = theta_logged - angle_set_logged;
+        rr.theta_relative_replayed = theta_replayed - angle_set_replayed;
         rr.omega_logged = omega_logged;
         rr.omega_replayed = omega_replayed;
+        rr.reseed = false;
         results.push_back(rr);
 
         prev_raw_count = raw_count;
