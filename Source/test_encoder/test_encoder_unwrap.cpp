@@ -12,7 +12,7 @@ struct TelemetryRow {
     int16_t dcount_signed;
     int16_t count_unwrapped;
     int16_t theta_unwrapped_e3;
-    int16_t omega_e3;
+    int32_t omega_e3;
 };
 
 struct ReplayRow {
@@ -52,7 +52,7 @@ static std::vector<TelemetryRow> load_csv(const std::string& path) {
         std::getline(ss, token, ','); r.dcount_signed = (int16_t)std::stoi(token);
         std::getline(ss, token, ','); r.count_unwrapped = (int16_t)std::stoi(token);
         std::getline(ss, token, ','); r.theta_unwrapped_e3 = (int16_t)std::stoi(token);
-        std::getline(ss, token, ','); r.omega_e3 = (int16_t)std::stoi(token);
+        std::getline(ss, token, ','); r.omega_e3 = (int32_t)std::stoi(token);
 
         rows.push_back(r);
     }
@@ -153,9 +153,9 @@ static std::vector<ReplayRow> replay_and_verify(const std::vector<TelemetryRow>&
                                     * (2.0f * PI / counts_per_rev) * 1000.0f);
         bool theta_torn = (abs(expected_theta_e3 - row.theta_unwrapped_e3) > 1);
 
-        int16_t expected_omega_e3 = 0;
+        int32_t expected_omega_e3 = 0;
         if (dt_ms > 0) {
-            expected_omega_e3 = (int16_t)(row.dcount_signed
+            expected_omega_e3 = (int32_t)(row.dcount_signed
                                 * (2.0f * PI / counts_per_rev)
                                 / (dt_ms / 1000.0f) * 1000.0f);
         }
