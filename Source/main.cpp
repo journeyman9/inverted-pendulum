@@ -59,6 +59,13 @@ shared_data<bool>* go; // case 2;
 shared_data<bool>* stop; // case 3
 shared_data<bool>* reset; // reset to idle
 
+// Raw counts captured by ISR — volatile because written in ISR, read in task
+static volatile int16_t isr_pendulum_raw = 0;
+static volatile int16_t isr_motor_raw = 0;
+
+// Handle to the processing task so the ISR can notify it
+static TaskHandle_t encoder_processing_task_handle = NULL;
+
 /*! \brief CCP write helper function written in assembly.
  *
  *  This function is written in assembly because of the time critical
@@ -175,10 +182,33 @@ int main (void)
 	// Enable high level interrupts and global interrupts
 	PMIC_CTRL = (1 << PMIC_HILVLEN_bp | 1 << PMIC_MEDLVLEN_bp | 1 << PMIC_LOLVLEN_bp);
 	sei();
+	
+	// Use TCE0 as a 1kHz periodic interrupt source
+	TCE0.CTRLB = TC_WGMODE_NORMAL_gc;
+	TCE0.PER = (F_CPU / 1000) - 1;  // 1kHz at 32MHz → PER = 31999
+	TCE0.INTCTRLA = TC_OVFINTLVL_HI_gc;  // High-level interrupt
+	TCE0.CTRLA = TC_CLKSEL_DIV1_gc;      // Start timer, no prescaler
 
 	// Here's where the RTOS scheduler is started up. It should never exit as long as
 	// power is on and the microcontroller isn't rebooted
 	vTaskStartScheduler ();
 
 	return 0;
+}
+
+ISR(TCE0_OVF_vect)
+{
+    // Read both hardware QDEC counters — just register reads, very fast
+    isr_pendulum_raw = TCC1.CNT;
+    isr_motor_raw = TCD0.CNT;
+
+    // Wake the processing task
+    BaseType_t xHigherPriorityTaskWoken = pdFALSE;
+    vTaskNotifyGiveFromISR(encoder_processing_task_handle, &xHigherPriorityTaskWoken);
+
+    // If the processing task has higher priority than whatever was running,
+    // yield to it immediately on ISR exit
+    if (xHigherPriorityTaskWoken == pdTRUE) {
+        taskYIELD_FROM_ISR();
+    }
 }
