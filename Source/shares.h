@@ -68,7 +68,7 @@ typedef struct
 	int16_t dcount_signed;
 	int16_t count_unwrapped;
 	int16_t theta_unwrapped_e3;
-	int16_t omega_e3;
+	int32_t omega_e3;
 } sample_t;
 
 #define TELEMETRY_BUFFER_SIZE 250

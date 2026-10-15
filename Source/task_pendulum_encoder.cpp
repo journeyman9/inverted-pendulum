@@ -114,7 +114,7 @@ void task_pendulum_encoder::run(void) {
 			telemetry_buffer[next_head].dcount_signed = dcount_signed;
 			telemetry_buffer[next_head].count_unwrapped = (int16_t)count_unwrapped;
 			telemetry_buffer[next_head].theta_unwrapped_e3 = (int16_t)(theta_unwrapped * 1000.0f);
-			telemetry_buffer[next_head].omega_e3 = (int16_t)(omega * 1000.0f);
+			telemetry_buffer[next_head].omega_e3 = (int32_t)(omega * 1000.0f);
 
 			next_head++;
 			if (next_head >= TELEMETRY_BUFFER_SIZE)
