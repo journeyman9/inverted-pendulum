@@ -40,10 +40,10 @@ task_system_controller::task_system_controller(
 void task_system_controller::run(void) {
 	// Make a variable which will hold times to use for precise task scheduling
 	portTickType previousTicks = xTaskGetTickCount ();
-	portTickType lastMeasuredTicks = previousTicks;   // For measurement
+	//portTickType lastMeasuredTicks = previousTicks;   // For measurement
 	
-	uint32_t timing_samples[10] = {0};
-	uint8_t sample_idx = 0;
+	//uint32_t timing_samples[10] = {0};
+	//uint8_t sample_idx = 0;
 	
 	Lqr controller;
 	Planner planner;

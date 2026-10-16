@@ -21,13 +21,13 @@ float Lqr::calculate_action(float x[4], float x_r[4], float position_set, float 
 		K[3] * (x[3] - x_r[3])
 	);
 	
-	u *= 1600 / 24;
+	u *= 1600.0f / 24.0f;
 	
-	if (u > 1600) {
-		u = 1600;
+	if (u > 1600.0f) {
+		u = 1600.0f;
 	}
-	else if (u < -1600) {
-		u = -1600;
+	else if (u < -1600.0f) {
+		u = -1600.0f;
 	}
 	return u;
 }

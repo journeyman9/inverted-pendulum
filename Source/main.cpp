@@ -175,10 +175,6 @@ int main (void)
 	// but it is desired to exercise the RTOS more thoroughly in this test program
 	new task_user ("UserInt", task_priority (0), 260, &ser_dev);
 
-	// Old separate encoder tasks — replaced by task_encoder_processing
-	//new task_pendulum_encoder ("EncPen", task_priority (6), 260, &ser_dev);
-	//new task_motor_encoder ("EncMtr", task_priority (5), 260, &ser_dev);
-
 	new task_encoder_processing ("EncProc", task_priority (5), 280, &ser_dev);
 	new task_system_controller ("SysCtrl", task_priority (4), 260, &ser_dev);
 	new task_motor_command ("MtrCmd", task_priority (3), 260, &ser_dev);
@@ -207,7 +203,7 @@ ISR(TCE0_OVF_vect)
     isr_pendulum_raw = TCC1.CNT;
     isr_motor_raw = TCD0.CNT;
 
-    portBASE_TYPE xHigherPriorityTaskWoken = pdFALSE;
+    signed portBASE_TYPE xHigherPriorityTaskWoken = pdFALSE;
     if (xEncoderSemaphore != NULL) {
         xSemaphoreGiveFromISR(xEncoderSemaphore, &xHigherPriorityTaskWoken);
     }
