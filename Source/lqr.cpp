@@ -10,7 +10,7 @@ Lqr::~Lqr() {
 
 float Lqr::calculate_action(float x[4], float x_r[4], float position_set, float angle_set) {
 	x_tilde = x[0] - position_set;
-	theta_tilde = x[2] - 3.1415f;
+	theta_tilde = x[2] - angle_set; //3.1415f;
 
 	// Calculate the control action using the LQR controller
 	u_voltage = -1.0f * (
