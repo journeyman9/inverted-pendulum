@@ -22,6 +22,7 @@
 #include "FreeRTOS.h"                       // Primary header for FreeRTOS
 #include "task.h"                           // Header for FreeRTOS task functions
 #include "queue.h"                          // FreeRTOS inter-task communication queues
+#include "semphr.h"                         // FreeRTOS semaphores
 #include "croutine.h"                       // Header for co-routines and such
 
 #include "rs232int.h"                       // ME405/507 library for serial comm.
@@ -34,12 +35,10 @@
 
 #include "task_user.h"                      // Header for user interface task
 #include "task_limit_switch.h"				// Header for limit switches
-#include "task_pendulum_encoder.h"			// Header for pendulum encoder
-#include "task_motor_encoder.h"				// Header for Motor Controller
+#include "task_encoder_processing.h"		// Header for merged ISR-driven encoder processing
 #include "task_system_controller.h"			// Header for the system controller
 #include "task_motor_command.h"				// Header for the motor command
 
-volatile int counter;
 frt_text_queue print_ser_queue (32, NULL, 10);
 
 shared_data<bool>* leftLimitSwitch;				// Left limit switch
@@ -60,11 +59,11 @@ shared_data<bool>* stop; // case 3
 shared_data<bool>* reset; // reset to idle
 
 // Raw counts captured by ISR — volatile because written in ISR, read in task
-static volatile int16_t isr_pendulum_raw = 0;
-static volatile int16_t isr_motor_raw = 0;
+volatile int16_t isr_pendulum_raw = 0;
+volatile int16_t isr_motor_raw = 0;
 
-// Handle to the processing task so the ISR can notify it
-static TaskHandle_t encoder_processing_task_handle = NULL;
+// Binary semaphore: ISR gives, encoder processing task takes
+xSemaphoreHandle xEncoderSemaphore = NULL;
 
 /*! \brief CCP write helper function written in assembly.
  *
@@ -168,12 +167,19 @@ int main (void)
 	rs232 ser_dev(0, &USARTC1); // Create a serial device on USART C1, baud 115200
 	ser_dev << clrscr << "FreeRTOS Xmega Testing Program" << endl << endl;
 
+	// Create the binary semaphore used by the encoder ISR to wake the processing task
+	vSemaphoreCreateBinary(xEncoderSemaphore);
+	xSemaphoreTake(xEncoderSemaphore, 0);  // Start empty so task blocks immediately
+
 	// The user interface is at low priority; it could have been run in the idle task
 	// but it is desired to exercise the RTOS more thoroughly in this test program
 	new task_user ("UserInt", task_priority (0), 260, &ser_dev);
 
-	new task_pendulum_encoder ("EncPen", task_priority (6), 260, &ser_dev);
-	new task_motor_encoder ("EncMtr", task_priority (5), 260, &ser_dev);
+	// Old separate encoder tasks — replaced by task_encoder_processing
+	//new task_pendulum_encoder ("EncPen", task_priority (6), 260, &ser_dev);
+	//new task_motor_encoder ("EncMtr", task_priority (5), 260, &ser_dev);
+
+	new task_encoder_processing ("EncProc", task_priority (5), 280, &ser_dev);
 	new task_system_controller ("SysCtrl", task_priority (4), 260, &ser_dev);
 	new task_motor_command ("MtrCmd", task_priority (3), 260, &ser_dev);
 	new task_limit_switch ("LeftSw", task_priority (2), 260, &ser_dev, (1<<0));
@@ -198,17 +204,11 @@ int main (void)
 
 ISR(TCE0_OVF_vect)
 {
-    // Read both hardware QDEC counters — just register reads, very fast
     isr_pendulum_raw = TCC1.CNT;
     isr_motor_raw = TCD0.CNT;
 
-    // Wake the processing task
-    BaseType_t xHigherPriorityTaskWoken = pdFALSE;
-    vTaskNotifyGiveFromISR(encoder_processing_task_handle, &xHigherPriorityTaskWoken);
-
-    // If the processing task has higher priority than whatever was running,
-    // yield to it immediately on ISR exit
-    if (xHigherPriorityTaskWoken == pdTRUE) {
-        taskYIELD_FROM_ISR();
+    portBASE_TYPE xHigherPriorityTaskWoken = pdFALSE;
+    if (xEncoderSemaphore != NULL) {
+        xSemaphoreGiveFromISR(xEncoderSemaphore, &xHigherPriorityTaskWoken);
     }
 }
