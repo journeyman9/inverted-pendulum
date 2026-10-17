@@ -41,10 +41,10 @@ task_system_controller::task_system_controller(
 void task_system_controller::run(void) {
 	// Make a variable which will hold times to use for precise task scheduling
 	portTickType previousTicks = xTaskGetTickCount ();
-	portTickType lastMeasuredTicks = previousTicks;   // For measurement
+	//portTickType lastMeasuredTicks = previousTicks;   // For measurement
 	
-	uint32_t timing_samples[10] = {0};
-	uint8_t sample_idx = 0;
+	//uint32_t timing_samples[10] = {0};
+	//uint8_t sample_idx = 0;
 	
 	Lqr controller;
 	Planner planner;
@@ -200,7 +200,7 @@ void task_system_controller::run(void) {
 					telemetry_buffer[next_head].timestamp_ms = xTaskGetTickCount();
 					telemetry_buffer[next_head].linear_position_e4 = (int16_t)(x[0] * 10000.0f);
 					telemetry_buffer[next_head].linear_velocity_e3 = (int16_t)(x[1] * 1000.0f);
-					telemetry_buffer[next_head].pendulum_angle_e4 = (int16_t)(x[2] * 10000.0f);
+					telemetry_buffer[next_head].pendulum_angle_e4 = (int32_t)(x[2] * 10000.0f);
 					telemetry_buffer[next_head].pendulum_velocity_e3 = (int16_t)(x[3] * 1000.0f);
 					telemetry_buffer[next_head].motor_voltage_e3 = (int16_t)(controller.u_voltage * 1000.0f);
 

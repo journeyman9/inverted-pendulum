@@ -66,7 +66,7 @@ typedef struct
 	uint32_t timestamp_ms;
 	int16_t linear_position_e4;
 	int16_t linear_velocity_e3;
-	int16_t pendulum_angle_e4;
+	int32_t pendulum_angle_e4;
 	int16_t pendulum_velocity_e3;
 	int16_t motor_voltage_e3;
 } sample_t;
