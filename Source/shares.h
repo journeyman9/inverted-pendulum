@@ -28,6 +28,8 @@
 #ifndef _SHARES_H_
 #define _SHARES_H_
 
+#include "semphr.h"
+
 
 //-------------------------------------------------------------------------------------
 // Externs:  In this section, we declare variables and functions that are used in all
@@ -60,6 +62,11 @@ extern shared_data<bool>* begin; // case 0
 extern shared_data<bool>* go; // case 4;
 extern shared_data<bool>* stop; // case 3
 extern shared_data<bool>* reset; // reset to idle
+
+// ISR -> task encoder interface
+extern volatile int16_t isr_pendulum_raw;
+extern volatile int16_t isr_motor_raw;
+extern xSemaphoreHandle xEncoderSemaphore;
 
 // Our attempt at a queue
 //extern frt_queue<bool>* leftLimitSwitch;
