@@ -68,6 +68,22 @@ extern volatile int16_t isr_pendulum_raw;
 extern volatile int16_t isr_motor_raw;
 extern xSemaphoreHandle xEncoderSemaphore;
 
+typedef struct
+{
+	uint32_t timestamp_ms;
+	int16_t linear_position_e4;
+	int16_t linear_velocity_e3;
+	int16_t pendulum_angle_e3;
+	int32_t pendulum_velocity_e3;
+	int16_t motor_voltage_e3;
+} sample_t;
+
+#define TELEMETRY_BUFFER_SIZE 250
+
+extern volatile uint16_t telemetry_head;
+extern volatile bool telemetry_buffer_full;
+extern sample_t telemetry_buffer[TELEMETRY_BUFFER_SIZE];
+
 // Our attempt at a queue
 //extern frt_queue<bool>* leftLimitSwitch;
 //extern frt_queue<bool>* rightLimitSwitch;

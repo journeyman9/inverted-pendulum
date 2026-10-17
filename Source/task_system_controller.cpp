@@ -203,47 +203,27 @@ void task_system_controller::run(void) {
 				
 				u = controller.calculate_action(x_hat.data(), x_r, position_set, angle_set);
 				observer.predict(u * (24.0f / 1600.0f));
+				
+				if (runs % 1 == 0) {
+					next_head = telemetry_head;
+					telemetry_buffer[next_head].timestamp_ms = xTaskGetTickCount();
+					telemetry_buffer[next_head].linear_position_e4 = (int16_t)(x[0] * 10000.0f);
+					telemetry_buffer[next_head].linear_velocity_e3 = (int16_t)(x[1] * 1000.0f);
+					telemetry_buffer[next_head].pendulum_angle_e3 = (int16_t)(x[2] * 1000.0f);
+					telemetry_buffer[next_head].pendulum_velocity_e3 = (int32_t)(x[3] * 1000.0f);
+					telemetry_buffer[next_head].motor_voltage_e3 = (int16_t)(controller.u_voltage * 1000.0f);
+
+					next_head++;
+					if (next_head >= TELEMETRY_BUFFER_SIZE)
+					{
+						next_head = 0;
+						telemetry_buffer_full = true;
+					}
+					telemetry_head = next_head;
+				}
 		
 				/*
 				if (runs%100 == 0) {
-					char buf[6];
-					char buf2[6];
-					char buf3[6];
-					*p_serial << "Angle radians: " << dtostrf(x[2], 0, 6, buf);
-					*p_serial << " Angle error: " << dtostrf(x[2] - 3.14159f, 0, 6, buf2);
-					*p_serial << " Motor u: " << dtostrf(u, 0, 6, buf3) << endl;
-				}
-				*/
-				/*
-				if (runs%100 == 0) {
-					char buf[3];
-					char buf2[3];
-					char buf3[3];
-					char buf4[3];
-					char buf5[3];
-					*p_serial << "x: " << dtostrf(x[0], 0, 3, buf);
-					*p_serial << ", xdot: " << dtostrf(x[1], 0, 3, buf2);
-					*p_serial << ", angle: " << dtostrf(x[2] - 3.14159f, 0, 3, buf3);
-					*p_serial << ", thetadot: " << dtostrf(x[3], 0, 3, buf4);
-					*p_serial << ", Motor u: " << dtostrf(u, 0, 3, buf5) << endl;
-				}
-				*/
-				/*
-				if (runs%2 == 0) {
-					char buf[3];
-					char buf2[3];
-					char buf3[3];
-					char buf4[3];
-					char buf5[3];
-					*p_serial << "theta: " << dtostrf(x[2], 0, 3, buf);
-					*p_serial << ", thetadot: " << dtostrf(x[3], 0, 3, buf2);
-					*p_serial << ", theta_hat: " << dtostrf(x_hat[2], 0, 3, buf3);
-					*p_serial << ", thetadot_hat: " << dtostrf(x_hat[3], 0, 3, buf4);
-					*p_serial << ", Motor u: " << dtostrf(u, 0, 3, buf5) << endl;
-				}
-				*/
-				/*
-				if (runs%2 == 0) {
 					char buf[3];
 					char buf2[3];
 					char buf3[3];
@@ -287,12 +267,6 @@ void task_system_controller::run(void) {
 				break;
 				
 		}	
-		
-		/*
-		if (runs % 100 == 0) {
-			*p_serial << "b: " << begin->get() << endl;
-		}
-		*/
 		
 		// Increment counter for debugging
 		runs++;
