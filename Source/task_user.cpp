@@ -192,7 +192,7 @@ void task_user::run (void)
 							*p_serial << sample.timestamp_ms << ",";
 							*p_serial << sample.linear_position_e4 << ",";
 							*p_serial << sample.linear_velocity_e3 << ",";
-							*p_serial << sample.pendulum_angle_e4 << ",";
+							*p_serial << sample.pendulum_angle_e3 << ",";
 							*p_serial << sample.pendulum_velocity_e3 << ",";
 							*p_serial << sample.motor_voltage_e3 << endl;
 						}
