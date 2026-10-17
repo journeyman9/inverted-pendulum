@@ -71,12 +71,12 @@ int main() {
     
     while (std::getline(file, line)) {
         std::stringstream ss(line);
-        std::string timestamp_ms, x_e4, xdot_e3, theta_e4, thetadot_e3, u_e3;
+        std::string timestamp_ms, x_e4, xdot_e3, theta_e3, thetadot_e3, u_e3;
         
         if (std::getline(ss, timestamp_ms, ',') && 
             std::getline(ss, x_e4, ',') &&
             std::getline(ss, xdot_e3, ',') &&
-            std::getline(ss, theta_e4, ',') &&
+            std::getline(ss, theta_e3, ',') &&
             std::getline(ss, thetadot_e3, ',') &&
             std::getline(ss, u_e3)) {
             
@@ -84,7 +84,7 @@ int main() {
                 float timestamp = std::stof(timestamp_ms);
                 float x = std::stof(x_e4);
                 float xdot = std::stof(xdot_e3);
-                float theta = std::stof(theta_e4);
+                float theta = std::stof(theta_e3);
                 float thetadot = std::stof(thetadot_e3);
                 float u = std::stof(u_e3);
                 
@@ -92,7 +92,7 @@ int main() {
                     timestamp / 1000.0f,
                     x / 10000.0f,
                     xdot / 1000.0f,
-                    theta / 10000.0f,
+                    theta / 1000.0f,
                     thetadot / 1000.0f,
                     u / 1000.0f
                 });
@@ -115,7 +115,9 @@ int main() {
     });
     
     rowData x0_raw = dataList[0];
-    const std::array<float, 4> x0{x0_raw.x, x0_raw.xdot, x0_raw.theta, x0_raw.thetadot};
+    float position_set = x0_raw.x;
+    float angle_set = x0_raw.theta;
+    const std::array<float, 4> x0{x0_raw.x - position_set, x0_raw.xdot, x0_raw.theta - angle_set, x0_raw.thetadot};
     Kalman observer(x0);
     
     std::vector<exportData> result;
@@ -125,7 +127,7 @@ int main() {
     for (const auto& row: dataList) {
         //std::cout << row.timestamp << " | " << row.x << " | " << row.xdot << " | " << row.theta << " | " << row.thetadot << " | " << row.u << std::endl;
         observer.predict(row.u);
-        observer.update({row.x, row.xdot, row.theta, row.thetadot});
+        observer.update({row.x - position_set, row.xdot, row.theta - angle_set, row.thetadot});
         x_hat = observer.getStateEstimate();
         P = observer.P;
         Kf = observer.Kf;
@@ -136,9 +138,9 @@ int main() {
             row.theta,
             row.thetadot,
             row.u,
-            x_hat[0],
+            x_hat[0] + position_set,
             x_hat[1],
-            x_hat[2],
+            x_hat[2] + angle_set,
             x_hat[3],
             P[0][0] + P[1][1] + P[2][2] + P[3][3],
             Kf[0][0] + Kf[1][1] + Kf[2][2] + Kf[3][3],

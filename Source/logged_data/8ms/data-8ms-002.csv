@@ -1,4 +1,4 @@
-timestamp_ms,x_e4,xdot_e3,theta_e4,thetadot_e3,u_e3
+timestamp_ms,x_e4,xdot_e3,theta_e3,thetadot_e3,u_e3
 243616,-2572,-52,30770,393,-2777
 243624,-2576,-45,30770,0,-1522
 243632,-2581,-59,30770,0,-1701

@@ -183,13 +183,15 @@ void task_system_controller::run(void) {
 				taskEXIT_CRITICAL();
 				
 				if (!observer_init) {
-					observer.x_hat = {{x[0], x[1], x[2], x[3]}};
+					observer.x_hat = {{x[0] - position_set, x[1], x[2] - angle_set, x[3]}};
 					observer.predict(0.0f);
 					observer_init = true;
 				}
 				
-				observer.update(std::array<float, 4>{x[0], x[1], x[2], x[3]});
+				observer.update(std::array<float, 4>{x[0] - position_set, x[1], x[2] - angle_set, x[3]});
 				x_hat = observer.getStateEstimate();
+				x_hat[0] += position_set;
+				x_hat[2] += angle_set;
 
 				planner.plan(x_hat.data());
 				
@@ -199,7 +201,7 @@ void task_system_controller::run(void) {
 					transition_to(100);
 				}
 				
-				u = controller.calculate_action(x, x_r, position_set, angle_set);
+				u = controller.calculate_action(x_hat.data(), x_r, position_set, angle_set);
 				observer.predict(u * (24.0f / 1600.0f));
 		
 				/*

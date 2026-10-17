@@ -1,4 +1,4 @@
-timestamp_ms,x_e4,xdot_e3,theta_e4,thetadot_e3,u_e3
+timestamp_ms,x_e4,xdot_e3,theta_e3,thetadot_e3,u_e3
 27992,-1324,-592,31588,-786,-3872
 28000,-1371,-585,31526,-786,-3714
 28008,-1417,-577,31463,-786,-3555
