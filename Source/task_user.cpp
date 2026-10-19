@@ -183,7 +183,7 @@ void task_user::run (void)
 							break;
 						
 						case('t'):
-							*p_serial << PMS("timestamp_ms,x_e4,xdot_e3,theta_e4,thetadot_e3,u_e3") << endl;
+							*p_serial << PMS("timestamp_ms,x_e4,xdot_e3,theta_e3,thetadot_e3,u_e3") << endl;
 
 							for (uint16_t index = 0; index < TELEMETRY_BUFFER_SIZE; index++)
 							{
