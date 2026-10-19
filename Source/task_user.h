@@ -48,7 +48,7 @@
 
 
 /// This macro defines a string that identifies the name and version of this program. 
-#define PROGRAM_VERSION		PMS ("ME405 base radio program V0.4 ")
+#define PROGRAM_VERSION		PMS ("Journey's Inverted Pendulum v0.1")
 
 
 //-------------------------------------------------------------------------------------

@@ -1,12 +1,12 @@
 import numpy as np
 import matplotlib.pyplot as plt
 import control as ct
-from model import A, B, C, D, sys, dsys
+from model import A, B, C, D, sys, dsys, dt
 import pandas as pd
 
 # Calculate reasonable max values for velocities
 print("\nOL: A")
-values, vectors = np.linalg.eig(A)
+values, vectors = np.linalg.eig(dsys.A)
 np.set_printoptions(precision=4, suppress=True)
 for i in range(len(values)):
     print("x{} approx e ^ ({:.2f})t * {}".format(i, values[i], vectors[:, i]))
@@ -424,10 +424,10 @@ for i in range(len(psd_block)):
     assert psd_block[i] >= 0
 '''
 
-K, S, E = ct.lqr(sys, Q, R)
+K, S, E = ct.dlqr(dsys, Q, R)
 
 print("\nCL: A-BK")
-values, vectors = np.linalg.eig(A - B@K)
+values, vectors = np.linalg.eig(dsys.A - dsys.B@K)
 np.set_printoptions(precision=4, suppress=True)
 for i in range(len(values)):
     print("x{} approx e ^ ({:.2f})t * {}".format(i, values[i], vectors[:, i]))
@@ -441,7 +441,8 @@ x0 = [0.2, 0, 0.0873, 0]
 u = K @ x0
 print("\nu: {:.6f}".format(u))
 
-idx_sorted = np.argsort(np.abs(np.real(values)))
+# Sort by magnitude |z| closest to 0 is fastest
+idx_sorted = np.argsort(np.abs(values))
 
 state_names = ["x", "xdot", "theta", "thetadot"]
 
@@ -451,8 +452,14 @@ for i in idx_sorted:
     lam = values[i]
     v = vectors[:, i]
 
-    sigma = np.real(lam)
-    Ts = np.inf if sigma == 0 else 4 / np.abs(sigma)
+    magnitude = np.abs(lam)
+    
+    if magnitude >= 1.0:
+        Ts = np.inf
+    elif magnitude == 0:
+        Ts = 0.0
+    else:
+        Ts = (-4 * dt) / np.log(magnitude)
 
     # eigenvector energy contribution
     energy = np.abs(v)**2
@@ -483,4 +490,3 @@ print("\n",
         float_format=lambda x: f"{x:0.3f}"
     )
 )
-

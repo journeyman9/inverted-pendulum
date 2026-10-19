@@ -2,21 +2,19 @@
 # Automatically-generated file. Do not edit or delete the file
 ################################################################################
 
+Source\kalman.cpp
+
 Source\lib\freertos\croutine.c
 
 Source\lqr.cpp
 
 Source\planner.cpp
 
+Source\task_encoder_processing.cpp
+
 Source\task_limit_switch.cpp
 
 Source\task_motor_command.cpp
-
-Source\task_motor_encoder.cpp
-
-Source\task_pendulum_encoder.cpp
-
-Source\task_skeleton.cpp
 
 Source\task_system_controller.cpp
 

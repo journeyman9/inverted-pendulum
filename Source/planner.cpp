@@ -1,7 +1,6 @@
 #include <stdlib.h>                         // Prototype declarations for I/O functions
 #include <avr/io.h>                         // Port I/O for SFR's
 #include "planner.h"
-#include <vector>
 
 Planner::Planner() {
 }

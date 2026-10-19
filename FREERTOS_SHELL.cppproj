@@ -192,6 +192,12 @@
     </ToolchainSettings>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Source\kalman.cpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Source\kalman.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="Source\lib\freertos\croutine.c">
       <SubType>compile</SubType>
     </Compile>
@@ -216,6 +222,12 @@
     <Compile Include="Source\planner.h">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="Source\task_encoder_processing.cpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Source\task_encoder_processing.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="Source\task_limit_switch.cpp">
       <SubType>compile</SubType>
     </Compile>
@@ -226,24 +238,6 @@
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="Source\task_motor_command.h">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="Source\task_motor_encoder.cpp">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="Source\task_motor_encoder.h">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="Source\task_pendulum_encoder.cpp">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="Source\task_pendulum_encoder.h">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="Source\task_skeleton.cpp">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="Source\task_skeleton.h">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="Source\task_system_controller.cpp">

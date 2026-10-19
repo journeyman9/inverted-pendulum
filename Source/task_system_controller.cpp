@@ -23,7 +23,8 @@
 #include "task_system_controller.h"                  // Template
 #include "lqr.h"
 #include "planner.h"
-#include <vector>
+#include <array>
+#include "kalman.h"
 
 task_system_controller::task_system_controller(
 	const char* a_name,
@@ -40,10 +41,10 @@ task_system_controller::task_system_controller(
 void task_system_controller::run(void) {
 	// Make a variable which will hold times to use for precise task scheduling
 	portTickType previousTicks = xTaskGetTickCount ();
-	portTickType lastMeasuredTicks = previousTicks;   // For measurement
+	//portTickType lastMeasuredTicks = previousTicks;   // For measurement
 	
-	uint32_t timing_samples[10] = {0};
-	uint8_t sample_idx = 0;
+	//uint32_t timing_samples[10] = {0};
+	//uint8_t sample_idx = 0;
 	
 	Lqr controller;
 	Planner planner;
@@ -51,6 +52,11 @@ void task_system_controller::run(void) {
 	float x[4] = {0.0f, 0.0f, 0.0f, 0.0f};
 	float x_r[4] = {0.0f, 0.0f, 0.0f, 0.0f};
 	float u = 0.0f;
+	uint16_t next_head = 0;
+	std::array<float, 4> x_hat{{0.0f, 0.0f, 0.0f, 0.0f}};
+	static Kalman observer(x_hat);
+	bool observer_init = false;
+	time_stamp tStart, tEnd, elapsed;
 		
 	while(1) {
 		/*
@@ -166,7 +172,9 @@ void task_system_controller::run(void) {
 				}
 				
 				go->put(0);
-
+				
+				motor_command->put(u);
+				
 				// Atomic read of state to prevent race conditions
 				taskENTER_CRITICAL();
 				x[0] = linear_position->get();
@@ -174,28 +182,47 @@ void task_system_controller::run(void) {
 				x[2] = pendulum_encoder_radians->get();
 				x[3] = pendulum_encoder_w_radians->get();
 				taskEXIT_CRITICAL();
+				
+				if (!observer_init) {
+					observer.x_hat = {{x[0] - position_set, x[1], x[2] - angle_set, x[3]}};
+					observer.predict(0.0f);
+					observer_init = true;
+				}
+				
+				observer.update(std::array<float, 4>{x[0] - position_set, x[1], x[2] - angle_set, x[3]});
+				x_hat = observer.getStateEstimate();
+				x_hat[0] += position_set;
+				x_hat[2] += angle_set;
 
-				planner.plan(x);
+				planner.plan(x_hat.data());
 				
 				// Error handling for too great of angle
 				if ((x[2] - angle_set >= 0.2616) || (x[2] - angle_set < -0.2616)){
 					*p_serial << "Outside Angle Recovery" << endl;
 					transition_to(100);
-					
 				}
-				u = controller.calculate_action(x, x_r, position_set, angle_set);				
-				motor_command->put(u);
 				
-				/*
-				if (runs%100 == 0) {
-					char buf[6];
-					char buf2[6];
-					char buf3[6];
-					*p_serial << "Angle radians: " << dtostrf(x[2], 0, 6, buf);
-					*p_serial << " Angle error: " << dtostrf(x[2] - 3.14159f, 0, 6, buf2);
-					*p_serial << " Motor u: " << dtostrf(u, 0, 6, buf3) << endl;
+				u = controller.calculate_action(x, x_r, position_set, angle_set);
+				observer.predict(u * (24.0f / 1600.0f));
+				
+				if (runs % 1 == 0) {
+					next_head = telemetry_head;
+					telemetry_buffer[next_head].timestamp_ms = xTaskGetTickCount();
+					telemetry_buffer[next_head].linear_position_e4 = (int16_t)(x[0] * 10000.0f);
+					telemetry_buffer[next_head].linear_velocity_e3 = (int16_t)(x[1] * 1000.0f);
+					telemetry_buffer[next_head].pendulum_angle_e3 = (int16_t)(x[2] * 1000.0f);
+					telemetry_buffer[next_head].pendulum_velocity_e3 = (int32_t)(x[3] * 1000.0f);
+					telemetry_buffer[next_head].motor_voltage_e3 = (int16_t)(controller.u_voltage * 1000.0f);
+
+					next_head++;
+					if (next_head >= TELEMETRY_BUFFER_SIZE)
+					{
+						next_head = 0;
+						telemetry_buffer_full = true;
+					}
+					telemetry_head = next_head;
 				}
-				*/
+		
 				/*
 				if (runs%100 == 0) {
 					char buf[3];
@@ -205,8 +232,8 @@ void task_system_controller::run(void) {
 					char buf5[3];
 					*p_serial << "x: " << dtostrf(x[0], 0, 3, buf);
 					*p_serial << ", xdot: " << dtostrf(x[1], 0, 3, buf2);
-					*p_serial << ", angle: " << dtostrf(x[2] - 3.14159f, 0, 3, buf3);
-					*p_serial << ", thetadot: " << dtostrf(x[3], 0, 3, buf4);
+					*p_serial << ", x_hat: " << dtostrf(x_hat[0], 0, 3, buf3);
+					*p_serial << ", xdot_hat: " << dtostrf(x_hat[1], 0, 3, buf4);
 					*p_serial << ", Motor u: " << dtostrf(u, 0, 3, buf5) << endl;
 				}
 				*/
@@ -242,12 +269,6 @@ void task_system_controller::run(void) {
 				
 		}	
 		
-		/*
-		if (runs % 100 == 0) {
-			*p_serial << "b: " << begin->get() << endl;
-		}
-		*/
-		
 		// Increment counter for debugging
 		runs++;
 		
@@ -256,6 +277,6 @@ void task_system_controller::run(void) {
 		//_delay_ms(1);
 		// This is a method we use to cause a task to make one run through its task
 		// loop every N milliseconds and let other tasks run at other times
-		delay_from_to (previousTicks, configMS_TO_TICKS (1));
+		delay_from_to (previousTicks, configMS_TO_TICKS (8));
 	}	
 }

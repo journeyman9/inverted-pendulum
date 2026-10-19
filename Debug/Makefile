@@ -43,14 +43,13 @@ SUBDIRS :=  \
 
 # Add inputs and outputs from these tool invocations to the build variables 
 C_SRCS +=  \
+../Source/kalman.cpp \
 ../Source/lib/freertos/croutine.c \
 ../Source/lqr.cpp \
 ../Source/planner.cpp \
+../Source/task_encoder_processing.cpp \
 ../Source/task_limit_switch.cpp \
 ../Source/task_motor_command.cpp \
-../Source/task_motor_encoder.cpp \
-../Source/task_pendulum_encoder.cpp \
-../Source/task_skeleton.cpp \
 ../Source/task_system_controller.cpp \
 ../Source/task_user.cpp \
 ../Source/lib/freertos/heap_2.c \
@@ -107,14 +106,13 @@ ASM_SRCS +=
 
 
 OBJS +=  \
+Source/kalman.o \
 Source/lib/freertos/croutine.o \
 Source/lqr.o \
 Source/planner.o \
+Source/task_encoder_processing.o \
 Source/task_limit_switch.o \
 Source/task_motor_command.o \
-Source/task_motor_encoder.o \
-Source/task_pendulum_encoder.o \
-Source/task_skeleton.o \
 Source/task_system_controller.o \
 Source/task_user.o \
 Source/lib/freertos/heap_2.o \
@@ -164,14 +162,13 @@ Source/lib/serial/rs232int.o \
 Source/main.o
 
 OBJS_AS_ARGS +=  \
+Source/kalman.o \
 Source/lib/freertos/croutine.o \
 Source/lqr.o \
 Source/planner.o \
+Source/task_encoder_processing.o \
 Source/task_limit_switch.o \
 Source/task_motor_command.o \
-Source/task_motor_encoder.o \
-Source/task_pendulum_encoder.o \
-Source/task_skeleton.o \
 Source/task_system_controller.o \
 Source/task_user.o \
 Source/lib/freertos/heap_2.o \
@@ -221,14 +218,13 @@ Source/lib/serial/rs232int.o \
 Source/main.o
 
 C_DEPS +=  \
+Source/kalman.d \
 Source/lib/freertos/croutine.d \
 Source/lqr.d \
 Source/planner.d \
+Source/task_encoder_processing.d \
 Source/task_limit_switch.d \
 Source/task_motor_command.d \
-Source/task_motor_encoder.d \
-Source/task_pendulum_encoder.d \
-Source/task_skeleton.d \
 Source/task_system_controller.d \
 Source/task_user.d \
 Source/lib/freertos/heap_2.d \
@@ -278,14 +274,13 @@ Source/lib/serial/rs232int.d \
 Source/main.d
 
 C_DEPS_AS_ARGS +=  \
+Source/kalman.d \
 Source/lib/freertos/croutine.d \
 Source/lqr.d \
 Source/planner.d \
+Source/task_encoder_processing.d \
 Source/task_limit_switch.d \
 Source/task_motor_command.d \
-Source/task_motor_encoder.d \
-Source/task_pendulum_encoder.d \
-Source/task_skeleton.d \
 Source/task_system_controller.d \
 Source/task_user.d \
 Source/lib/freertos/heap_2.d \
@@ -348,6 +343,13 @@ LINKER_SCRIPT_DEP+=
 
 
 # AVR32/GNU C Compiler
+Source/kalman.o: ../Source/kalman.cpp
+	@echo Building file: $<
+	@echo Invoking: AVR8/GNU C Compiler : 5.4.0
+	$(QUOTE)C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr8\avr8-gnu-toolchain\bin\avr-g++.exe$(QUOTE) -funsigned-char -funsigned-bitfields -DDEBUG -DF_CPU=32000000UL  -I"../Source/lib/freertos" -I"../Source/lib/frtcpp" -I"../Source/lib/misc" -I"../Source/lib/serial" -I"C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\XMEGAA_DFP\1.1.68\include" -I"C:\Users\journ\Documents\GitHub\avr-libstdcpp\include"  -O1 -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -g2 -Wall -mmcu=atxmega128a4u -B "C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\XMEGAA_DFP\1.1.68\gcc\dev\atxmega128a4u" -c -std=c++11 -flto -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
+	@echo Finished building: $<
+	
+
 Source/lib/freertos/croutine.o: ../Source/lib/freertos/croutine.c
 	@echo Building file: $<
 	@echo Invoking: AVR8/GNU C Compiler : 5.4.0
@@ -369,6 +371,13 @@ Source/planner.o: ../Source/planner.cpp
 	@echo Finished building: $<
 	
 
+Source/task_encoder_processing.o: ../Source/task_encoder_processing.cpp
+	@echo Building file: $<
+	@echo Invoking: AVR8/GNU C Compiler : 5.4.0
+	$(QUOTE)C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr8\avr8-gnu-toolchain\bin\avr-g++.exe$(QUOTE) -funsigned-char -funsigned-bitfields -DDEBUG -DF_CPU=32000000UL  -I"../Source/lib/freertos" -I"../Source/lib/frtcpp" -I"../Source/lib/misc" -I"../Source/lib/serial" -I"C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\XMEGAA_DFP\1.1.68\include" -I"C:\Users\journ\Documents\GitHub\avr-libstdcpp\include"  -O1 -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -g2 -Wall -mmcu=atxmega128a4u -B "C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\XMEGAA_DFP\1.1.68\gcc\dev\atxmega128a4u" -c -std=c++11 -flto -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
+	@echo Finished building: $<
+	
+
 Source/task_limit_switch.o: ../Source/task_limit_switch.cpp
 	@echo Building file: $<
 	@echo Invoking: AVR8/GNU C Compiler : 5.4.0
@@ -377,27 +386,6 @@ Source/task_limit_switch.o: ../Source/task_limit_switch.cpp
 	
 
 Source/task_motor_command.o: ../Source/task_motor_command.cpp
-	@echo Building file: $<
-	@echo Invoking: AVR8/GNU C Compiler : 5.4.0
-	$(QUOTE)C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr8\avr8-gnu-toolchain\bin\avr-g++.exe$(QUOTE) -funsigned-char -funsigned-bitfields -DDEBUG -DF_CPU=32000000UL  -I"../Source/lib/freertos" -I"../Source/lib/frtcpp" -I"../Source/lib/misc" -I"../Source/lib/serial" -I"C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\XMEGAA_DFP\1.1.68\include" -I"C:\Users\journ\Documents\GitHub\avr-libstdcpp\include"  -O1 -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -g2 -Wall -mmcu=atxmega128a4u -B "C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\XMEGAA_DFP\1.1.68\gcc\dev\atxmega128a4u" -c -std=c++11 -flto -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
-	@echo Finished building: $<
-	
-
-Source/task_motor_encoder.o: ../Source/task_motor_encoder.cpp
-	@echo Building file: $<
-	@echo Invoking: AVR8/GNU C Compiler : 5.4.0
-	$(QUOTE)C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr8\avr8-gnu-toolchain\bin\avr-g++.exe$(QUOTE) -funsigned-char -funsigned-bitfields -DDEBUG -DF_CPU=32000000UL  -I"../Source/lib/freertos" -I"../Source/lib/frtcpp" -I"../Source/lib/misc" -I"../Source/lib/serial" -I"C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\XMEGAA_DFP\1.1.68\include" -I"C:\Users\journ\Documents\GitHub\avr-libstdcpp\include"  -O1 -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -g2 -Wall -mmcu=atxmega128a4u -B "C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\XMEGAA_DFP\1.1.68\gcc\dev\atxmega128a4u" -c -std=c++11 -flto -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
-	@echo Finished building: $<
-	
-
-Source/task_pendulum_encoder.o: ../Source/task_pendulum_encoder.cpp
-	@echo Building file: $<
-	@echo Invoking: AVR8/GNU C Compiler : 5.4.0
-	$(QUOTE)C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr8\avr8-gnu-toolchain\bin\avr-g++.exe$(QUOTE) -funsigned-char -funsigned-bitfields -DDEBUG -DF_CPU=32000000UL  -I"../Source/lib/freertos" -I"../Source/lib/frtcpp" -I"../Source/lib/misc" -I"../Source/lib/serial" -I"C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\XMEGAA_DFP\1.1.68\include" -I"C:\Users\journ\Documents\GitHub\avr-libstdcpp\include"  -O1 -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -g2 -Wall -mmcu=atxmega128a4u -B "C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\XMEGAA_DFP\1.1.68\gcc\dev\atxmega128a4u" -c -std=c++11 -flto -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
-	@echo Finished building: $<
-	
-
-Source/task_skeleton.o: ../Source/task_skeleton.cpp
 	@echo Building file: $<
 	@echo Invoking: AVR8/GNU C Compiler : 5.4.0
 	$(QUOTE)C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr8\avr8-gnu-toolchain\bin\avr-g++.exe$(QUOTE) -funsigned-char -funsigned-bitfields -DDEBUG -DF_CPU=32000000UL  -I"../Source/lib/freertos" -I"../Source/lib/frtcpp" -I"../Source/lib/misc" -I"../Source/lib/serial" -I"C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\XMEGAA_DFP\1.1.68\include" -I"C:\Users\journ\Documents\GitHub\avr-libstdcpp\include"  -O1 -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -g2 -Wall -mmcu=atxmega128a4u -B "C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\XMEGAA_DFP\1.1.68\gcc\dev\atxmega128a4u" -c -std=c++11 -flto -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
