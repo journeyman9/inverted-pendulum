@@ -61,6 +61,22 @@ extern shared_data<bool>* go; // case 4;
 extern shared_data<bool>* stop; // case 3
 extern shared_data<bool>* reset; // reset to idle
 
+typedef struct
+{
+	uint32_t timestamp_ms;
+	int16_t linear_position_e4;
+	int16_t linear_velocity_e3;
+	int16_t pendulum_angle_e3;
+	int32_t pendulum_velocity_e3;
+	int16_t motor_voltage_e3;
+} sample_t;
+
+#define TELEMETRY_BUFFER_SIZE 160
+
+extern volatile uint16_t telemetry_head;
+extern volatile bool telemetry_buffer_full;
+extern sample_t telemetry_buffer[TELEMETRY_BUFFER_SIZE];
+
 // Our attempt at a queue
 //extern frt_queue<bool>* leftLimitSwitch;
 //extern frt_queue<bool>* rightLimitSwitch;
