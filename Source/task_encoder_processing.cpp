@@ -63,27 +63,27 @@ void task_encoder_processing::run(void) {
 
 	const float pend_counts_per_rev = 1997.0f;
 	const float PI = 3.141592f;
-	const float dt = 0.001f;  // ISR fires at exactly 1kHz
 
 	// --- Motor state ---
 	float motor_prev_x = 0.0f;
 	const float meters_per_count = 0.00006f;
 	linear_offset->put(0);
 
-	// Signal that we're ready — start the ISR timer now
-	// (TCE0 is started in main after this task is created)
+	// Accumulate over 8 ISR ticks (8ms) to match controller period and Kalman F matrix
+	const uint8_t DECIMATE = 8;
+	uint8_t isr_count = 0;
+	int32_t pend_dcount_accum = 0;
+	const float dt = DECIMATE * 0.001f;
 
 	while (1) {
-		// Block until ISR gives the semaphore
 		xSemaphoreTake(xEncoderSemaphore, portMAX_DELAY);
 
-		// Atomically copy the ISR-captured values (int16_t is not atomic on 8-bit AVR)
 		cli();
 		int16_t local_pend_raw = isr_pendulum_raw;
 		int16_t local_motor_raw = isr_motor_raw;
 		sei();
 
-		// ---- Pendulum processing ----
+		// Unwrap every tick so we never miss a wraparound
 		int16_t pend_dcount_raw = local_pend_raw - pend_prev_raw;
 
 		if (pend_dcount_raw > (int16_t)(pend_counts_per_rev / 2.0f)) {
@@ -95,22 +95,27 @@ void task_encoder_processing::run(void) {
 
 		int16_t pend_dcount_signed = -pend_dcount_raw;
 		pend_count_unwrapped += pend_dcount_signed;
-		float theta_unwrapped = pend_count_unwrapped * (2.0f * PI / pend_counts_per_rev);
-		float omega = (pend_dcount_signed * (2.0f * PI / pend_counts_per_rev)) / dt;
-
-		pendulum_encoder->put((int16_t)pend_count_unwrapped);
-		pendulum_encoder_radians->put(theta_unwrapped);
-		pendulum_encoder_w_radians->put(omega);
-
+		pend_dcount_accum += pend_dcount_signed;
 		pend_prev_raw = local_pend_raw;
 
-		// ---- Motor processing ----
-		float motor_x = ((float)local_motor_raw) * meters_per_count - linear_offset->get();
-		linear_position->put(motor_x);
-		linear_velocity->put((motor_x - motor_prev_x) / dt);
+		isr_count++;
 
-		motor_prev_x = motor_x;
+		if (isr_count >= DECIMATE) {
+			float theta_unwrapped = pend_count_unwrapped * (2.0f * PI / pend_counts_per_rev);
+			float omega = (pend_dcount_accum * (2.0f * PI / pend_counts_per_rev)) / dt;
 
-		runs++;
+			pendulum_encoder->put((int16_t)pend_count_unwrapped);
+			pendulum_encoder_radians->put(theta_unwrapped);
+			pendulum_encoder_w_radians->put(omega);
+
+			float motor_x = ((float)local_motor_raw) * meters_per_count - linear_offset->get();
+			linear_position->put(motor_x);
+			linear_velocity->put((motor_x - motor_prev_x) / dt);
+			motor_prev_x = motor_x;
+
+			pend_dcount_accum = 0;
+			isr_count = 0;
+			runs++;
+		}
 	}
 }

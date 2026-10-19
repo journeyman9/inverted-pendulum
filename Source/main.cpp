@@ -190,11 +190,11 @@ int main (void)
 	PMIC_CTRL = (1 << PMIC_HILVLEN_bp | 1 << PMIC_MEDLVLEN_bp | 1 << PMIC_LOLVLEN_bp);
 	sei();
 	
-	// Use TCE0 as a 1kHz periodic interrupt source
-	TCE0.CTRLB = TC_WGMODE_NORMAL_gc;
-	TCE0.PER = (F_CPU / 1000) - 1;  // 1kHz at 32MHz → PER = 31999
-	TCE0.INTCTRLA = TC_OVFINTLVL_HI_gc;  // High-level interrupt
-	TCE0.CTRLA = TC_CLKSEL_DIV1_gc;      // Start timer, no prescaler
+	// Use TCD1 as a 1kHz periodic interrupt source (TCE0 is used by FreeRTOS tick)
+	TCD1.CTRLB = TC_WGMODE_NORMAL_gc;
+	TCD1.PER = (F_CPU / 1000) - 1;  // 1kHz at 32MHz → PER = 31999
+	TCD1.INTCTRLA = TC_OVFINTLVL_HI_gc;  // High-level interrupt
+	TCD1.CTRLA = TC_CLKSEL_DIV1_gc;      // Start timer, no prescaler
 
 	// Here's where the RTOS scheduler is started up. It should never exit as long as
 	// power is on and the microcontroller isn't rebooted
@@ -203,7 +203,7 @@ int main (void)
 	return 0;
 }
 
-ISR(TCE0_OVF_vect)
+ISR(TCD1_OVF_vect)
 {
     isr_pendulum_raw = TCC1.CNT;
     isr_motor_raw = TCD0.CNT;
