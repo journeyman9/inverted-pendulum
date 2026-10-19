@@ -55,7 +55,7 @@ void writeCSV(const std::string& filepath, const std::vector<exportData>& datase
 
 
 int main() {
-    std::string input_file = "./logged_data/8ms/data-8ms-002.csv";
+    std::string input_file = "./logged_data/fixed/data-7pri-001.csv";
     std::ifstream file(input_file); 
     
     if (!file.is_open()) {
