@@ -52,6 +52,7 @@ void task_system_controller::run(void) {
 	float x[4] = {0.0f, 0.0f, 0.0f, 0.0f};
 	float x_r[4] = {0.0f, 0.0f, 0.0f, 0.0f};
 	float u = 0.0f;
+	uint16_t next_head = 0;
 	std::array<float, 4> x_hat{{0.0f, 0.0f, 0.0f, 0.0f}};
 	static Kalman observer(x_hat);
 	bool observer_init = false;

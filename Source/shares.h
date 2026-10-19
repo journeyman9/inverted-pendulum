@@ -78,7 +78,7 @@ typedef struct
 	int16_t motor_voltage_e3;
 } sample_t;
 
-#define TELEMETRY_BUFFER_SIZE 250
+#define TELEMETRY_BUFFER_SIZE 160
 
 extern volatile uint16_t telemetry_head;
 extern volatile bool telemetry_buffer_full;
