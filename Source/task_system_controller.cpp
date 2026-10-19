@@ -202,7 +202,7 @@ void task_system_controller::run(void) {
 					transition_to(100);
 				}
 				
-				u = controller.calculate_action(x_hat.data(), x_r, position_set, angle_set);
+				u = controller.calculate_action(x, x_r, position_set, angle_set);
 				observer.predict(u * (24.0f / 1600.0f));
 				
 				if (runs % 1 == 0) {
