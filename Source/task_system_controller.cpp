@@ -81,6 +81,7 @@ void task_system_controller::run(void) {
 			case(0): 
 				linear_offset->put(0);
 				set_already = false;
+				observer_init = false;
 				integrated_error = 0.0f; // Reset integral
 				if (begin->get()) {
 					reset->put(0);
@@ -185,7 +186,12 @@ void task_system_controller::run(void) {
 				
 				if (!observer_init) {
 					observer.x_hat = {{x[0] - position_set, x[1], x[2] - angle_set, x[3]}};
-					observer.predict(0.0f);
+					observer.P = {{
+						{{1.0f, 0.0f, 0.0f, 0.0f}},
+						{{0.0f, 1.0f, 0.0f, 0.0f}},
+						{{0.0f, 0.0f, 1.0f, 0.0f}},
+						{{0.0f, 0.0f, 0.0f, 1.0f}}
+					}};
 					observer_init = true;
 				}
 				
@@ -202,7 +208,7 @@ void task_system_controller::run(void) {
 					transition_to(100);
 				}
 				
-				u = controller.calculate_action(x, x_r, position_set, angle_set);
+				u = controller.calculate_action(x_hat.data(), x_r, position_set, angle_set);
 				observer.predict(u * (24.0f / 1600.0f));
 				
 				if (runs % 1 == 0) {
