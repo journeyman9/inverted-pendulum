@@ -22,16 +22,17 @@ struct exportData {
     float theta;
     float thetadot;
     float u;
+    float u_cl;
     float x_hat_0;
     float x_hat_1;
     float x_hat_2;
     float x_hat_3;
     float trace_P;
     float trace_Kf;
-    
+
     std::string to_csv_line() const {
         std::stringstream ss;
-        ss << timestamp << "," << x << "," << xdot << "," << theta << "," << thetadot << "," << u << ","
+        ss << timestamp << "," << x << "," << xdot << "," << theta << "," << thetadot << "," << u << "," << u_cl << ","
            << x_hat_0 << "," << x_hat_1 << "," << x_hat_2 << "," << x_hat_3 << "," << trace_P << "," << trace_Kf;
         return ss.str();
     }
@@ -44,7 +45,7 @@ void writeCSV(const std::string& filepath, const std::vector<exportData>& datase
         return;
     }
     
-    file << "timestamp,x,xdot,theta,thetadot,u,x_hat_0,x_hat_1,x_hat_2,x_hat_3,trace_P,trace_Kf\n";
+    file << "timestamp,x,xdot,theta,thetadot,u,u_cl,x_hat_0,x_hat_1,x_hat_2,x_hat_3,trace_P,trace_Kf\n";
     
     for (const auto& row: dataset) {
         file << row.to_csv_line() << "\n";
@@ -55,7 +56,7 @@ void writeCSV(const std::string& filepath, const std::vector<exportData>& datase
 
 
 int main() {
-    std::string input_file = "./logged_data/isr/data-isr-001.csv";
+    std::string input_file = "./logged_data/kalman/2026-11-15-21-58-no-kalman.csv";
     std::ifstream file(input_file); 
     
     if (!file.is_open()) {
@@ -119,18 +120,31 @@ int main() {
     float angle_set = x0_raw.theta;
     const std::array<float, 4> x0{x0_raw.x - position_set, x0_raw.xdot, x0_raw.theta - angle_set, x0_raw.thetadot};
     Kalman observer(x0);
-    
+
+    const float K[4] = {-25.082511f, -11.15f, 30.379604f, 3.00f};
+
     std::vector<exportData> result;
     std::array<float, 4> x_hat;
     Matrix P;
     Matrix Kf;
     for (const auto& row: dataList) {
-        //std::cout << row.timestamp << " | " << row.x << " | " << row.xdot << " | " << row.theta << " | " << row.thetadot << " | " << row.u << std::endl;
-        observer.predict(row.u);
+        // Match hardware ordering: update first, then predict
         observer.update({row.x - position_set, row.xdot, row.theta - angle_set, row.thetadot});
         x_hat = observer.getStateEstimate();
         P = observer.P;
         Kf = observer.Kf;
+
+        // Compute closed-loop u from x_hat (same as LQR on hardware)
+        float u_cl_voltage = -1.0f * (
+            K[0] * x_hat[0] +
+            K[1] * x_hat[1] +
+            K[2] * x_hat[2] +
+            K[3] * x_hat[3]
+        );
+        float u_cl_pwm = u_cl_voltage * (1600.0f / 24.0f);
+        if (u_cl_pwm > 1600.0f) u_cl_pwm = 1600.0f;
+        else if (u_cl_pwm < -1600.0f) u_cl_pwm = -1600.0f;
+
         result.push_back(exportData{
             row.timestamp,
             row.x,
@@ -138,6 +152,7 @@ int main() {
             row.theta,
             row.thetadot,
             row.u,
+            u_cl_voltage,
             x_hat[0] + position_set,
             x_hat[1],
             x_hat[2] + angle_set,
@@ -145,6 +160,9 @@ int main() {
             P[0][0] + P[1][1] + P[2][2] + P[3][3],
             Kf[0][0] + Kf[1][1] + Kf[2][2] + Kf[3][3],
         });
+
+        // Predict with the closed-loop u (what hardware would actually use)
+        observer.predict(u_cl_pwm * (24.0f / 1600.0f));
     }
     
     // 1. Find the position of the very last forward slash '/'
