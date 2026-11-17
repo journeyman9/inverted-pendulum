@@ -83,6 +83,7 @@ void task_system_controller::run(void) {
 				set_already = false;
 				observer_init = false;
 				integrated_error = 0.0f; // Reset integral
+				u = 0.0f;
 				telemetry_head = 0;
 				telemetry_buffer_full = false;
 				memset(telemetry_buffer, 0, sizeof(telemetry_buffer));
